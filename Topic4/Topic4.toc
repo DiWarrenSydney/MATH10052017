@@ -1,0 +1,12 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Topic4: Probability, Random Variables and Distributions}{1}{0}{1}
+\beamer@subsectionintoc {1}{1}{Example: Coin Tossing during WWII}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Why study Probability?}{6}{0}{1}
+\beamer@subsectionintoc {1}{3}{What is Probability?}{7}{0}{1}
+\beamer@subsectionintoc {1}{4}{Three types of Probability}{8}{0}{1}
+\beamer@subsectionintoc {1}{5}{Describing Simple Probability Models}{20}{0}{1}
+\beamer@subsectionintoc {1}{6}{Probability Results}{26}{0}{1}
+\beamer@subsectionintoc {1}{7}{Counting Short Cuts}{33}{0}{1}
+\beamer@subsectionintoc {1}{8}{Random Variables}{36}{0}{1}
+\beamer@subsectionintoc {1}{9}{Distributions}{41}{0}{1}

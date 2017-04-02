@@ -1,0 +1,16 @@
+\frametitle{}
+\begin{block}{}
+
+{\bf Neater way: Summarise by defining a random variable} \\
+Let $X = $ the total of 2 tosses of a die, $x=2,3,\ldots,12$.
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
+$x$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12  \\ \hline
+$P(X=x)$ & $\frac{1}{36}$ & $\frac{2}{36}$ & $\frac{3}{36}$ & $\frac{4}{36}$ & $\frac{5}{36}$ & $\frac{6}{36}$ & $\frac{5}{36}$ & $\frac{4}{36}$ & $\frac{3}{36}$ & $\frac{2}{36}$ & $\frac{1}{36}$  \\ \hline
+\end{tabular}
+\end{center}
+
+\[P( X \geq 8)  =  \frac{15}{36}   \]
+
+\end{block}
