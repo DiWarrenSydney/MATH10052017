@@ -1,0 +1,6 @@
+\frametitle{Dirty Data}
+
+Notice that throughout Topic1 we have deliberately showcased raw data with the missing values coded as '-9'. This is called 'dirty data' and is how real data exists.
+
+\vspace{.5cm}
+Dealing with 'dirty data' is outside the scope of MATH1005, as it can require some sophistication. Ideally, we would replace all the missing values by a blank. However, one possible strategy is to account for the missing values in your histogram: create the bins (-10,0), [0,18] ..., so there is effectively 1 nonsense bin (although it still affects the calculation of frequencies of the other bins.)

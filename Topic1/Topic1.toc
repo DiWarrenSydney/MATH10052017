@@ -1,0 +1,13 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Topic1: Data and Graphical Summaries}{1}{0}{1}
+\beamer@subsectionintoc {1}{1}{Example: Australian Road Fatalities Jan-April 2016}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Identifying Variables}{4}{0}{1}
+\beamer@subsectionintoc {1}{3}{Graphical Summaries}{9}{0}{1}
+\beamer@subsectionintoc {1}{4}{Summary0: Barplot}{11}{0}{1}
+\beamer@subsectionintoc {1}{5}{Summary1: Frequency table and ordinate diagram}{12}{0}{1}
+\beamer@subsectionintoc {1}{6}{Summary2: Frequency table and histograms}{14}{0}{1}
+\beamer@subsectionintoc {1}{7}{Summary3: Stem and leaf plot}{20}{0}{1}
+\beamer@subsectionintoc {1}{8}{Summary4: Boxplot}{23}{0}{1}
+\beamer@subsectionintoc {1}{9}{Describing the Shape of Data}{32}{0}{1}
+\beamer@subsectionintoc {1}{10}{Dirty Data}{35}{0}{1}
