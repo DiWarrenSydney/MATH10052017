@@ -1,0 +1,629 @@
+<<echo=FALSE, cache=FALSE>>=
+set_parent('../full_lectures/master.Rnw')
+@
+
+
+
+%%%% TOPIC11 %%%%
+\section[11]{Topic11: Test for Goodness of Fit (Chi-squared Test)}
+
+
+\subsection[GoodnessofFit]{Example1: Mendel's Early Genetics Model}
+\begin{frame}{Example1: Mendel's Early Genetics Model}
+
+Mendel did much work in early genetics in the 19th Century, but it wasn't appreciated until later. He conducted experiments on the distributions of traits in pea plants. In one experiment, he classified 556 peas according to shape (Round or Angular) and colour (Yellow or Green). He predicted that the 4 different `offspring' (RY, RG, AY, AG) would occur in the ratio 9:3:3:1. He observed counts of 315, 108, 101 and 32. 
+
+\vspace{.5cm}
+{\bf Does Mendel's theory fit the data?}
+
+\end{frame}
+
+\subsection[GoodnessofFit]{Example2: Random Number Generator}
+\begin{frame}[fragile]{Example2: Random Number Generator}
+Suppose a Random Number Generator is being tested. 1000 values yield the following results. \\
+
+\vspace{.5cm}
+{\tiny 
+\begin{tabular}{l|llllllll}  \hline
+Cat. & [0,0.1) &  [0.1,0.2) & [0.2,0.3) & [0.3,0.4) & [0.4,0.5) & [0.5,0.6) & [0.6,0.7) & [0.7,0.8)  \\ \hline
+$O_{i}$ & 136 & 105 & 107 & 89 & 97 & 84 & 76 & 84    \\ \hline
+\end{tabular}
+}
+
+\vspace{.5cm}
+{\tiny 
+\begin{tabular}{l|lll}  \hline
+Cat. & [0.8,0.9) &  [0.9,1] & Total \\ \hline
+$O_{i}$ & 105  & 117  & 1000      \\ \hline
+\end{tabular}
+}
+
+\vspace{.5cm}
+{\bf Test the goodness of fit of the U[0,1] model to these counts.}
+
+<<fig.height=3,echo=FALSE>>=
+curve(dunif(x, 0,1), 0, 1,ylab = "U[0,1]")
+@
+\end{frame}
+
+\subsection[GoodnessofFit]{Example3: Testing Data fits a Binomial Model}
+\begin{frame}[fragile]{Example3: Testing Data fits a Binomial Model}
+Data results in the following frequency table and plot. \\
+
+\vspace{.5cm}
+\begin{tabular}{l|lllll} 
+Category & 0 & 1 & 2 & 3 & Total  \\ \hline
+$O_{i}$ & 19 & 34 & 27 & 20 & 100    \\ \hline
+\end{tabular}
+
+<<echo=F,fig.height=2.5>>=
+x=c(0,1,2,3)
+f=c(19,34,27,20)
+plot(x,f)
+@
+
+{\bf Test whether the data could be modelled by $Bin(n,p)$ for some $p$.}
+\end{frame}
+
+\begin{frame}
+Putting this example into context, imagine a sports journalist claims that Michael Jordan's free throws follow a Binomial distribution with probability 80\%.
+\href{https://sahilmohnani.wordpress.com/tag/binomial/}{\beamergotobutton{Sports Example}}
+\href{https://www.youtube.com/watch?v=3lt1x-k3QGU}{\beamergotobutton{Larry Bird highlights}}
+
+\end{frame}
+
+
+\subsection[GoodnessofFit]{Example4: Testing Data fits a Normal Model}
+\begin{frame}[fragile]{Example4: Testing Data fits a Normal Model}
+Data results in the following histogram. \\
+
+<<echo=F,eval=F, fig.height=3>>=
+x=read.txt()
+x <- read.csv("http://www.maths.usyd.edu.au/u/UG/JM/MATH1005/r/StatsData/w13.txt")
+hist(x)
+@
+
+\includegraphics[height=4cm]{../images/Topic11_Q2.pdf}
+
+\vspace{.5cm}
+{\bf Test whether the following histogram could be modelled by a Normal distribution $N(\mu, \sigma^2)$?}
+\end{frame}
+
+\subsection[GoodnessofFit]{Interesting Facts about the Chi-Squared Distribution}
+
+\begin{frame}[fragile]{Interesting Facts about the Chi-Squared Distribution}
+
+For the Goodness of Fit test, we are going to use the 
+Chi-Squared Distribution. Recall from Chapter 5:
+
+\begin{definition}[Chi-Squared distribution]
+The \alert{Chi-Squared distribution} is the sum of squared independent Standard Normal random variables $Z_{i} \sim N(0,1)$ $i=1,2,\ldots,n$. It can only take positive values and is typically right skewed.
+
+\vspace{.5cm}
+We say the variable $X = \sum_{i=1}^{n} Z_{i}^2 \sim \chi^2_{n}$ with $n$ degrees of freedom, and mean $E(X)=n$ and  variance $Var(X) = 2n$.
+
+\vspace{.5cm}
+The pdf is:
+\[ f(x)  =  \frac{ 1}  { 2^{\frac{n}{2}} \Gamma(\frac{n}{2})}
+x^{\frac{n}{2}-1} e^{-\frac{x}{2}}
+\;\;\;\;\; \mbox{for }  x \in (0, \infty) \]
+
+\end{definition}
+\href{https://www.youtube.com/watch?v=hcDb12fsbBU}{\beamergotobutton{Link}}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{}
+<<echo=FALSE, fig.height = 4>>=
+curve(dchisq(x,1), xlim = c(0, 50),ylab="", col="black")
+curve(dchisq(x,2), xlim = c(0, 50),add=TRUE, col="blue")
+curve(dchisq(x,3),xlim = c(0, 50), add=TRUE,lty=2,col="red")
+curve(dchisq(x,30),xlim = c(0, 50), add=TRUE,lty=3,col="green")
+legend("topright",legend=c("Chi1","Chi2","Chi3","Chi30"),lty=1:4,col=c("black","blue","red","green"))
+@
+\end{frame}
+
+
+\subsection[GoodnessofFit]{Steps for the Chi-Squared Test}
+\begin{frame}[fragile]{Steps for the Chi-Squared Test}
+
+\framebox{Context}
+Consider a set of categorical data with $g$ categories in which fall observed counts $O_{i}$, for $i=1,2,\ldots,g$. A probability model is proposed for the categories, and we want to test whether it is adequate.
+
+\vspace{.5cm}
+\framebox{Preparation}
+Construct the following table:
+
+\begin{center}
+\begin{tabular}{|l|lllll|l|} \hline
+Class & 1 & 2 & 3 & \ldots & g & Totals \\ \hline
+Observed Counts & $O_{1}$ & $O_{2}$ & $O_{3}$ & \ldots & $O_{g}$ & $\sum_{i=1}^{g} O_{i} = n$ \\
+Expected Counts & $E_{1}$ & $E_{2}$ & $E_{3}$ & \ldots & $E_{g}$ & $\sum_{i=1}^{g} E_{i} = n$ \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{.5cm}
+Notes:
+\begin{itemize}
+\item $O_{i}$ are given, and $E_{i}$ need to be worked out from the hypothesised model $H_{0}$, so   $E_{i} = n P(category \;\; i)$.
+\item Sometimes we need to estimate $k$ parameter(s) of the model first, before we can work out $E_{i}$.
+\end{itemize}
+\end{frame} 
+
+
+\begin{frame}[fragile]{}
+
+\framebox{H} $H_{0}$: Model fits. vs $H_{1}$: Model doesn't fit. \\
+
+\framebox{A} Cochran's Rule: Check that $E_{i} \geq 1$ and no more than 20\% of $E_{i}$ are less than 5. If some of the $E_{i}$ are too small, then we combine categories together.
+
+\framebox{T} 
+\begin{itemize}
+\item Definition Formula: $\tau = \sum_{i=1}^{g} \frac{(O_{i} - E_{i})^2}{E_{i}} \sim \chi^2_{g-k-1}$ (under $H_{0}$)
+\item Calculation Formula: $\tau = \sum_{i=1}^{g} \frac{O_{i}^2}{E_{i}} - n \sim \chi^2_{g-k-1}$ (under $H_{0}$)
+\item Large values of $\tau$ will argue against $H_{0}$ for $H_{1}$. \\  
+(This indicates a difference between $O_{i}$ and $E_{i}$.)
+\item The observed value is $\tau_{0}$. 
+\end{itemize}
+
+\framebox{P} $P$-value = $P( \chi^2_{g-k-1} \geq \tau_{0})$.
+
+\framebox{C} Weigh up the $P$-value.
+\end{frame}  
+
+
+\subsection[GoodnessofFit]{Worked Examples}
+\begin{frame}[fragile]{Example: Mendel's Early Genetics Model}
+
+\framebox{Preparation}
+Construct the following table:
+
+\begin{center}
+\begin{tabular}{|l|llll|l|} \hline
+Class & RY & RG & AY & AG  & Totals \\ \hline
+Observed Counts & 315  & 108 & 101 & 32 & 556 \\
+Expected Counts & 312.75   & 104.25  & 104.25  & 34.75  & 556 \\ \hline
+\end{tabular}
+\end{center}
+
+where: \\
+$E_{1} = \frac{9}{9+3+3+1}*556 = \frac{9}{16}*556 = 312.75$ \\
+$E_{2} = E_{3} =  \frac{3}{16}*556  = 104.25$. \\
+$E_{4} = \frac{1}{16}*556  = 34.75$.\\
+
+So the parameters are: $g=4, k=0$.
+\end{frame} 
+
+\begin{frame}[fragile]{}
+
+\framebox{H} $H_{0}$: Model 9:3:3:1 fits. vs $H_{1}$: Model doesn't fit. \\
+
+\framebox{A} Cochran's Rule: All $E_{i} \geq 1$ and no more than 20\% of $E_{i}$ are less than 5. 
+
+\framebox{T} 
+\begin{itemize}
+\item Calculation Formula: $\tau = \sum_{i=1}^{4} \frac{O_{i}^2}{E_{i}} - 556 \sim \chi^2_{3}$ (under $H_{0}$)
+\item Large values of $\tau$ will argue against $H_{0}$ for $H_{1}$, as this indicates a difference between $O_{i}$ and $E_{i}$.)
+\item The observed value is $\tau_{0} = \frac{315^2}{312.75} + \frac{108^2}{104.25} + \frac{101^2}{104.25} + \frac{32^2}{34.75} - 556 \approx 0.47$. 
+\end{itemize}
+
+<<>>=
+o=c(315,108,101,32)
+e=c(312.75,104.25,104.25,34.75)
+sum((o-e)^2/e)
+sum(o^2/e) - 556
+@
+\end{frame}  
+
+
+\begin{frame}[fragile]{}
+\framebox{P} $P$-value = $P( \chi^2_{3} \geq 0.47) > 0.25 $ using tables.
+
+<<>>=
+1-pchisq(0.47,3)
+@
+
+
+\framebox{C} As the $P$-value is so large, the data is consistent with Mendel's model.
+\end{frame}  
+
+
+\begin{frame}[fragile]{Example2: Random Number Generator}
+
+\framebox{Preparation}
+Construct the following table:
+
+\vspace{.5cm}
+{\tiny 
+\begin{tabular}{l|llllllll}  \hline
+Cat. & [0,0.1) &  [0.1,0.2) & [0.2,0.3) & [0.3,0.4) & [0.4,0.5) & [0.5,0.6) & [0.6,0.7) & [0.7,0.8)  \\ \hline
+$O_{i}$ & 136 & 105 & 107 & 89 & 97 & 84 & 76 & 84    \\ \hline
+$E_{i}$ & 100 & 100 & 100 & 100 & 100 & 100 & 100 & 100    \\ \hline
+\end{tabular}
+}
+
+\vspace{.5cm}
+{\tiny 
+\begin{tabular}{l|lll}  \hline
+Cat. & [0.8,0.9) &  [0.9,1] & Total \\ \hline
+$O_{i}$ & 105  & 117  & 1000      \\ \hline
+$E_{i}$ & 100  & 100  & 1000      \\ \hline
+\end{tabular}
+} 
+
+\vspace{.5cm}
+as $E_{i} = 1000/10 = 100$ for $i=1,2,\ldots,10$. 
+
+\vspace{.5cm}
+So the parameters are: $g=10, k=0$.
+\end{frame} 
+
+\begin{frame}[fragile]{}
+
+\framebox{H} $H_{0}$: U[0,1] Model fits. vs $H_{1}$: Model doesn't fit. \\
+
+\framebox{A} Cochran's Rule: All $E_{i} \geq 1$ and no more than 20\% of $E_{i}$ are less than 5. 
+
+\framebox{T} 
+\begin{itemize}
+\item Calculation Formula: $\tau = \sum_{i=1}^{10} \frac{O_{i}^2}{E_{i}} - 1000 \sim \chi^2_{9}$ (under $H_{0}$)
+\item Large values of $\tau$ will argue against $H_{0}$ for $H_{1}$, as this indicates a difference between $O_{i}$ and $E_{i}$.)
+\item The observed value is $\tau_{0} = \frac{136^2}{100} + \frac{105^2}{100} + \ldots \frac{117^2}{100} - 1000 = 29.02$. 
+\end{itemize}
+
+<<>>=
+o=c(136,105,107,89,97,84,76,84,105,117)
+e=c(100,100,100,100,100,100,100,100,100,100)
+sum((o-e)^2/e)
+sum(o^2/e) - 1000
+@
+\end{frame} 
+
+
+\begin{frame}[fragile]{}
+\framebox{P} $P$-value = $P( \chi^2_{9} \geq 29.02) < 0.01$ using tables.
+
+<<>>=
+1-pchisq(29.02,9)
+@
+
+\framebox{C} As the $P$-value is so small, the data is not consistent with random number generator.
+\end{frame} 
+
+
+\begin{frame}[fragile]{Example3: Testing Data fits a Binomial Model}
+
+\framebox{Preparation}
+
+\vspace{.5cm}
+(1) Fit parameters \\
+In order to fit a Binomial model, we need the 2 parameters $n$ and $p$. Given the outcomes $0,1,2,3$, we have $n=3$, but $p$ is not given, so we need to estimate it from the data using the formula
+\[ \hat{p} = \frac{0 \times 19 + 1 \times 34 + 2 \times 27 + 3 \times 20}{3 \times 100} \approx 0.493   \]
+The formula arises because 100 Bin(3,p) trials is equivalent to 300 Bernoulli(p) trials.
+
+<<>>=
+x=c(0,1,2,3)
+o=c(19,34,27,20)
+sum(x*o)/(3*sum(o))
+@
+\end{frame} 
+
+\begin{frame}[fragile]{}
+(2) Construct the following table:
+
+\vspace{.5cm}
+\begin{tabular}{l|llll|l} 
+Category & 0 & 1 & 2 & 3 & Total  \\ \hline
+$O_{i}$ & 19 & 34 & 27 & 20 & 100    \\ \hline
+$E_{i}$ & 13.03 & 38.02 & 36.97 & 11.98 & 100    \\ \hline
+\end{tabular}
+
+\vspace{.5cm}
+as $E_{i} = {3 \choose i} (0.493)^i (1-0.493)^{3-i} \times 100$ for $i=0,1,2,3$. 
+
+<<>>=
+dbinom(x,3,0.493)*100
+@
+
+\vspace{.5cm}
+So the parameters are: $g=4, k=1$.
+\end{frame} 
+
+\begin{frame}[fragile]{}
+
+\framebox{H} $H_{0}$: Bin(3,p) Model fits. vs $H_{1}$: Model doesn't fit. \\
+
+\framebox{A} Cochran's Rule: All $E_{i} \geq 1$ and no more than 20\% of $E_{i}$ are less than 5. 
+
+\framebox{T} 
+\begin{itemize}
+\item Calculation Formula: $\tau = \sum_{i=0}^{3} \frac{O_{i}^2}{E_{i}} - 100 \sim \chi^2_{4-1-1} = \chi^2_{2}$ (under $H_{0}$)
+\item Large values of $\tau$ will argue against $H_{0}$ for $H_{1}$, as this indicates a difference between $O_{i}$ and $E_{i}$.
+\item The observed value is $\tau_{0} = \frac{19^2}{13.03}  + \ldots \frac{20^2}{11.98} - 100 \approx 11.2$. 
+\end{itemize}
+
+{\tiny
+<<>>=
+o=c(19,34,27,20)
+e=c(13,38,37,12)
+sum((o-e)^2/e)
+sum(o^2/e) - 100
+@
+}
+\end{frame}  
+
+
+\begin{frame}[fragile]{}
+\framebox{P} $P$-value = $P( \chi^2_{2} \geq 11.2) < 0.01$ using tables.
+
+<<>>=
+1-pchisq(11.2,2)
+@
+
+\framebox{C} As the $P$-value is so small, the data is not consistent with a Bin(3,p) model.
+
+\vspace{.5cm}
+Extension:
+$X \sim \chi^2_{2} =  \exp(-\frac{x}{2})$, where
+\[ P(X  \geq x) = e^{-\frac{x}{2}} \]
+so the exact $P$-value is
+\[ P( \chi^2_{2} \geq 11.2) = e^{-\frac{11.2}{2}} = 0.003697864 \]
+\end{frame}  
+
+\begin{frame}[fragile]{Example4: Testing Data fits a Normal Model}
+
+This is a harder problem, as to fit a Normal distribution we need to estimate the 2 parameters: $\mu$ and $\sigma^2$. 
+
+\vspace{.5cm}
+We present a summarised solution, and then show how it could be done in R (Extension). 
+
+{\tiny
+<<echo=F,fig.height=3>>=
+x <- read.table("http://www.maths.usyd.edu.au/u/UG/JM/MATH1005/r/StatsData/w13.txt")
+x=unlist(x) #Changes data frame to vector
+hist(x)
+@
+}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\framebox{Preparation}
+
+\vspace{.5cm}
+(1) To fit the 2 parameters, we divide the continuous data into categories, by finding out how many observations fit in each class of the histogram.
+
+\vspace{.5cm}
+\begin{tabular}{l|lllllll|l} 
+Class & [-2,-1) & [-1,0) & [0,1) & [1,2) & [2,3) & [3,4) & [4,5) & Total  \\ \hline
+$O_{i}$ & 7 & 23 & 24 & 18 & 10 & 13 & 5 & 100    \\ \hline
+\end{tabular}
+
+\vspace{.5cm}
+To work out the mean, we use the midpoint of each class as an estimate of the obervations in that class.
+So the 1st class has 7 observations in [-2,-1) each approximated by -1.5. 
+
+\vspace{.5cm}
+Hence the mean estimate is 
+{\tiny
+\[ \hat{\mu} = \frac{7 \times (-1.5) + 23 \times (-0.5) + 24 \times (0.5) + 18 \times 1.5 + 10 \times 2.5 + 13 \times 3.5 + 5 \times 4.5}{100} = 1.1 \]
+}
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+Similarly, we can work out the variance
+
+{\tiny
+\[ \hat{\sigma^2} = \frac{7 \times (-1.5)^2 + 23 \times(-0.5)^2 + 24 \times (0.5)^2 + \ldots + 5 \times 4.5^2 - 100 \times (1.1)^2}{99} = 2.727273 \]
+}
+So 
+\[ \hat{\sigma} = \sqrt{2.727273} \approx 1.65 \]
+
+Therefore, for fitting the Normal we use the 2 parameters: $\mu = 1.1$ and $\sigma = 1.65$.
+
+\vspace{.5cm}
+Note that we based these estimates on the grouped data, not the original ungrouped data. If we used the ungrouped data we would get a larger statistic and so a misleading small $P$-value.
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+(2) Work out the Expected Values for $N(1.1,1.65^2)$.
+
+\vspace{.5cm}
+Note: We now change the first interval to $(-\infty,-1)$ and last to $[4,\infty)$, to be consistent with the Normal which spans $(-\infty,\infty)$.
+
+\vspace{.5cm}
+We construct the following table:
+
+\vspace{.5cm}
+\begin{tabular}{l|lllllll|l} 
+Class & (-$\infty$,-1) & [-1,0) & [0,1) & [1,2) & [2,3) & [3,4) & [4,$\infty$) & Total  \\ \hline
+$O_{i}$ & 7 & 23 & 24 & 18 & 10 & 13 & 5 & 100    \\ \hline
+$E_{i}$ & 10.16 & 15.09 & 22.33 & 23.14 & 16.80 & 8.54 & 3.94 & 100    \\ \hline
+\end{tabular}
+
+\vspace{.5cm}
+where the Expected Counts in (-$\infty$,-1) = 10.16
+<<>>=
+pnorm(-1,1.1,1.65)*100
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+and the Expected Counts in [-1,0) = 15.09
+<<>>=
+(pnorm(0,1.1,1.65)-pnorm(-1,1.1,1.65))*100
+@
+
+\vspace{.5cm}
+Other values follow:
+{\tiny
+<<>>=
+(pnorm(1,1.1,1.65)-pnorm(0,1.1,1.65))*100 
+(pnorm(2,1.1,1.65)-pnorm(1,1.1,1.65))*100
+(pnorm(3,1.1,1.65)-pnorm(2,1.1,1.65))*100
+@
+}
+\end{frame} 
+
+\begin{frame}[fragile]{}
+
+{\tiny 
+<<>>=
+(pnorm(4,1.1,1.65)-pnorm(3,1.1,1.65))*100
+(1-pnorm(4,1.1,1.65))*100
+@
+}
+
+\vspace{.5cm}
+So the parameters are: $g=7, k=2$.
+\end{frame} 
+
+\begin{frame}[fragile]{}
+
+\framebox{H} $H_{0}$: $N(1.1,1.65^2)$ Model fits. vs $H_{1}$: Model doesn't fit. \\
+
+\framebox{A} Cochran's Rule: All $E_{i} \geq 1$ and no more than 20\% of $E_{i}$ are less than 5. 
+
+\framebox{T} 
+\begin{itemize}
+\item Calculation Formula: $\tau = \sum_{i=1}^{7} \frac{O_{i}^2}{E_{i}} - 100 \sim \chi^2_{7-1-2} = \chi^2_{4}$ (under $H_{0}$)
+\item Large values of $\tau$ will argue against $H_{0}$ for $H_{1}$, as this indicates a difference between $O_{i}$ and $E_{i}$.)
+\item The observed value is $\tau_{0} = \frac{7^2}{10.16} + \ldots \frac{5^2}{3.94} - 100 \approx 11.76$. 
+\end{itemize}
+\end{frame}  
+
+
+\begin{frame}[fragile]{}
+\framebox{P} $P$-value = $P( \chi^2_{4} \geq 11.76) \in (0.01,0.025) $ using tables.
+
+<<>>=
+1-pchisq(11.76,4)
+@
+
+\framebox{C} As the $P$-value is small, the data are not consistent with a Normal model, as evident from the Normal curve on the histogram.
+
+
+<<echo=F,fig.height=3>>=
+#Add Normal PDF to the histogram
+x <- read.table("http://www.maths.usyd.edu.au/u/UG/JM/MATH1005/r/StatsData/w13.txt")
+x=unlist(x) #Changes data frame to vector
+hist(x, pr=T)
+curve(dnorm(x,m=1.1,s=1.65),lty=2,add=T)  
+@
+
+\end{frame} 
+
+
+
+\begin{frame}[fragile]{Solving in R (Extension)}
+
+\vspace{.5cm}
+Note: These results differ a tiny bit, as previously we rounded the estimate of standard deviation to 2dp.
+
+\vspace{.5cm}
+(1) Scan data and produce histogram
+{\tiny
+<<fig.height=3>>=
+x <- read.table("http://www.maths.usyd.edu.au/u/UG/JM/MATH1005/r/StatsData/w13.txt")
+x=unlist(x) #Changes data frame to vector
+hist(x)
+@
+}
+
+%\includegraphics[height=4cm]{Topic11_Q2.pdf}
+\end{frame}
+
+
+
+
+
+\begin{frame}[fragile]{}
+(2) Find the Observed Counts, from a histogram of the data.
+
+<<fig.height=2>>=
+#Lists the class breaks (-2,-1], (-1,0] etc
+hist(x,pr=T)$breaks   
+
+freq=hist(x,pr=T)$counts  #Observed Counts O_i
+freq
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+(3) Estimate the 2 parameters of Normal: mean and sd.
+<<>>=
+mids=(-2:4)+.5    #Midpoints of each class
+mids
+
+gr.sum=sum(freq*mids)
+gr.sum
+
+gr.sumsq=sum(freq*mids^2) 
+gr.sumsq
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+<<>>=
+gr.mean=gr.sum/100   #Estimate of mean
+gr.mean
+
+gr.var=1/99* (gr.sumsq - 1/100* gr.sum^2)
+gr.var
+
+gr.sd=sqrt(gr.var)   #Estimate of sd
+gr.sd
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+(4) Find the Expected Counts, from fitting a $N(1.1, 1.651446^2)$ model.
+
+<<fig.height=3>>=
+#Add Normal PDF to the histogram
+hist(x, pr=T)
+curve(dnorm(x,m=gr.mean,s=gr.sd),lty=2,add=T)  
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+<<>>=
+#Normal probability at lower threshold of each interval
+lower.probs=pnorm(-1:4,m=gr.mean,s=gr.sd)      
+lower.probs
+
+#The probability in each interval (upper-lower)
+exp.probs=diff(c(0,lower.probs,1))
+exp.probs
+
+#Find Expected frequencies/counts E_i
+exp.freq= 100* exp.probs                        
+exp.freq
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+(5) Calculate the chi-squared test statistic, and $P$-value.
+<<>>=
+#Find Chi-squared contributions
+contrib = ((exp.freq-freq)^2)/exp.freq          
+contrib
+
+# Put O-i, E_i, Chi-Sq in table
+cbind(freq,exp.freq,contrib)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+<<>>=
+#Calculate Chi-squared test statistic
+tau.obs=sum(((exp.freq-freq)^2)/exp.freq)      
+tau.obs
+
+#Calculate P-value
+1-pchisq(tau.obs, df=length(freq)-2-1)         
+@
+\end{frame}
+
+

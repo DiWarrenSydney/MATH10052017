@@ -1,0 +1,20 @@
+\frametitle{}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#Calculate Chi-squared test statistic}
+\hlstd{tau.obs}\hlkwb{=}\hlkwd{sum}\hlstd{(((exp.freq}\hlopt{-}\hlstd{freq)}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlstd{exp.freq)}
+\hlstd{tau.obs}
+\end{alltt}
+\begin{verbatim}
+## [1] 11.74652
+\end{verbatim}
+\begin{alltt}
+\hlcom{#Calculate P-value}
+\hlnum{1}\hlopt{-}\hlkwd{pchisq}\hlstd{(tau.obs,} \hlkwc{df}\hlstd{=}\hlkwd{length}\hlstd{(freq)}\hlopt{-}\hlnum{2}\hlopt{-}\hlnum{1}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.0193392
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
