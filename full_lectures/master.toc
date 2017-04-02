@@ -1,0 +1,112 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {english}
+\beamer@sectionintoc {1}{INTRODUCTION: WHY STATS?}{5}{0}{1}
+\beamer@subsectionintoc {1}{1}{Why Study Statistics?}{7}{0}{1}
+\beamer@subsectionintoc {1}{2}{What is Statistics?}{10}{0}{1}
+\beamer@sectionintoc {2}{PART1: EXPLORATORY DATA ANALYSIS (EDA)}{12}{0}{2}
+\beamer@subsectionintoc {2}{1}{Overview of Exploraratory Data Analysis (EDA)}{14}{0}{2}
+\beamer@sectionintoc {3}{Topic1: Data and Graphical Summaries}{16}{0}{3}
+\beamer@subsectionintoc {3}{1}{Example: Australian Road Fatalities Jan-April 2016}{18}{0}{3}
+\beamer@subsectionintoc {3}{2}{Identifying Variables}{19}{0}{3}
+\beamer@subsectionintoc {3}{3}{Graphical Summaries}{24}{0}{3}
+\beamer@subsectionintoc {3}{4}{Summary0: Barplot}{26}{0}{3}
+\beamer@subsectionintoc {3}{5}{Summary1: Frequency table and ordinate diagram}{27}{0}{3}
+\beamer@subsectionintoc {3}{6}{Summary2: Frequency table and histograms}{29}{0}{3}
+\beamer@subsectionintoc {3}{7}{Summary3: Stem and leaf plot}{35}{0}{3}
+\beamer@subsectionintoc {3}{8}{Summary4: Boxplot}{38}{0}{3}
+\beamer@subsectionintoc {3}{9}{Describing the Shape of Data}{47}{0}{3}
+\beamer@subsectionintoc {3}{10}{Dirty Data}{50}{0}{3}
+\beamer@sectionintoc {4}{Topic2: Numerical Summaries}{51}{0}{4}
+\beamer@subsectionintoc {4}{1}{Example: Australian Road Fatalities Jan-April 2016}{53}{0}{4}
+\beamer@subsectionintoc {4}{2}{Numerical Summaries}{54}{0}{4}
+\beamer@subsectionintoc {4}{3}{Numerical Data - Notation}{58}{0}{4}
+\beamer@subsectionintoc {4}{4}{Numerical Data - Summaries for Centre}{60}{0}{4}
+\beamer@subsectionintoc {4}{5}{Numerical Summaries for Spread}{65}{0}{4}
+\beamer@subsectionintoc {4}{6}{Outliers}{78}{0}{4}
+\beamer@sectionintoc {5}{Topic3: Bivariate Data}{85}{0}{5}
+\beamer@subsectionintoc {5}{1}{Example: Male Olympic 100m sprints}{87}{0}{5}
+\beamer@subsectionintoc {5}{2}{Bivariate Data}{88}{0}{5}
+\beamer@subsectionintoc {5}{3}{Fitting a Least Squares Regression Model}{89}{0}{5}
+\beamer@subsectionintoc {5}{4}{Step1: Construct a Scatter plot}{91}{0}{5}
+\beamer@subsectionintoc {5}{5}{Step2: Fit the Least Square\IeC {\textquoteright }s Line (LSL)}{93}{0}{5}
+\beamer@subsectionintoc {5}{6}{Step3: Construct a residual plot}{99}{0}{5}
+\beamer@subsectionintoc {5}{7}{Step4: Calculate the correlation coefficient and the coefficient of determination}{101}{0}{5}
+\beamer@subsectionintoc {5}{8}{Avoiding mistakes in Regression}{110}{0}{5}
+\beamer@sectionintoc {6}{PART2: PROBABILITY AND DISTRIBUTION THEORY (PDT)}{114}{0}{6}
+\beamer@subsectionintoc {6}{1}{Overview of Probability and Distribution Theory (PDT)}{116}{0}{6}
+\beamer@sectionintoc {7}{Topic4: Probability, Random Variables and Distributions}{117}{0}{7}
+\beamer@subsectionintoc {7}{1}{Example: Coin Tossing during WWII}{119}{0}{7}
+\beamer@subsectionintoc {7}{2}{Why study Probability?}{122}{0}{7}
+\beamer@subsectionintoc {7}{3}{What is Probability?}{123}{0}{7}
+\beamer@subsectionintoc {7}{4}{Three types of Probability}{124}{0}{7}
+\beamer@subsectionintoc {7}{5}{Describing Simple Probability Models}{136}{0}{7}
+\beamer@subsectionintoc {7}{6}{Probability Results}{142}{0}{7}
+\beamer@subsectionintoc {7}{7}{Counting Short Cuts}{149}{0}{7}
+\beamer@subsectionintoc {7}{8}{Random Variables}{152}{0}{7}
+\beamer@subsectionintoc {7}{9}{Distributions}{157}{0}{7}
+\beamer@sectionintoc {8}{Topic5: Discrete Random Variables}{161}{0}{8}
+\beamer@subsectionintoc {8}{1}{Example1: Powerball}{163}{0}{8}
+\beamer@subsectionintoc {8}{2}{Example2: Tasmanian fruit flies}{164}{0}{8}
+\beamer@subsectionintoc {8}{3}{Example3: Calcium deficiency in orchards}{166}{0}{8}
+\beamer@subsectionintoc {8}{4}{Discrete Distributions}{167}{0}{8}
+\beamer@subsectionintoc {8}{5}{Mean and Variance of Discrete Distributions}{169}{0}{8}
+\beamer@subsectionintoc {8}{6}{Example1: Hypergeometric Distribution}{177}{0}{8}
+\beamer@subsectionintoc {8}{7}{Example2: Binomial Distribution}{182}{0}{8}
+\beamer@subsectionintoc {8}{8}{Appendix: Poisson Distribution}{187}{0}{8}
+\beamer@sectionintoc {9}{Topic6: Continuous Random Variables}{193}{0}{9}
+\beamer@subsectionintoc {9}{1}{Example: Australian Netball and AFL teams}{195}{0}{9}
+\beamer@subsectionintoc {9}{2}{Comparing Discrete and Continuous Distributions}{201}{0}{9}
+\beamer@subsectionintoc {9}{3}{Normal Distribution}{203}{0}{9}
+\beamer@subsectionintoc {9}{4}{Normal Probabilities}{208}{0}{9}
+\beamer@subsectionintoc {9}{5}{Normal Percentiles}{219}{0}{9}
+\beamer@subsectionintoc {9}{6}{Other Continuous Distributions}{220}{0}{9}
+\beamer@sectionintoc {10}{Topic7: Combinations of Random Variables}{233}{0}{10}
+\beamer@subsectionintoc {10}{1}{Example: Luggage Limits on A380 Qantas Flight}{235}{0}{10}
+\beamer@subsectionintoc {10}{2}{Linear Function of a Random Variable}{237}{0}{10}
+\beamer@subsectionintoc {10}{3}{Independence of Random Variables}{239}{0}{10}
+\beamer@subsectionintoc {10}{4}{Sums of Random Variables}{240}{0}{10}
+\beamer@subsectionintoc {10}{5}{Sums of Normal Random Variables}{242}{0}{10}
+\beamer@subsectionintoc {10}{6}{Sums of Non-Normal Random Variables (CLT)}{248}{0}{10}
+\beamer@subsectionintoc {10}{7}{Application of the CLT to the Binomial Distribution}{258}{0}{10}
+\beamer@sectionintoc {11}{PART3: HYPOTHESIS TESTING AND INFERENCE}{262}{0}{11}
+\beamer@subsectionintoc {11}{1}{Overview of Hypothesis Testing and Inference}{264}{0}{11}
+\beamer@sectionintoc {12}{Topic8: Hypothesis Testing}{265}{0}{12}
+\beamer@subsectionintoc {12}{1}{Example: Famous Court Cases}{267}{0}{12}
+\beamer@subsectionintoc {12}{2}{The Western legal system}{269}{0}{12}
+\beamer@subsectionintoc {12}{3}{Framework for Hypothesis Testing}{272}{0}{12}
+\beamer@subsectionintoc {12}{4}{Defining Terms}{273}{0}{12}
+\beamer@sectionintoc {13}{Topic9: Test for Proportion (Proportion and Sign Tests)}{278}{0}{13}
+\beamer@subsectionintoc {13}{1}{Example1: IVF}{280}{0}{13}
+\beamer@subsectionintoc {13}{2}{Example2: Vegetarianism in Australia}{281}{0}{13}
+\beamer@subsectionintoc {13}{3}{An intuitive approach to the Proportion Test}{282}{0}{13}
+\beamer@subsectionintoc {13}{4}{Steps for Proportion Test}{284}{0}{13}
+\beamer@subsectionintoc {13}{5}{Sign Test}{292}{0}{13}
+\beamer@sectionintoc {14}{Topic10: Test for Means (Z and T Tests)}{305}{0}{14}
+\beamer@subsectionintoc {14}{1}{Example1: Comm Bank's online service}{307}{0}{14}
+\beamer@subsectionintoc {14}{2}{Example2: ADHD in children in Taiwan}{308}{0}{14}
+\beamer@subsectionintoc {14}{3}{Example3: Weight Loss}{310}{0}{14}
+\beamer@subsectionintoc {14}{4}{1 Sample Z Test}{311}{0}{14}
+\beamer@subsectionintoc {14}{5}{1 Sample T Test}{316}{0}{14}
+\beamer@subsectionintoc {14}{6}{Paired T Test}{322}{0}{14}
+\beamer@subsectionintoc {14}{7}{2 Sample T Test}{325}{0}{14}
+\beamer@sectionintoc {15}{Topic11: Test for Goodness of Fit (Chi-squared Test)}{333}{0}{15}
+\beamer@subsectionintoc {15}{1}{Example1: Mendel's Early Genetics Model}{335}{0}{15}
+\beamer@subsectionintoc {15}{2}{Example2: Random Number Generator}{336}{0}{15}
+\beamer@subsectionintoc {15}{3}{Example3: Testing Data fits a Binomial Model}{337}{0}{15}
+\beamer@subsectionintoc {15}{4}{Example4: Testing Data fits a Normal Model}{339}{0}{15}
+\beamer@subsectionintoc {15}{5}{Interesting Facts about the Chi-Squared Distribution}{340}{0}{15}
+\beamer@subsectionintoc {15}{6}{Steps for the Chi-Squared Test}{342}{0}{15}
+\beamer@subsectionintoc {15}{7}{Worked Examples}{344}{0}{15}
+\beamer@sectionintoc {16}{Topic12: Confidence Intervals}{370}{0}{16}
+\beamer@subsectionintoc {16}{1}{Example1: Birth Weight}{372}{0}{16}
+\beamer@subsectionintoc {16}{2}{Example2: Paint Primer Thickness}{373}{0}{16}
+\beamer@subsectionintoc {16}{3}{Example3: Concrete Tensile Strength}{374}{0}{16}
+\beamer@subsectionintoc {16}{4}{Example4: Clinton vs Trump Polls}{376}{0}{16}
+\beamer@subsectionintoc {16}{5}{Estimating Parameters}{378}{0}{16}
+\beamer@subsectionintoc {16}{6}{Overview of Confidence Intervals}{380}{0}{16}
+\beamer@subsectionintoc {16}{7}{Formulae for Confidence Intervals}{381}{0}{16}
+\beamer@subsectionintoc {16}{8}{Confidence Interval for Mean based on Z Test Statistic}{382}{0}{16}
+\beamer@subsectionintoc {16}{9}{Worked Examples}{389}{0}{16}
+\beamer@subsectionintoc {16}{10}{Justifying the Conservative CI for Proportion}{398}{0}{16}
+\beamer@sectionintoc {17}{APPENDIX}{399}{0}{17}
+\beamer@subsectionintoc {17}{1}{Appendix1}{401}{0}{17}

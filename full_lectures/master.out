@@ -1,0 +1,70 @@
+\BOOKMARK [2][]{Outline0.1}{INTRODUCTION: WHY STATS?}{}% 1
+\BOOKMARK [2][]{Outline0.2}{PART1: EXPLORATORY DATA ANALYSIS \(EDA\)}{}% 2
+\BOOKMARK [2][]{Outline0.3}{Topic1: Data and Graphical Summaries}{}% 3
+\BOOKMARK [2][]{Outline0.4}{Topic2: Numerical Summaries}{}% 4
+\BOOKMARK [2][]{Outline0.5}{Topic3: Bivariate Data}{}% 5
+\BOOKMARK [3][]{Outline0.5.8.110}{Avoiding mistakes in Regression}{Outline0.5}% 6
+\BOOKMARK [2][]{Outline0.6}{PART2: PROBABILITY AND DISTRIBUTION THEORY \(PDT\)}{}% 7
+\BOOKMARK [2][]{Outline0.7}{Topic4: Probability, Random Variables and Distributions}{}% 8
+\BOOKMARK [3][]{Outline0.7.9.157}{Distributions}{Outline0.7}% 9
+\BOOKMARK [2][]{Outline0.8}{Topic5: Discrete Random Variables}{}% 10
+\BOOKMARK [3][]{Outline0.8.1.163}{Example1: Powerball}{Outline0.8}% 11
+\BOOKMARK [3][]{Outline0.8.2.164}{Example2: Tasmanian fruit flies}{Outline0.8}% 12
+\BOOKMARK [3][]{Outline0.8.3.166}{Example3: Calcium deficiency in orchards}{Outline0.8}% 13
+\BOOKMARK [3][]{Outline0.8.4.167}{Discrete Distributions}{Outline0.8}% 14
+\BOOKMARK [3][]{Outline0.8.5.169}{Mean and Variance of Discrete Distributions}{Outline0.8}% 15
+\BOOKMARK [3][]{Outline0.8.6.177}{Example1: Hypergeometric Distribution}{Outline0.8}% 16
+\BOOKMARK [3][]{Outline0.8.7.182}{Example2: Binomial Distribution}{Outline0.8}% 17
+\BOOKMARK [3][]{Outline0.8.8.187}{Appendix: Poisson Distribution}{Outline0.8}% 18
+\BOOKMARK [2][]{Outline0.9}{Topic6: Continuous Random Variables}{}% 19
+\BOOKMARK [3][]{Outline0.9.1.195}{Example: Australian Netball and AFL teams}{Outline0.9}% 20
+\BOOKMARK [3][]{Outline0.9.2.201}{Comparing Discrete and Continuous Distributions}{Outline0.9}% 21
+\BOOKMARK [3][]{Outline0.9.3.203}{Normal Distribution}{Outline0.9}% 22
+\BOOKMARK [3][]{Outline0.9.4.208}{Normal Probabilities}{Outline0.9}% 23
+\BOOKMARK [3][]{Outline0.9.5.219}{Normal Percentiles}{Outline0.9}% 24
+\BOOKMARK [3][]{Outline0.9.6.220}{Other Continuous Distributions}{Outline0.9}% 25
+\BOOKMARK [2][]{Outline0.10}{Topic7: Combinations of Random Variables}{}% 26
+\BOOKMARK [3][]{Outline0.10.1.235}{Example: Luggage Limits on A380 Qantas Flight}{Outline0.10}% 27
+\BOOKMARK [3][]{Outline0.10.2.237}{Linear Function of a Random Variable}{Outline0.10}% 28
+\BOOKMARK [3][]{Outline0.10.3.239}{Independence of Random Variables}{Outline0.10}% 29
+\BOOKMARK [3][]{Outline0.10.4.240}{Sums of Random Variables}{Outline0.10}% 30
+\BOOKMARK [3][]{Outline0.10.5.242}{Sums of Normal Random Variables}{Outline0.10}% 31
+\BOOKMARK [3][]{Outline0.10.6.248}{Sums of Non-Normal Random Variables \(CLT\)}{Outline0.10}% 32
+\BOOKMARK [3][]{Outline0.10.7.258}{Application of the CLT to the Binomial Distribution}{Outline0.10}% 33
+\BOOKMARK [2][]{Outline0.11}{PART3: HYPOTHESIS TESTING AND INFERENCE}{}% 34
+\BOOKMARK [2][]{Outline0.12}{Topic8: Hypothesis Testing}{}% 35
+\BOOKMARK [2][]{Outline0.13}{Topic9: Test for Proportion \(Proportion and Sign Tests\)}{}% 36
+\BOOKMARK [3][]{Outline0.13.1.280}{Example1: IVF}{Outline0.13}% 37
+\BOOKMARK [3][]{Outline0.13.2.281}{Example2: Vegetarianism in Australia}{Outline0.13}% 38
+\BOOKMARK [3][]{Outline0.13.3.282}{An intuitive approach to the Proportion Test}{Outline0.13}% 39
+\BOOKMARK [3][]{Outline0.13.4.284}{Steps for Proportion Test}{Outline0.13}% 40
+\BOOKMARK [3][]{Outline0.13.5.292}{Sign Test}{Outline0.13}% 41
+\BOOKMARK [2][]{Outline0.14}{Topic10: Test for Means \(Z and T Tests\)}{}% 42
+\BOOKMARK [3][]{Outline0.14.1.307}{Example1: Comm Bank's online service}{Outline0.14}% 43
+\BOOKMARK [3][]{Outline0.14.2.308}{Example2: ADHD in children in Taiwan}{Outline0.14}% 44
+\BOOKMARK [3][]{Outline0.14.3.310}{Example3: Weight Loss}{Outline0.14}% 45
+\BOOKMARK [3][]{Outline0.14.4.311}{1 Sample Z Test}{Outline0.14}% 46
+\BOOKMARK [3][]{Outline0.14.5.316}{1 Sample T Test}{Outline0.14}% 47
+\BOOKMARK [3][]{Outline0.14.6.322}{Paired T Test}{Outline0.14}% 48
+\BOOKMARK [3][]{Outline0.14.7.325}{2 Sample T Test}{Outline0.14}% 49
+\BOOKMARK [2][]{Outline0.15}{Topic11: Test for Goodness of Fit \(Chi-squared Test\)}{}% 50
+\BOOKMARK [3][]{Outline0.15.1.335}{Example1: Mendel's Early Genetics Model}{Outline0.15}% 51
+\BOOKMARK [3][]{Outline0.15.2.336}{Example2: Random Number Generator}{Outline0.15}% 52
+\BOOKMARK [3][]{Outline0.15.3.337}{Example3: Testing Data fits a Binomial Model}{Outline0.15}% 53
+\BOOKMARK [3][]{Outline0.15.4.339}{Example4: Testing Data fits a Normal Model}{Outline0.15}% 54
+\BOOKMARK [3][]{Outline0.15.5.340}{Interesting Facts about the Chi-Squared Distribution}{Outline0.15}% 55
+\BOOKMARK [3][]{Outline0.15.6.342}{Steps for the Chi-Squared Test}{Outline0.15}% 56
+\BOOKMARK [3][]{Outline0.15.7.344}{Worked Examples}{Outline0.15}% 57
+\BOOKMARK [2][]{Outline0.16}{Topic12: Confidence Intervals}{}% 58
+\BOOKMARK [3][]{Outline0.16.1.372}{Example1: Birth Weight}{Outline0.16}% 59
+\BOOKMARK [3][]{Outline0.16.2.373}{Example2: Paint Primer Thickness}{Outline0.16}% 60
+\BOOKMARK [3][]{Outline0.16.3.374}{Example3: Concrete Tensile Strength}{Outline0.16}% 61
+\BOOKMARK [3][]{Outline0.16.4.376}{Example4: Clinton vs Trump Polls}{Outline0.16}% 62
+\BOOKMARK [3][]{Outline0.16.5.378}{Estimating Parameters}{Outline0.16}% 63
+\BOOKMARK [3][]{Outline0.16.6.380}{Overview of Confidence Intervals}{Outline0.16}% 64
+\BOOKMARK [3][]{Outline0.16.7.381}{Formulae for Confidence Intervals}{Outline0.16}% 65
+\BOOKMARK [3][]{Outline0.16.8.382}{Confidence Interval for Mean based on Z Test Statistic}{Outline0.16}% 66
+\BOOKMARK [3][]{Outline0.16.9.389}{Worked Examples}{Outline0.16}% 67
+\BOOKMARK [3][]{Outline0.16.10.398}{Justifying the Conservative CI for Proportion}{Outline0.16}% 68
+\BOOKMARK [2][]{Outline0.17}{APPENDIX}{}% 69
+\BOOKMARK [3][]{Outline0.17.1.401}{Appendix1}{Outline0.17}% 70

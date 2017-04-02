@@ -1,0 +1,401 @@
+\documentclass[t,xcolor=pdftex,dvipsnames,table]{beamer}
+%\documentclass[handout,t,xcolor=pdftex,dvipsnames,table]{beamer}  % For handout
+\mode<presentation>{
+\useoutertheme[subsection=false]{miniframes}
+%\beamertemplatenavigationsymbolsempty
+\usecolortheme{custom}
+\usefonttheme[onlymath]{serif}
+\setbeamercovered{invisible}
+%\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{mini frames}{}  % Old one
+% Comment out this line to give the header
+% \setbeamertemplate{headline}[default]
+\setbeamertemplate{caption}[numbered]
+%\setbeamertemplate{itemize items}[circle] 
+\setbeamertemplate{frametitle continuation}{\frametitle{\color{white}Title}}  % So no tile on subsequent frames, from [allowframebreaks]
+
+%%% CUSTOMISING NAVIATION %%%%
+%This customises the navigation to be thin width and just have section headings (not subsections). 
+\setbeamertemplate{headline}{%
+\leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex]{palette tertiary}%   % Tertiary colour is blue
+    \insertsectionnavigationhorizontal{\paperwidth}{}{\hskip0pt plus1filll}
+    \end{beamercolorbox}%
+}}}
+
+\RequirePackage{marvosym}
+
+%%% INCLUDING SOLUTIONS %%%%
+%% You can incorporate both questions and solutions in the 
+%% same document.  Solutions can be included between the 
+%% commands \begin{soln} and \end{soln}
+%% To generate a pdf with only the questions uncomment:
+%\excludecomment{soln}
+\usepackage{comment}
+\specialcomment{soln}{\begingroup \vspace{1mm} \sl}{ \leavevmode \endgroup}
+
+%%%% DETAILS FOR PART 1 TITLE PAGE (OLD) %%%%
+%\title{\large Part2 - Probability \& Distribution Theory} 
+%\subtitle{} 
+%\author{\copyright Dr Di Warren 2016} 
+%\date{MATH1005 - Statistics}
+% \colorlet{Faculty}{Arts}
+%\colorlet{Faculty}{MasterBrandRed} % This is only needed if the notes are used for different faculties.
+%\colorlet{FacultyText}{White}
+% Defines the color of the text used on the title page and ``blocks''
+% White for Business; TitlePageBlack for Arts, Pharmacy and Science
+%\definecolor{CoolBlack}{rgb}{0.0, 0.18, 0.39}
+
+%%%% DETAILS FOR FULL COURSE TITLE PAGE %%%%
+\title{\Huge STATISTICS} 
+\subtitle{} 
+\author{\copyright University of Sydney 2017 (Di Warren)} 
+\date{MATH1005}
+% \colorlet{Faculty}{Arts}
+\colorlet{Faculty}{MasterBrandRed} % This is only needed if the notes are used for different faculties.
+\colorlet{FacultyText}{White}
+% Defines the color of the text used on the title page and ``blocks''
+% White for Business; TitlePageBlack for Arts, Pharmacy and Science
+\definecolor{CoolBlack}{rgb}{0.0, 0.18, 0.39}
+
+%%%% PACKAGES %%%%
+\usepackage{multirow}
+\usepackage{fancybox}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{bm}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows,decorations.pathmorphing}
+\usepackage{verbatim}
+\usepackage{pgf,pgfsys,pgffor}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.3} %Recommended as of Pgfplots 1.3 - necessary?
+\usetikzlibrary{decorations.pathreplacing,calc}
+\usetikzlibrary{shapes, backgrounds}   % For Venn diagrams
+\def \setA{ (0,0) circle (1cm) }
+\def \setB{ (1.5,0) circle (1cm) }
+\def \setC{ (0.6,1.5) circle (1cm) }
+\def \setO{ (-2, -1.5) rectangle (3.5, 2.75) }
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\usepackage{listings}  %Added by Di for adding R code
+
+%\AtBeginSection[]
+%{
+%   \begin{frame}
+ %      \frametitle{Outline}
+ %      \tableofcontents[currentsection]
+%   \end{frame}
+%}  %This seems overkill for weekly lecture slides.
+
+%\AtBeginSection[]
+%{
+%  \begin{frame}
+% \frametitle{Contents}
+%  \tiny{\tableofcontents[currentsection]}
+%  \end{frame}
+%}
+%\useoutertheme{infolines} % Just lists current section in navigation at top, nice but limiting?
+
+%%%% TITLE PAGE AND CONTENTS AT BEGINNING OF EACH TOPIC %%%%
+
+\RequirePackage{ifthen} % package required
+\newboolean{sectiontoc}
+\setboolean{sectiontoc}{true} %default to true
+
+\AtBeginSection[]
+{
+\begin{frame}[plain]
+\vspace{60pt}
+\begin{center}
+\Huge{{\textcolor{MasterBrandBlue} \insertsection}}
+\end{center}
+\begin{tikzpicture}[scale=0.54]
+%\hspace{-12pt}
+%% Big Rectangle
+\fill[MasterBrandRed] (0,14) -- (20,14) -- (20,15) -- (0,15);
+
+%\draw (1,14.5) node [anchor = west] {\textcolor{MasterBrandBlue}{\Huge{\insertsection}}}; Overlays box with title, but long titles drop off the page
+\end{tikzpicture} 
+\end{frame}
+
+%%%%%WORKING VERSION OF TOC%%%%%
+%\begin{frame}
+%   \frametitle{Outline}
+%  \tableofcontents[currentsection, sectionstyle=show/hide, subsectionstyle=show/show/hide]
+%  \end{frame}
+%}
+
+%%%%%2 VERSIONS - WITH AND WITHOUT TOC%%%%%
+  \ifthenelse{\boolean{sectiontoc}}{
+    \begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[currentsection, sectionstyle=show/hide, subsectionstyle=show/show/hide]
+ \end{frame}
+  }
+}
+%%%%%This doesnt seem to work?%%%%
+\newcommand{\toclesssection}[1]{
+  \setboolean{sectiontoc}{false}
+  %\section{#1}
+  \setboolean{sectiontoc}{true}
+}
+
+
+% PDF settings
+%\hypersetup{%
+%  pdftitle={\inserttitle \insertsubtitle},%
+%  pdfauthor={Di Warren},%
+%	pdfsubject={},%
+%	pdfkeywords={}%   
+%	 }
+
+%%%%  HELPFUL MACROS %%%%
+\newcommand{\ud}{\mathrm{d}}
+\newcommand{\var}{\mathrm{var}}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\cov}{\mathrm{cov}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\MSE}{\mathrm{MSE}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\Bias}{\mathrm{Bias}}
+\newcommand{\dei}{\partial}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\betahat}{\hat{\beta}}
+\newcommand{\CLRM}{$\mathbf{y} = X\bm{\beta} + \bm{\ep}$}
+
+%%%% LOGO FOR SLIDES %%%%
+\logo{\vspace{79mm}\includegraphics[height=0.9cm]{../images/sydney.pdf}}
+
+%%%% ADD PAGE NUMBER %%%%
+\setbeamertemplate{sidebar right}{}
+\setbeamertemplate{footline}{%
+\hfill\usebeamertemplate***{navigation symbols}
+\hspace{1cm}\insertframenumber{}/\inserttotalframenumber}
+
+%%%% BEGIN CONTENT %%%
+\begin{document}
+
+%%% CHANGE THE WORKING DIRECTORY WHERE APPROPRIATE %%%
+<<include=FALSE>>=
+opts_knit$set(concordance=FALSE,tidy=TRUE)
+setwd("~/Dropbox/teaching/MATH1005/2017/lectures/full_lectures")
+@
+
+%%% TITLE PAGE FOR PARTS OF COURSE %%%
+\begin{frame}[plain]
+\vspace{-10pt}
+\begin{tikzpicture}[scale=0.54]
+\hspace{-12pt}
+%% Big Rectangle
+\fill[MasterBrandRed] (2.48,2) -- (2.48,17.07) -- (23.42,17.07) -- (23.42,2) -- cycle;
+%% Smaller Square
+\fill[MasterBrandBlue] (2.48,0) -- (2.48,6) -- (2.48+6,6) -- (2.48+6,0) -- cycle;
+%% Logo on top of the squares
+\includegraphics[scale=0.2]{../images/sydney.pdf} 
+\hspace{-5mm}
+\draw (0,0);
+\draw (0,14.5) node [anchor = west] {\textcolor{FacultyText}{\Large{\MakeUppercase{\inserttitle}}}}; % This is main heading
+\draw (17.5,4.5) node [anchor = east] {\textcolor{FacultyText}{\scriptsize{\insertdate}}};
+\draw (17.5,3.5) node [anchor = east] {\textcolor{FacultyText}{\scriptsize{\MakeUppercase{\insertshortauthor}}}};
+\end{tikzpicture} 
+\end{frame}
+
+%%%% TABLE OF CONTENTS - JUST TOPICS LISTED %%%%
+\begin{frame}[allowframebreaks]
+\frametitle{Course Contents}
+\tableofcontents[hideallsubsections]
+\end{frame}
+
+
+%%%% INTRO SECTION %%%%
+<<intro, child='../Introduction/Introduction.Rnw', cache=TRUE, cache.rebuild=FALSE>>=
+@ 
+
+%%%% PART 1 %%%%
+  \section[Part1]{PART1: EXPLORATORY DATA ANALYSIS (EDA)}
+\subsection[]{Overview of Exploraratory Data Analysis (EDA)}
+\begin{frame}{Overview of Exploraratory Data Analysis (EDA)}
+``What can we learn about the data?" \\
+
+\vspace{.5cm}
+Exploratory Data Analysis or Descriptive Statistics is about creating a snapshot or summary of the data. This helps us to identify the data's main qualities, and hence aids us in understanding the population from which it derives.
+
+\begin{center}
+\begin{tikzpicture}[very thick, level distance = 2cm,
+population/.style={rectangle,draw},
+sample/.style={rectangle,draw,fill=green!20,rounded corners=.8ex},
+%%every node/.style = {shape=rectangle, rounded corners,
+%% draw, align=center,
+%% top color=white, bottom color=blue!20}
+]]
+
+\node[population, minimum height = 1.5cm, minimum width = 6cm] { Population  }
+child { node[sample] {Sample}   };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{}
+\begin{center}
+\includegraphics[height=7cm]{../images/SocialMediaStats.jpg}
+\end{center}
+%\hyperimage{http://www.socialfactor.com/wp-content/uploads/2013/01/Social_Media_Stats.jpg}  %Load image
+\href{http://www.socialfactor.com/social-media-the-biggest-shift-since-the-industrial-revolution}{\beamergotobutton{Source}}  %Why not work?
+\end{frame}
+
+<<intro, child='../Topic1/Topic1.Rnw'>>=
+@
+
+<<intro, child='../Topic2/Topic2.Rnw'>>=
+@ 
+
+<<intro, child='../Topic3/Topic3.Rnw'>>=
+@ 
+
+
+%%%% PART2 %%%%
+\section[Part2]{PART2: PROBABILITY AND DISTRIBUTION THEORY (PDT)}
+\subsection[]{Overview of Probability and Distribution Theory (PDT)}
+\begin{frame}{Overview of Probability and Distribution Theory (PDT)}
+``How does the population give rise to the data?" \\
+
+\vspace{.5cm}
+Probability and Distribution Theory (PDT) studies probability and distributions in order to model the population that gives rise to the sample.
+
+\begin{center}
+\begin{tikzpicture}[very thick, level distance = 2cm,
+                    population/.style={rectangle,draw,fill=blue!20, draw},
+                    sample/.style={rectangle,draw, rounded corners=.8ex},
+                    %%every node/.style = {shape=rectangle, rounded corners,
+                    %% draw, align=center,
+                    %% top color=white, bottom color=blue!20}
+                    ]]
+
+\node[population, minimum height = 1.5cm, minimum width = 6cm] { Population  }
+child { node[sample] {Sample}   };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+<<intro, child='../Topic4/Topic4.Rnw'>>=
+@
+  
+<<intro, child='../Topic5/Topic5.Rnw'>>=
+@ 
+  
+<<intro, child='../Topic6/Topic6.Rnw'>>=
+@ 
+
+<<intro, child='../Topic7/Topic7.Rnw'>>=
+@ 
+
+%%%% PART 3 %%%%
+\section[Part3]{PART3: HYPOTHESIS TESTING AND INFERENCE}
+\subsection[]{Overview of Hypothesis Testing and Inference}
+\begin{frame}{Overview of Hypothesis Testing and Inference}
+``What can we learn about the population from the data?" \\
+
+\vspace{.5cm}
+Hypothesis Testing dates back to Sir Ronald Fisher (1890-1962), an English Statistician, biologist and geneticist.
+Hypothesis testing is all about how to make wise decisions (or judgements or inferences) about a hypothesis on a population from a sample.
+
+\begin{center}
+\begin{tikzpicture}[very thick, level distance = 2cm,
+population/.style={rectangle,draw, fill=green!20},
+sample/.style={rectangle,draw,rounded corners=.8ex},
+  %%every node/.style = {shape=rectangle, rounded corners,
+   %% draw, align=center,
+   %% top color=white, bottom color=blue!20}
+    ]]
+    
+  \node[population, minimum height = 1.5cm, minimum width = 6cm] { Population $H_{0}$ vs $H_{1}$}
+    child { node[sample] {Sample}   };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+<<intro, child='../Topic8/Topic8.Rnw'>>=
+@ 
+
+<<intro, child='../Topic9/Topic9.Rnw'>>=
+@ 
+
+<<intro, child='../Topic10/Topic10.Rnw'>>=
+@ 
+
+<<intro, child='../Topic11/Topic11.Rnw'>>=
+@ 
+
+<<intro, child='../Topic12/Topic12.Rnw'>>=
+@ 
+
+
+
+%%%% APPENDIX %%%%
+\section[APPENDIX]{APPENDIX}
+\subsection[Appendix1]{Appendix1}
+
+\begin{frame}[label=Appendix1]
+\frametitle{Appendix: General Probability Theory}
+
+The following results form the foundation of a Geneal Theory of Probability (exanded more in 2nd year courses).
+
+\vspace{.5cm}
+{\bf Three axioms}
+\begin{enumerate}
+\item
+For any event $A \subset \Omega$,
+\[ \boxed{ P(A) \geq 0 } \]
+\item  \[ \boxed{ P( \Omega ) = 1 } \]
+\item
+If $A_{1}, A_{2}, \ldots A_{n} \subset \Omega$ are mutually exclusive events, then
+\[ P( A_{1} \cup A_{2} \cup \ldots A_{n} ) 
+= P( A_{1} ) +  P( A_{2} ) + \ldots + P( A_{n} ) \]
+or
+\[ \boxed{ P( \cup_{i=1}^{n} A_{i} ) = \sum_{i=1}^{n} P(A_{i})  } \]
+\end{enumerate}
+\end{frame}
+
+\begin{frame}\frametitle{}
+{\bf Three corollaries}
+\begin{enumerate}
+\item
+For any event $A \subset \Omega$,
+\[ \boxed{ 0 \leq P(A) \leq 1 } \]
+
+\item
+For any event $A \subset \Omega$,
+\[ \boxed{ P(A') = 1- P(A) } \]
+
+\item
+For any 2 events $A, B \subset \Omega$,
+\[ \boxed{ P(A \cup B) = P(A) + P(B) - P(A \cap B)  } \]
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[label=Sharks]\frametitle{Sharks}
+Changing patterns of shark attacks in Australian waters (2011) \\
+\href{https://taronga.org.au/sites/tarongazoo/files/downloads/changing_patterns_of_shark_attacks_in_australian_waters.pdf}{\beamergotobutton{Shark Attacks Article}}
+\begin{center}
+\includegraphics[height=5cm]{../images/Shark.jpg}
+\end{center}
+\end{frame}
+
+
+
+\end{document}
+
+%%%%%EARLIER VERSION OF TOC%%%%%
+%\begin{frame}
+% \frametitle{Outline of \insertsection}
+%\frametitle{Outline}
+%\tableofcontents[currentsection, sectionstyle=show/hide, subsectionstyle=show/show/hide]
+%\end{frame}

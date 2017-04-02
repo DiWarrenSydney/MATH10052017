@@ -1,0 +1,16 @@
+\frametitle{Justifying the Conservative CI for Proportion}
+
+The Standard Error in the Approximate CI is $\sqrt{ \frac{\hat{p}(1- \hat{p})}{n} }$. \\
+
+As $0 \leq \hat{p} \leq 1$, then
+ $0 \leq \hat{p}(1- \hat{p}) \leq \frac{1}{4}$, as the maximum of the function occurs when $\hat{p} = \frac{1}{2}$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-189-1}
+
+\end{knitrout}
+
+Hence,the maximum that the SE can be is
+$\sqrt{ \frac{\frac{1}{4}}{n} } = \frac{1}{2 \sqrt{n}}$
+which is what we use in the conservative CI. That is, we choose the largest possible CI.

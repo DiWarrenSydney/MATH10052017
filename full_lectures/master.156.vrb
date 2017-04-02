@@ -1,0 +1,15 @@
+\frametitle{Probability Functions}
+
+\begin{definition}[Probability Functions]
+
+For a variable $X$, we can describe the probabilities by:
+\begin{itemize}
+\item the \alert{probability distribution function} (for discrete variables) \\
+$P(X=x)$
+
+\item  the \alert{probability density function (pdf)} (for continuous variables) \\  $f(x)$ \\
+\item  the \alert{cumulative distribution function (CDF)} (for both discrete and continuous variables)  \\
+$F(x) = P(X \leq x)$
+
+\end{itemize}
+\end{definition}

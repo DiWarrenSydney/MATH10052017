@@ -1,0 +1,24 @@
+\frametitle{}
+
+\begin{block}{Definition (Combinations, Binomial Coefficients)}
+The number of ways of choosing a group of $x$ objects from $n$ objects is
+\[ {n \choose x}  = \frac{n!}{x! (n-x)!} \]
+where by definition $0! = 1$.
+\end{block}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{factorial}\hlstd{(}\hlnum{10}\hlstd{)}\hlopt{/}\hlstd{(}\hlkwd{factorial}\hlstd{(}\hlnum{8}\hlstd{)}\hlopt{*}\hlkwd{factorial}\hlstd{(}\hlnum{2}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 45
+\end{verbatim}
+\begin{alltt}
+\hlkwd{choose}\hlstd{(}\hlnum{10}\hlstd{,}\hlnum{2}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 45
+\end{verbatim}
+\end{kframe}
+\end{knitrout}

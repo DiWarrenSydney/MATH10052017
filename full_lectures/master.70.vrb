@@ -1,0 +1,9 @@
+\frametitle{Spread - based on the Quartiles (IQR)}
+The quartiles are a set of 3 values $\{ Q_{1}, Q_{2} = \tilde{x}, Q_{3} \}$ that roughly split the data into quarters.
+
+\vspace{.5cm}
+There is no universal way to define quartiles.
+We use the following convention: we divide the data into 2 sets at the median (including the median for an odd sized data set), and then find the median of each half set of data.
+
+\vspace{.5cm}
+Once we have found $Q_{1}$, we can find $Q_{3}$ by symmetry, by counting back from the end of sorted data set.
