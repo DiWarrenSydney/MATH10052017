@@ -1,0 +1,27 @@
+\frametitle{}
+
+\framebox{P} $P$-value = 2 $P( X \geq 9) = 2 P( X = 9) \approx 0.004$. \\
+(As the observed value $x=9$ is in the upper tail of the distribution, we consider $P(X \geq 9)$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{2}\hlopt{*} \hlkwd{dbinom}\hlstd{(}\hlnum{9}\hlstd{,}\hlnum{9}\hlstd{,}\hlnum{0.5}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.00390625
+\end{verbatim}
+\begin{alltt}
+\hlnum{2}\hlopt{*} \hlstd{(}\hlnum{1}\hlopt{-}\hlkwd{pbinom}\hlstd{(}\hlnum{8}\hlstd{,}\hlnum{9}\hlstd{,}\hlnum{0.5}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.00390625
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-11-1}
+
+\end{knitrout}

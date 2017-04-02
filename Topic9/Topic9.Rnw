@@ -1,0 +1,439 @@
+<<echo=FALSE, cache=FALSE>>=
+set_parent('../full_lectures/master.Rnw')
+@
+
+
+%%%% TOPIC9 %%%%
+\section[9]{Topic9: Test for Proportion (Proportion and Sign Tests)}
+
+\subsection[Example]{Example1: IVF}
+\begin{frame}{Example1: IVF}
+
+IVF (In Vitro Fertilisation) is a technique of assisted reproductive technology.
+The first IVF baby was born in Australia in 1980 under the supervision of a team of doctors at Monash University, the 3rd IVF baby in the world. The first IVF baby was born in the UK (Louise Brown, 25 July 1978, physiologist and Nobel Prize Winner Sir Robert Edwards, surgeon Dr Patrick Steptoe).
+
+\vspace{.5cm}
+Interestingly, of the first 7 IVF births in Australia, 6 were girls. {\bf Is there evidence of a gender bias in IVF?}
+
+\begin{center}
+\includegraphics[height=3cm]{../images/IVF.jpg}
+\end{center}
+\end{frame}
+
+\subsection[Example]{Example2: Vegetarianism in Australia}
+\begin{frame}{Example2: Vegetarianism in Australia}
+According to data from 2013, 10\% of the Australian population choose a vegetarian diet. In 2015, a survey of 10,000 people resulted in 1,190 vegetarians.
+{\bf Has vegetarianism increased in Australia?}
+
+\begin{center}
+\includegraphics[height=4cm]{../images/BarcelonaFruit.jpg}
+\end{center}
+\href{http://www.roymorgan.com/findings/5264-meat-free-health-conscious-anxious-australias-vegetarians-201310272327}{\beamergotobutton{Roy Morgan Stats}}
+\end{frame}
+
+\subsection[Intuitive Approach]{An intuitive approach to the Proportion Test}
+\begin{frame}{An Intuitive approach to the Proportion Test}
+
+Select a coin from your wallet. {\bf Is the coin biased?}
+
+\vspace{.5cm}
+\framebox{Hypothesis} $H_{0}$: Coin is fair, $p=P(Head) = 0.5$. \\
+
+\framebox{Experiment} Toss the coin 20 times and see how many heads come up. \\
+
+\framebox{Observed Sample} This results in $x$ heads. \\
+
+\framebox{Conclusion} If the number of heads $x$ is very small or very big, then there is evidence against $H_{0}$.
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+Assuming $H_{0}$ is true, then $X = \mbox{Number of heads} \sim Bin(n=20,p=0.5)$. \\
+
+\vspace{.5cm}
+\begin{tabular}{lll} \hline
+$x$ & $P(X \mbox{is } x \mbox{ or more extreme})$ & Conclusion \\ \hline
+0 & $P(X =0) =0.00000095$ & $H_{0}$ is highly unlikely. \\
+1 & $P(X \leq 1) =0.00002$ & $H_{0}$ is highly unlikely. \\
+2 & $P(X \leq 2) =0.0002$ & $H_{0}$ is highly unlikely. \\
+5 & $P(X \leq 5) =0.02$ & $H_{0}$ is fairly unlikely. \\
+8 & $P(X \leq 8) =0.25$ & Data consistent with $H_{0}$. \\ \hline
+\end{tabular}
+
+{\tiny 
+<<>>=
+x=c(0,1,2,5,8)
+pbinom(x,20,0.5)
+@
+}
+\end{frame}
+
+
+\subsection[Proportion]{Steps for Proportion Test}
+\begin{frame}[fragile]{Steps for Proportion Test}
+For a hypothesis concerning a unknown population proportion $p$, we follow the following steps. \\
+
+\vspace{.5cm}
+\framebox{H} $H_{0}: p = p_{0}$ vs $H_{1}: p < p_{0}$. \\
+
+\framebox{A} The $n$ trials are independent with constant probability $p$.
+
+\framebox{T} 
+\begin{itemize}
+\item $\tau = X =  \mbox{number of successes} \sim Bin(n,p_{0})$ under $H_{0}$. 
+\item Small values of $x$ will argue against $H_{0}$ for $H_{1}$. 
+\item The observed value is $x$. 
+\end{itemize}
+
+\framebox{P} $P$-value = $P( X \leq x)$.
+
+\framebox{C} Weigh up the $P$-value. A rule of thumb is to reject $H_{0}$ for $P$-value $< 0.05 = \alpha$.
+\end{frame}  
+
+\begin{frame}{}
+Notes on $P$-value:
+
+\begin{itemize}
+\item If the alternate hypotheses is $H_{1}: p > p_{0}$, then large values of $x$ will argue against $H_{0}$ for $H_{1}$ and the associated $P$-value is $P( X \geq x)$. 
+\item If the alternate hypotheses is 2 sided $H_{1}: p \neq p_{0}$, then both small and large values of $x$ will argue against $H_{0}$ for $H_{1}$ and the associated $P$-value is $P( |X-n p_{0}| \geq |x-n p_{0}|)$.
+\item In the special case when $p_{0} = \frac{1}{2}$, the 2 sided $P$-value reduces to
+\begin{itemize}
+\item $P$-value $= 2P( X \geq x)$, for $x > \frac{n}{2}$.
+\item $P$-value $= 2P( X \leq x)$, for $x < \frac{n}{2}$.
+\end{itemize}
+\item If $n$ is large, then we can use the CLT (Topic 7) to find an approximation to the $P$-value. We find the approximating Normal $Y \sim N(n p_{0}, n p_{0} (1-p_{0}))$, and then either use R or standardise the Normal and look up the Normal tables.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Examples}
+\begin{block}{IVF}
+Of the first 7 IVF births in Australia, 6 were girls. Is there evidence of a gender bias in IVF?
+\end{block}
+
+\vspace{.5cm}
+Let $p = P(\mbox{girl baby from IVF)}$. Note this is a 2 sided test as the possible direction of bias is unspecified, given this was the first IVF trials.
+
+\vspace{.5cm}
+\framebox{H} 
+Without prior evidence, we would assume no gender bias, hence $p_{0} = 0.5$. If there is a gender bias, then $p_{0} \neq 0.5$.  \\
+Hence,  $H_{0}: p = 0.5$ vs $H_{1}: p \neq 0.5$. \\
+
+\vspace{.5cm}
+\framebox{A} The $n=7$ births are independent with constant probability $p$.
+
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+
+\framebox{T} 
+\begin{itemize}
+\item $\tau = X =  \mbox{number of girl births from 1st 7 IVF births} \sim Bin(7,0.5)$ under $H_{0}$. 
+\item Small and large values of $x$ will argue against $H_{0}$ for $H_{1}$. \\
+(ie if $H_{0}$ is not true, then we would expect $x$ to indicate either a bias towards girls (large) or bias towards boys (small)).
+\item The observed value is $x=6$ (large).
+\end{itemize}
+
+\vspace{.5cm}
+\framebox{P} $P$-value = 2 $P( X \geq 6)$ = 0.125.
+
+<<>>=
+dbinom(6,7,0.5) + dbinom(7,7,0.5)
+1-pbinom(5,7,0.5)
+@
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+
+\framebox{C} 
+As the $P$-value is 12.5\%, we would say that the data are consistent with $H_{0}$. Hence, it appears that there is not a gender bias in IVF.\\
+
+\vspace{.5cm}
+Note: What the $P$-value indicates, is that getting $x=6$ or greater ($x=7$) on a Binomial(7,0.5) distribution is not that uncommon, which is clear from the Binomial probability distribution function.
+
+<<echo=FALSE, fig.height=3>>=
+x <- dbinom(0:7, 7, 0.5)
+barplot(x, names.arg=0:7, space=0, main=sprintf(paste('Bin(',7,',',0.5,')')))
+@
+\end{frame}
+
+
+\begin{frame}{}
+
+\begin{block}{Vegetarianism}
+Has vegetarianism increased in Australia?
+\end{block}
+
+\vspace{.5cm}
+Let $p = P(\mbox{Vegetarian preference in Australia)}$. Note this is a 1 sided test as we are testing whether vegetarianism has `increased'.
+
+\vspace{.5cm}
+\framebox{H} 
+From the 2013 data, 10\% of the Australian population choose a vegetarian diet, hence $p_{0} = 0.1$. \\
+$H_{0}: p = 0.1$ vs $H_{1}: p > 0.1$. \\
+
+\vspace{.5cm}
+\framebox{A} The $n=10000$ people in the 2015 survey are independent with constant probability $p$.
+\end{frame}
+
+
+
+\begin{frame}[fragile]{}
+
+\framebox{T} 
+\begin{itemize}
+\item $\tau = X =  \mbox{Number of vegetarians in the survey} \sim Bin(10000,0.1)$ under $H_{0}$. 
+\item Large values of $x$ will argue against $H_{0}$ for $H_{1}$. \\
+(ie if $H_{0}$ is not true, and $H_{1}$ is, then we would expect $x$ to be larger, as $p > 0.1$.).
+\item The observed value is $x=1190$.
+\end{itemize}
+
+\vspace{.5cm}
+\framebox{P} $P$-value = $P( X \geq 1190) \approx 0$.
+
+<<>>=
+1-pbinom(1189,10000,0.1)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+\framebox{C} 
+As the $P$-value is so small, we would say that the data are not consistent with $H_{0}$. Hence, it appears that there has been an increase in vegetarianism in Australia.
+
+\vspace{.5cm}
+Note: What the $P$-value indicates, is that getting $x=1190$ or greater on a Binomial(10000,0.1) distribution is rare, which is clear from the Binomial probability distribution function.
+
+<<echo=FALSE, fig.height=3>>=
+x <- dbinom(0:10000, 10000, 0.1)
+barplot(x, names.arg=0:10000, space=0, main=sprintf(paste('Bin(',10000,',',0.1,')')))
+@
+\end{frame}
+
+
+\subsection[Sign Test]{Sign Test}
+\begin{frame}[fragile]{Sign Test}
+The Sign Test is a clever trick which effectively widens the applicability of the Proportion Test. It allows the `Proportion' Test to be used for testing for a hypothesis about a mean or median.
+
+\vspace{.5cm}
+We change from $H_{0}: \mu = \mu_{0}$ (or $H_{0}: \tilde{\mu} = \tilde{\mu}_{0}$) to $H_{0}: p_{+} = 0.5$, by considering the proportion of the signs of differences $\{ sign(x_{i}-\mu_{0})\}$ which are positive.
+
+\vspace{.5cm}
+Note:
+If any observations are equal to the null hypothesis value $x_{i} = \mu_{0}$ then we eliminate them from the sample. This assumes there are only a few `zeroes', as it effectively reduces the sample size.
+
+
+\end{frame}  
+
+\begin{frame}[fragile]{}
+\framebox{Context} 
+\begin{itemize}
+\item 
+Suppose a single sample $x_{1}, x_{2}, \ldots, x_{n}$ is taken from a continuous distribution of unknown type. 
+\item We want to test $H_{0}: \mu = \mu_{0}$ (or $H_{0}: \tilde{\mu} = \tilde{\mu}_{0}$).
+\item
+If we assume that the distribution is symmetric, then if $H_{0}$ holds, every observation is equally likely to be above or below $\mu_{0}$. 
+
+\item Consider the set of signs of differences 
+\[ sign(x_{1}-\mu_{0}), sign(x_{2}-\mu_{0}), \ldots, sign(x_{n}-\mu_{0}) \]
+
+\item Define $X = \mbox{the number of + signs} \sim Bin(n, p_{+})$, where
+$p_{+} = P(+ \mbox{ difference})$.
+
+\item Then $H_{0}: \mu = \mu_{0}$ is equivalent to $H_{0}: p_{+} = 0.5$. 
+\end{itemize}
+\end{frame}  
+
+
+\begin{frame}[fragile]{Steps for Sign Test}
+ 
+\framebox{Preparation}
+For $H_{0}: \mu = \mu_{0}$, calculate the signs of differences $\{ sign(x_{i}-\mu_{0}) \}$  and count the number of positive signs $x$.
+
+\vspace{.5cm}
+\framebox{H}
+$H_{0}: p_{+} = 0.5$ vs $H_{1}: p_{+} < 0.5$. 
+
+\framebox{A} The distribution is continuous and symmetric.\\
+Note: For $H_{0}: \tilde{\mu} = \tilde{\mu}_{0}$, we only need to assume that the distribution is continuous. \\
+
+\framebox{T} 
+\begin{itemize}
+\item $\tau = X =  \mbox{number of positive signs} \sim Bin(n,p_{+})$ (under $H_{0}$) 
+\item Small values of $x$ will argue against $H_{0}$ for $H_{1}$. 
+\item The observed value is $x$. 
+\end{itemize}
+
+\framebox{P} $P$-value = $P( X \leq x)$.
+
+\framebox{C} Weigh up the size of $P$-value.
+
+\end{frame}  
+
+
+\begin{frame}{Example: Freeze Dried Coffee}
+
+Freeze drying and spray drying are 2 different methods of producing instant coffee. The consumer is interested in the amount of caffeine residue. It is known that the median residue for freeze drying is 3.55g/100g of dry matter. This means that if $R$ is the residue (and is continuous and symmetric) that
+$P(R < 3.55) = P(R > 3.55) = 0.5$. \\
+
+In 8 samples of spray dried coffee, the residue was
+\[ 4.8 , 4.0, 3.8, 4.3, 3.9, 4.6, 3.1, 3.7 \mbox{ (g/100g dry matter)} \]
+{\bf Is there any difference in the caffeine residue between the 2 methods?}
+
+\begin{center}
+\includegraphics[height=2.5cm]{../images/FreezeCoffee.jpg}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+
+\framebox{Preparation}
+For $H_{0}: \mu = 3.55$, we calculate the signs of differences $\{ sign(x_{i}-3.55) \}$  and count the number of positive signs $x=7$.
+
+<<>>=
+x=c(4.8, 4.0, 3.8, 4.3, 3.9, 4.6, 3.1, 3.7)
+x-3.55
+sign(x-3.55)
+@
+
+\vspace{.5cm}
+\framebox{H}
+$H_{0}: p_{+} = 0.5$ vs $H_{1}: p_{+} \neq 0.5$.  \\
+This means that if the median caffeine residue is 3.55, then we should expect half the signs of differences to be positive.\\
+We choose a 2 sided test, as there is no prior evidence about which method has higher caffeine residue.
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+\framebox{A} The distribution of caffeine residue is continuous and symmetric.
+
+\vspace{.5cm}
+\framebox{T} 
+\begin{itemize}
+\item $\tau = X =  \mbox{number of positive signs} \sim Bin(8,0.5)$ (under $H_{0}$) 
+\item Large and small values of $x$ will argue against $H_{0}$ for $H_{1}$. \\
+\item The observed value is $x=7$. 
+\end{itemize}
+
+\framebox{P} $P$-value = 2 $P( X \geq 7) \approx 0.07$.
+(As our observed value $x=7$ is in the upper tail of the distribution, we consider $P( X \geq 7)$.
+
+<<>>=
+dbinom(7,8,0.5) + dbinom(8,8,0.5)
+1-pbinom(6,8,0.5)
+@
+
+\end{frame}
+
+\begin{frame}{}
+
+\framebox{C} As the $P$-value is 7\%, the data are consistent with $H_{0}$. \\
+ie If $H_{0}$ is true, we would expect to see these data (or more extreme) 7\% of the time. It appears there is not a difference in the caffeine residue between the 2 methods of coffee production.
+
+\vspace{1cm}
+Note: To calculate the $P$-value, we can use the Binomial formula, the Binomial table, the Binomial histogram, or R.
+
+\end{frame}
+
+
+
+
+\begin{frame}{Example: Student's Sleep Study}
+
+The Sign Test can also be applied to {\bf paired data}. Paired data is very common, for example before and after trials and studies on twins. The sign test can be used for paired data, by applying the sign test to the set of differences. \\
+
+\vspace{.5cm}
+A famous data set is Student (1908). For each of 10 patients, the amount of extra hours sleep was measured, after the administrating of 2 drugs $A$ and $B$. (A negative result indicates that the patient’s sleep reduced).  \href{https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/sleep.html}{\beamergotobutton{Sleep Data}}  \\
+
+\vspace{.5cm}
+{\small \begin{tabular}{lllllllllll} \hline
+Patient & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline
+$A$ & 0.7 & -1.6 & -0.2 & -1.2 & -0.1 & 3.4 & 3.7 & 0.8 & 0.0 & 2.0 \\
+$B$ & 1.9 & 0.8 & 1.1 & 0.1 & -0.1 & 4.4 & 5.5 & 1.6 & 4.6 & 3.4 \\  \hline
+\end{tabular}}
+\end{frame}
+
+\begin{frame}{}
+
+\begin{center}
+\includegraphics[height=5cm]{../images/Sleep.png}
+\end{center}
+
+{\bf Is there a difference between the affect of drugs on sleep?}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+
+\framebox{Preparation}
+
+We fill out the following table to find the differences of the paired data, and then find the signs of those differences. Notice we eliminate the 5th readings, as the difference is 0. 
+
+\vspace{.5cm}
+{\tiny \begin{tabular}{lllllllllll} \hline
+Patient & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline
+$A$ & 0.7 & -1.6 & -0.2 & -1.2 & -0.1 & 3.4 & 3.7 & 0.8 & 0.0 & 2.0 \\
+$B$ & 1.9 & 0.8 & 1.1 & 0.1 & -0.1 & 4.4 & 5.5 & 1.6 & 4.6 & 3.4 \\  \hline
+$B-A$ & & & & & & & & & & \\ \hline
+Sign($B-A$) & & & & & X & & & & & \\ \hline
+\end{tabular}}
+
+{\tiny 
+<<>>=
+a=c(0.7,-1.6,-0.2,-1.2,-0.1,3.4,3.7,0.8,0.0,2.0)
+b=c(1.9,0.8,1.1,0.1,-0.1,4.4,5.5,1.6,4.6,3.4)
+diff=b-a
+diff
+sign(diff)
+@
+}
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+For $H_{0}: \mu_{diff} = 0$, we calculate the signs of differences $\{ sign(diff_{i}-0) \}$  and count the number of positive signs $x=9$.
+
+\vspace{.5cm}
+\framebox{H}
+$H_{0}: p_{+} = 0.5$ vs $H_{0}: p_{+} \neq 0.5$.  \\
+This means that if the difference is 0, then we should expect half the signs of differences to be positive.\\
+We choose a 2 sided test, as there is no prior evidence about which drug effects sleep more.
+
+\vspace{.5cm}
+\framebox{A} The set of differences is continuous and symmetric.
+
+\vspace{.5cm}
+\framebox{T} 
+\begin{itemize}
+\item $\tau = X =  \mbox{number of positive signs} \sim Bin(9,0.5)$ (under $H_{0}$) 
+\item Large and small values of $x$ will argue against $H_{0}$ for $H_{1}$. \\
+\item The observed value is $x=9$. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+\framebox{P} $P$-value = 2 $P( X \geq 9) = 2 P( X = 9) \approx 0.004$. \\
+(As the observed value $x=9$ is in the upper tail of the distribution, we consider $P(X \geq 9)$.
+
+<<>>=
+2* dbinom(9,9,0.5)
+2* (1-pbinom(8,9,0.5))
+@
+
+<<echo=FALSE, fig.height=3>>=
+x <- dbinom(0:9, 9, 0.5)
+barplot(x, names.arg=0:9, space=0, main=sprintf(paste('Bin(',9,',',0.5,')')))
+@
+\end{frame}
+
+
+\begin{frame}{}
+
+\framebox{C} As the $P$-value is so small (0.4\%), there is strong evidence against $H_{0}$. \\
+ie If $H_{0}$ is true, we would only expect to see this pattern (or more extreme) 0.4\% of the time. It appears there is a difference in the effect of the 2 drugs on sleep.
+\end{frame}
