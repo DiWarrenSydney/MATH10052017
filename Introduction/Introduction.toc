@@ -1,0 +1,5 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {english}
+\beamer@sectionintoc {1}{INTRODUCTION: WHY STATS?}{1}{0}{1}
+\beamer@subsectionintoc {1}{1}{Why Study Statistics?}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{What is Statistics?}{6}{0}{1}

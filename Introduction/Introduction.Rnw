@@ -1,0 +1,79 @@
+<<echo=FALSE, cache=FALSE>>=
+set_parent('../full_lectures/master.Rnw')
+@
+\section[Intro]{INTRODUCTION: WHY STATS?}
+
+%\toclesssection{}  Not working
+
+\subsection[]{Why Study Statistics?}
+\begin{frame}{Why Study Statistics?}
+
+Sometimes `Statistics' is treated with scepticism - you may have heard the famous quote: `There are lies, damn lies, and statistics', attributed to both Mark Twain and Benjamin Disraeli.  
+
+\vspace{.5cm}
+\includegraphics[height=3cm]{../images/StatsLies.jpg} \hspace{1cm} \includegraphics[height=3cm]{../images/StatsDodgy2.jpg}
+
+\vspace{.5cm}
+But in a data rich world, statistical literacy is essential for everyone, whether in medicine, science, business, education, engineering, marketing or law, as it allows evidence based reasoning. 
+\end{frame}
+
+
+\begin{frame}{}
+For example, has the incidence of brain cancer risen in Australia since the introduction of mobile phones 29 years ago? Mobile phone use in Australia has increased rapidly since its introduction in 1987 with whole population usage being 94\% by 2014. There is a popularly hypothesised association between brain cancer incidence and mobile phone use. Is it valid?
+
+\vspace{.5cm}
+Or, does public feeling toward sharks grow negative following shark bites on humans? Media and government responses are often predicated on this presumptive emotional response; but how should public policy be developed?
+
+\vspace{.5cm}
+Statistics has endless interesting applications and is highly collaborative, as John Wilder Tukey said, 
+`The best thing about being a statistician is that you get to play in everyone's backyard.'
+\end{frame}
+
+\begin{frame}{}
+That's why there are so many jobs for `data scientists'. According to Val Kinsley, Chief economist at Google, `I keep saying the sexy job in the next ten years will be statisticians. People think I'm joking, but who would've guessed that computer engineers would've been the sexy job of the 1990s?' or a recent Fortune magazine, 'The nerdy-cool job that companies are scrambling to fill: data scientist.'
+
+\vspace{.5cm}
+\href{https://en.wikipedia.org/wiki/Frazz}{\beamergotobutton{Cartoon1Source}} 
+\href{http://vadlo.com/Research_Cartoons/Depends-upon-what-is-more-publishable.gif}{\beamergotobutton{Cartoon2 Source}}
+\href{https://flowingdata.com/category/statistics/mistaken-data/}{\beamergotobutton{Mistaken Data}} 
+\href{http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers}{\beamergotobutton{McKinsey Article}}  
+\href{http://www.careercast.com/jobs-rated/jobs-rated-report-2016-ranking-200-jobs}{\beamergotobutton{2016 Top Jobs}}
+\href{www.nytimes.com/2000/07/28/us/john-tukey-85-statistician-coined-the-word-software.html}{\beamergotobutton{Tukey}}
+\href{http://www.amadeus.com/blog/18/06/10-reasons-why-data-scientist-is-the-sexiest-job-or-not/}{\beamergotobutton{Data Scientist}}
+\href{http://fortune.com/2011/09/06/data-scientist-the-hot-new-gig-in-tech/}{\beamergotobutton{Fortune}}
+\end{frame}
+
+
+
+\subsection[]{What is Statistics?}
+\begin{frame}{What is Statistics?}
+\begin{block}{Definition (Statistics)}
+Statistics is the science of learning from data. It is problem-solving. We pose questions of data and enable data to pose questions.
+\end{block}
+
+\begin{block}{Definition (Big Data)}
+Big Data is `inconveniently large data’ (Clair Alston), with characteristics such as high-volume, high-variety, high-velocity, high-variability, high-value and low-veracity.
+\end{block}
+
+\begin{block}{Definition (Population and Sample)}
+A population is the full amount of information being studied, of which a sample (or data) is a subset.
+\end{block}
+\end{frame}
+
+\begin{frame}{}
+
+We often only have access to a sample of a population. Why? Hence, the critical question driving much Statistical Research is: What information does the sample give about the population and how reliable is that information?
+
+\begin{center}
+\begin{tikzpicture}[very thick, level distance = 2cm,
+population/.style={rectangle,draw, fill=blue!20},
+sample/.style={rectangle,draw,fill=green!20,rounded corners=.8ex},
+  %%every node/.style = {shape=rectangle, rounded corners,
+   %% draw, align=center,
+   %% top color=white, bottom color=blue!20}
+    ]]  
+  \node[population, minimum height = 1.5cm, minimum width = 6cm] { Population  }
+    child { node[sample] {Sample}   };
+\end{tikzpicture}
+\end{center}
+\end{frame}
