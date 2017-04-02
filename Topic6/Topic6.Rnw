@@ -1,0 +1,729 @@
+<<echo=FALSE, cache=FALSE>>=
+set_parent('../full_lectures/master.Rnw')
+@
+
+
+%%%% TOPIC6 %%%%
+\section[6]{Topic6: Continuous Random Variables}
+\subsection[Example]{Example: Australian Netball and AFL teams}
+\begin{frame}{Example: Australian Netball and AFL teams}
+
+In 2015 the Australian Institute of Sport ran a netball training camp for the best Australian young players playing in goals: shooters, attackers, keepers and defence. All players were over 189cm in height.  
+
+\vspace{.5cm}
+`Tall goal shooters and tall goal keepers are much more a part of the scene than when I was playing 15 years ago. We recognise that in Australia the game of netball is changing, we want to remain competitive and maintain a competitive advantage."
+
+(Former Australian netball team member and AIS Centre of Excellence coach Jenny Borlase)
+\href{http://www.abc.net.au/news/2015-06-14/tall-athletes-get-support-at-ais-to-stand-as-proud-netballers/6544642}{\beamergotobutton{ABC News}}
+\end{frame}
+
+
+
+\begin{frame}{}
+
+{\bf What is the probability of finding an Australian woman of `goal player' height or taller?}
+
+\begin{center}
+\includegraphics[height=6cm]{../images/NetballHeight.jpg}
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}{}
+
+If $X$ represents the heights of Australian women (in cms), what is $P(X > 189)$?
+
+\vspace{1cm}
+<<echo=FALSE, fig.height=2.5>>=
+curve(dnorm(x, mean = 161.8, sd = 6), xlim = c(188.5, 191),xlab="Height of Australian women in cms (x)", ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(189, 191, 0.1)
+polygon(x = c(sequence,191,189),
+        y = c(dnorm(c(sequence),161.8,6),0,0),
+        col = "red")
+axis(1, at=c(189), pos=0)
+@
+\end{frame}
+
+
+
+\begin{frame}[fragile]{}
+
+Similarly, in the Australian Football League (AFL) recruiters tend to look for tall male players.
+
+\vspace{.5cm}
+'Data collected by Adelaide sports doctor Geoffrey Verrall and AFL sports scientist Jamie Hepner suggest genetics play a bigger part in achieving a top-level football career than skill or desire. Using AFL statistics, they noted the height of the 562 rookies selected in AFL national drafts between 2004 and 2010. They found those shorter than 180cm could just about forget trying for a place in the elite league - unless they happened to be an indigenous or Pacific Islander player, who thrive on leg speed and lightning reflexes ... Generally, white Australian males must be tall (about 188cm) to  make it in the AFL.'
+\href{http://www.heraldsun.com.au/sport/afl/size-matters-at-afl-level/story-e6frf9jf-1226650225771}{\beamergotobutton{HeraldSun}}
+\end{frame}
+
+
+\begin{frame}{}
+
+{\bf What proportion of Australian men are similar height to Sydney superstar Adam Goodes (191cm) or West Coast ruckman Nick Naitanui (201cm)?}
+
+\begin{center}
+\includegraphics[height=6cm]{../images/NicN.jpg}
+\end{center}
+
+\href{http://www.sbs.com.au/news/sites/sbs.com.au.news/files/images/1/5/15Apr_NicNaitanui_800x600.jpg}{\beamergotobutton{SBS}}
+\end{frame}
+
+
+\begin{frame}{}
+
+If $Y$ represents the heights of Australian men (in cms), what is $P(Y > 191)$ or even $P(Y > 201)$?
+
+\vspace{1cm}
+<<echo=FALSE, fig.height=2.5>>=
+curve(dnorm(x, mean = 175.6, sd = 7), xlim = c(200, 210),xlab="Height of Australian men in cms (x)", ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(201, 210, 0.1)
+polygon(x = c(sequence,210,201),
+        y = c(dnorm(c(sequence),175.6,7),0,0),
+        col = "blue")
+#axis(1, at=seq(260, 300, 5), pos=0)
+axis(1, at=c(201), pos=0)
+@
+\end{frame}
+
+
+\subsection[Comparing Discrete and Continuous Distributions]{Comparing Discrete and Continuous Distributions}
+\begin{frame}\frametitle{Comparing Discrete and Continuous Distributions}
+
+There are 5 fundamental differences between discrete and continuous distributions:
+
+\vspace{.5cm}
+\begin{tabular}{|l||l|l|} \hline 
+ & Discrete & Continuous \\ \hline \hline
+Values & Countable & Infinite \\ \hline
+Plot &  Histogram $P(X=x)$ & Smooth curve $f(x)$  \\ 
+& probability distribution & probability density \\
+& function  & function (pdf)  \\ \hline
+$P(X=x)$ & $0 \leq P(X=x) \leq 1 \;\; \forall x$
+& $P(X=x)=0 \;\; \forall x$ \\ \hline
+Sum of & $\sum_{x} P(X=x) = 1$ & $\int_{x} f(x) dx = 1$ \\
+Probabilities & Area of histogram & Area under density \\ \hline
+$F(x) = P(X \leq x)$ & $\sum_{y=min(x)}^{x} P(X=y)$
+& $\int_{-\infty}^{x} f(y) dy$\\
+CDF 
+\hyperlink{CDF}{\beamergotobutton{CDF}}
+& & \\ \hline
+\end{tabular}
+
+%Define CDF.
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+For any continuous distribution:
+
+\begin{itemize}
+\item
+there is an infinite number of possible values;
+\item
+these values may be within a fixed interval. For example, male human heights (in cm) belong to [54.6,272].
+\hyperlink{https://en.wikipedia.org/wiki/Human_height}{\beamergotobutton{Human Heights}}
+\item
+each of the individual probabilities is 0, ie $P(X=x)=0 \;\; \forall x$. This looks strange at first. However, consider that if we allocate even the smallest amount of probability to each of the infinite values, the probabilities could never sum to 1!
+\item
+the total of all the probabilites, represented by the area under the probability density function (pdf), must be  1.
+\item For a continuous distribution
+\[ P(a < X < b) = P(a \leq X \leq b) \] 
+This is not generally true for a discrete distribution.
+\end{itemize}
+\end{frame}
+
+
+\subsection[Normal Distribution]{Normal Distribution}
+
+\begin{frame}[fragile,label=Normalpdf]\frametitle{Normal Distribution}
+
+\begin{definition}[Normal Distribution]
+The \alert{Normal distribution} models a symmetric, bell-shaped variable with 2 parameters mean $\mu$ and variance $\sigma^2$ and points of inflection at $\mu \pm \sigma$. We say the variable $X \sim N(\mu, \sigma^2)$. 
+
+\vspace{.5cm}
+The probability density function (pdf) is:
+\[ f(x)  =  \frac{1}{  \sqrt{2 \pi \sigma^2}}  e^{   -\frac{ (x-\mu)^2 }{2 \sigma^2  } }
+\;\;\;\;\; \mbox{for }  x \in (- \infty, \infty) \]
+
+The cumulative distribution function (CDF) is
+\[ F(x) = P(X \leq x) = \int_{-\infty}^{x} f(y) dy \]
+\end{definition}
+
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{}
+
+The Normal Distribution is very important because it can approximate many natural phenomemon, like annual rainful (sometimes skewed), humidity, evapotranspiration, heights/weights/length of animals, intelligence, and measurement errors. \\
+
+\vspace{.5cm}
+It can also approximate sums of random variables, via the Central Limit Theorem (Topic 7). \\
+
+\vspace{.5cm}
+{\bf Does the Normal Distribution approximate the distribution of human heights?}
+
+\end{frame}
+
+
+
+
+
+
+\begin{frame}[fragile]
+
+\href{http://www.abs.gov.au/websitedbs/CaSHome.nsf/Home/CensusAtSchool+data+for+Calculators#2012}{\beamergotobutton{Data}}
+
+
+<<fig.height=2.5, echo=-1, eval=-2>>=
+data <- read.csv("../datasets/SchoolCensusHeights.csv")
+data <- read.csv("SchoolCensusHeights.csv")
+names(data)
+par(mfrow=c(1,3))
+hist(data$FemaleHeight)
+hist(data$MaleHeight)
+hist(data$AllHeight)
+@
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\href{https://vincentarelbundock.github.io/Rdatasets/doc/car/Davis.html}{\beamergotobutton{Data}}
+
+<<fig.height=2.5, echo=-1, eval=-2>>=
+data <- read.csv("../datasets/DavisHeights.csv")
+data <- read.csv("DavisHeights.csv")
+names(data)
+par(mfrow=c(1,2))
+hist(data$FemaleHeight)
+hist(data$ReportFH)
+@
+\end{frame}
+
+
+
+
+
+
+\begin{frame}[fragile]
+
+Modelling Australian women's heights by $X \sim N(161.8,6^2)$ and men by $Y \sim N(175.6,7^2)$, we get \\
+\href{http://www.abs.gov.au/ausstats/abs@.nsf/0/E11CED5FB86D178ACA257AA30014C059?opendocument
+}{\beamergotobutton{ABSData}}
+
+<<>>=
+<<echo=FALSE, fig.height = 4.5>>=
+par(mfrow=c(1,2))
+curve(dnorm(x, 161.8, 6), xlim = c(140, 200),ylab="",  main = "pdf", col="red")
+curve(dnorm(x,175.6,7),xlim = c(140, 200), add=TRUE,col="blue")
+legend("topright",legend=c("F","M"),lty=1, col=c("red","blue"))
+curve(pnorm(x,161.8, 6),xlim = c(140, 200), main = "CDF", ylab="", col="red")
+curve(pnorm(x,175.6,7),xlim = c(140, 200), main = "CDF",add=TRUE, ylab="", col="blue")
+@
+\end{frame}
+
+
+\subsection[Normal Probabilities]{Normal Probabilities}
+
+\begin{frame}[fragile]\frametitle{Normal Probabilities}
+
+{\bf What is the probability of finding an Australian woman of `goal player' height or taller?} \\
+
+\vspace{.5cm}
+If $X \sim N(161.8,6^2)$, what is $P(X > 189)$?
+
+
+\vspace{1cm}
+<<echo=FALSE, fig.height=2.5>>=
+curve(dnorm(x, mean = 161.8, sd = 6), xlim = c(150, 190),xlab="Height of Australian women in cms (x)", ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(189, 190, 0.1)
+polygon(x = c(sequence,190,189),
+        y = c(dnorm(c(sequence),161.8,6),0,0),
+        col = "red")
+axis(1, at=c(161.8,189), pos=0)
+@
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{}
+{\bf Method1: Integrate the pdf} \\
+
+\[ P(X > 189) = \int_{189}^{\infty} \frac{1}{  \sqrt{2 \pi (6^2)}}  e^{   -\frac{ (y-161.8)^2 }{2 (6^2)  } } dy \]
+
+
+\vspace{1cm}
+There is no closed form, but we could Numerical Integration.
+<<>>=
+f <- function(x) {dnorm(x,161.8,6)} 
+integrate(f,189,200)
+@
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{}
+
+{\bf Method2: Use R}
+
+<<>>=
+pnorm(189,161.8,6)  #pnorm(x,mean,sd) 
+@
+
+<<echo=FALSE, fig.height=2>>=
+curve(dnorm(x, mean = 161.8, sd = 6), xlim = c(150, 190),xlab="Height of Australian women in cms (x)", ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(150, 189, 0.1)
+polygon(x = c(sequence,189,150),
+        y = c(dnorm(c(sequence),161.8,6),0,0),
+        col = "red")
+axis(1, at=c(161.8,189), pos=0)
+@
+
+Upper Tail probabilities are found from Lower Tail probabilties:
+\[ P(X > 189) = 1- P(X \leq 189) = 2.9e-06 \]
+
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+Notes on using R:
+\begin{itemize}
+\item
+Interval probabilities are found by subtraction:
+\[ P( 170 < X \leq 175) = 0.07196146 \]
+
+<<echo=FALSE, fig.height=2.5>>=
+curve(dnorm(x, mean = 161.8, sd = 6), xlim = c(160, 190),ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(170, 175, 0.1)
+polygon(x = c(sequence,175,170),
+        y = c(dnorm(c(sequence),161.8,6),0,0),
+        col = "purple")
+axis(1, at=seq(160, 180, 5), pos=0)
+@
+
+<<>>=
+pnorm(175,161.8,6)-pnorm(170,161.8,6)
+@
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{itemize}
+\item
+For the standard Normal $Z \sim N(0,1)$, we can leave the mean and standard deviation unspecified.
+
+\[ P(Z \leq 0.8)  = 0.7881446 \]
+
+<<echo=FALSE, fig.height=2>>=
+curve(dnorm(x), xlim = c(-2, 2),ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(-2, 0.8, 0.1)
+polygon(x = c(sequence,0.8,-2),
+        y = c(dnorm(c(sequence)),0,0),
+        col = "purple")
+axis(1, at=c(-2,-1,0,0.8,1,2), pos=0)
+@
+
+<<>>=
+pnorm(0.8,0,1)
+pnorm(0.8)
+@
+
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{}
+
+{\bf Method3: Standardise and use the Standard Normal Tables} 
+
+\vspace{.5cm}
+The Standard Normal Tables tabulate the CDF for $Z \sim N(0,1)$. \\
+
+\vspace{.5cm}
+\includegraphics[height=6cm]{../images/NormalTableSample.pdf}
+
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{}
+
+For example, $P(Z \leq 0.8) = 0.7881$. \\
+
+<<echo=FALSE, fig.height=2>>=
+curve(dnorm(x), xlim = c(-2, 2),ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(-2, 0.8, 0.1)
+polygon(x = c(sequence,0.8,-2),
+        y = c(dnorm(c(sequence)),0,0),
+        col = "purple")
+axis(1, at=c(-2,-1,0,0.8,1,2), pos=0)
+@
+
+\includegraphics[height=5cm]{../images/NormalTableEg1.jpg}
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+How do we use the Standard Normal Tables for a general Normal?  \\ 
+
+\vspace{.5cm} 
+Every General Normal $X \sim N(\mu, \sigma^2)$ can be transformed into the Standard Normal $Z \sim N(0,1)$. 
+
+\vspace{.5cm} 
+\begin{definition}[Standardardising a Normal]
+If $X \sim N(\mu, \sigma^2)$ and $Z \sim N(0, 1)$, then \\
+$P( X \leq x) = P \Big( \frac{X-\mu}{\sigma} \leq \frac{x-\mu}{\sigma}  \Big)= P \Big( Z \leq \frac{x-\mu}{\sigma}  \Big)$
+\end{definition}
+
+\begin{eqnarray*}
+P(X > 189) & = & P( \frac{X-161.8}{6} > \frac{189-161.8}{6}) \\
+& = & P(Z > 4.533333)  \\
+& < & 1-0.9986 \\
+& = & 0.0014
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{}
+
+\includegraphics[height=8cm]{../images/NormalTableEg2.jpg}
+
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{}
+
+Effectively we have found that 
+<<echo=FALSE, fig.height=2>>=
+curve(dnorm(x, mean = 161.8, sd = 6), xlim = c(150, 190),xlab="Australian women heights in cm (x)", ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(189, 200, 0.1)
+polygon(x = c(sequence,200,189),
+        y = c(dnorm(c(sequence),161.8,6),0,0),
+        col = "blue")
+axis(1, at=c(161.8,189,200), pos=0)
+@
+is equivalent to
+<<echo=FALSE, fig.height=2>>=
+curve(dnorm(x), xlim = c(-2, 4.7),xlab="Standardised Height (z)", ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(4.53, 4.7, 0.1)
+polygon(x = c(sequence,4.7,4.53),
+        y = c(dnorm(c(sequence)),0,0),
+        col = "blue")
+axis(1, at=c(0,4.53), pos=0)
+@
+
+{\tiny
+<<>>=
+1-pnorm(4.533333)
+@
+}
+\end{frame}
+
+
+
+\begin{frame}[fragile]\frametitle{}
+
+{\bf Method4: Appoximate using the Special Percentiles of the Normal Distribution} 
+
+All Normal distributions satisfy the "68\%-95\%-99.7\% Rule. \\
+
+\vspace{.5cm}
+\begin{tabular}{|l|l|} \hline
+Number of sds $\sigma$ from the Mean $\mu$ & \% of Probability \\ \hline
+1 & 68\%  \\
+2 & 95\% \\
+3 & 99.7\% \\ \hline
+\end{tabular}
+
+
+<<echo=FALSE, fig.height=3>>=
+par(mfrow=c(1,3))
+curve(dnorm(x), xlim = c(-3, 3),ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(-1, 1, 0.1)
+polygon(x = c(sequence,1,-1),
+        y = c(dnorm(c(sequence)),0,0),
+        col = "green")
+axis(1, at=seq(-3, 3, 1), pos=0)
+curve(dnorm(x), xlim = c(-3, 3),ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(-2, 2, 0.1)
+polygon(x = c(sequence,2,-2),
+        y = c(dnorm(c(sequence)),0,0),
+        col = "green")
+axis(1, at=seq(-3, 3, 1), pos=0)
+curve(dnorm(x), xlim = c(-3, 3),ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(-3, 3, 0.1)
+polygon(x = c(sequence,3,-3),
+        y = c(dnorm(c(sequence)),0,0),
+        col = "green")
+axis(1, at=seq(-3, 3, 1), pos=0)
+@
+
+\end{frame}
+
+
+
+\subsection[Normal Percentiles]{Normal Percentiles}
+\begin{frame}[fragile]\frametitle{Normal Percentiles (Inverse Probabilities)}
+
+Given $X \sim N(161.8,6^2)$, what is the 90\% percentile for heights of Australian women. \\
+
+\vspace{.5cm}
+We need to find $q$ such that $P(X \leq q) = 0.9$.
+
+<<echo=FALSE, fig.height=2.5>>=
+q=qnorm(0.9,mean = 161.8, sd = 6)
+curve(dnorm(x, mean = 161.8, sd = 6), xlim = c(140, 190),ylab="",xlab="Heights of Australian women (x)", axes=FALSE)
+abline(h = 0)
+sequence <- seq(140, q, 0.1)
+polygon(x = c(sequence,q,140),
+        y = c(dnorm(c(sequence),161.8,6),0,0),
+        col = "purple")
+#axis(1, at=seq(270, 300, 5), pos=0)
+axis(1, at=c(161.8,q), labels=c(161.8,letters[17]))
+@
+
+<<>>=
+qnorm(0.9,161.8,6)  #qnorm(%,mean,sd)
+@
+\end{frame}
+
+
+\subsection[Other Distributions]{Other Continuous Distributions}
+
+
+\begin{frame}\frametitle{Other Continuous Distributions}
+
+We now consider 3 other continuous distributions which will be used in the Hypothesis Testing part of the course (Topic 8 onwards).
+
+\begin{itemize}
+\item Student $T$  (T tests)
+\item Fisher's $F$ (Test for equal variance and ANOVA in STAT2)
+\item Chi-Squared $\chi^{2}$ (Goodness of Fit Tests)
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Student T}
+
+\begin{definition}[Student T Distribution]
+The \alert{Student T distribution} is symmetric and bell-shaped with thicker tails than a Normal. 
+
+\vspace{.5cm}
+We say the variable $X \sim t_{n}$, with $n$ degrees of freedom.
+
+\vspace{.5cm}
+The pdf is:
+\[ f(x)  =  \frac{ \Gamma(\frac{n+1}{2})}  { \sqrt{n \pi} \Gamma(\frac{n}{2})}
+(1+ \frac{x^2}{n})^{-\frac{n+1}{2}}
+\;\;\;\;\; \mbox{for }  x \in (- \infty, \infty) \]
+\hyperlink{Normalpdf}{\beamergotobutton{Compare Normal}} 
+
+\vspace{.5cm}
+The mean is 0 and variance is $\frac{n}{n-2}$ for $n > 2$.
+
+\end{definition}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{}
+
+<<echo=FALSE, fig.height = 5>>=
+curve(dnorm(x), xlim = c(-3, 3),ylab="", col="black", main="Comparing Student T to Normals")
+curve(dt(x,1), xlim = c(-3, 3),add=TRUE, col="blue")
+curve(dt(x,2),xlim = c(-3, 3), add=TRUE,lty=1,col="red")
+curve(dt(x,30),xlim = c(-3, 3), add=TRUE,lty=1,col="green")
+#legend(2,0.4,legend=c("N(0, 1)","t_1","t_2", "t_30"),col=c("black", blue","red","green"))
+legend("topright",legend=c("N(0, 1)","t1","t2","t30"),lty=1,col=c("black","blue","red","green"))
+@
+\end{frame}
+ 
+
+\begin{frame}\frametitle{Chi-Squared distribution}
+
+\vspace{.5cm}
+\begin{definition}[Chi-Squared distribution]
+The \alert{Chi-Squared distribution} is the sum of squared independent Standard Normal random variables. It can only take positive values and typically right skewed.
+
+\vspace{.5cm}
+We say the variable $X \sim \chi^2_{n}$, with $n$ degrees of freedom.
+
+\vspace{.5cm}
+The pdf is:
+\[ f(x)  =  \frac{ 1}  { 2^{\frac{n}{2}} \Gamma(\frac{n}{2})}
+x^{\frac{n}{2}-1} e^{-\frac{x}{2}}
+\;\;\;\;\; \mbox{for }  x \in (0, \infty) \]
+
+\vspace{.5cm}
+The mean is $n$ and variance is $2 n$.
+\end{definition}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]\frametitle{}
+<<echo=FALSE, fig.height = 4>>=
+curve(dchisq(x,1), xlim = c(0, 50),ylab="", col="black")
+curve(dchisq(x,2), xlim = c(0, 50),add=TRUE, col="blue")
+curve(dchisq(x,3),xlim = c(0, 50), add=TRUE,lty=2,col="red")
+curve(dchisq(x,30),xlim = c(0, 50), add=TRUE,lty=3,col="green")
+legend("topright",legend=c("Chi1","Chi2","Chi3","Chi30"),lty=1:4,col=c("black","blue","red","green"))
+@
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Fisher's F}
+
+\begin{definition}[Fisher's F Distribution]
+The \alert{Fisher's F distribution} is the scaled ratio of 2 $\chi^2$ variables, with $m$ and $n$ degrees of freedom.
+
+\vspace{.5cm}
+We say the variable $X \sim F_{m,n}$. \\
+
+\vspace{.5cm}
+The pdf is:
+\[ f(x)  =  \frac{ \Gamma( \frac{m+n}{2} ) m^{\frac{m}{2}}  n^{\frac{n}{2}}   }{ \Gamma( \frac{m}{2} )  \Gamma( \frac{n}{2} )}
+\frac{ x^{\frac{m}{2}-1}  }{ (n + mx)^{\frac{m+n}{2}}      }
+\;\;\;\;\; \mbox{for }  x \in (0, \infty) \]
+
+
+
+\vspace{.5cm}
+The mean is $\frac{n}{n-2}$ for $n >2$ and variance is $\frac{2 n^2 (m+n-2)}{m (n-2)^2(n-4)}$ for $n > 4$.
+
+
+
+\end{definition}
+
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{}
+
+<<echo=FALSE, fig.height = 5>>=
+curve(df(x,1,1), xlim = c(0, 50),ylab="", col="black")
+curve(df(x,2,2), xlim = c(0, 50),add=TRUE, col="blue")
+curve(df(x,3,2),xlim = c(0, 50), add=TRUE,lty=2,col="red")
+curve(df(x,30,30),xlim = c(0, 50), add=TRUE,lty=3,col="green")
+legend("topright",legend=c("F1","F2","F3","F30"),lty=1:4,col=c("black","blue","red","green"))
+@
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{}
+ 
+Using commands in R: \\
+
+$P(X \leq 2)$, where $X \sim t_{4}$.
+
+<<>>=
+pt(2,4)
+@
+
+$P(X \geq 3)$, where $X \sim \chi^2_{4}$.
+
+<<>>=
+1-pchisq(3,4)
+@
+
+$P(1 < X \leq 3)$, where $X \sim F(2,4)$.
+
+<<>>=
+pf(3,2,4)-pf(1,2,4)
+@
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Summary Examples}
+
+\begin{alertblock}{Have a go}
+Dharshani Sivalingam is the tallest netball player in the world. What is the probability of finding an Australian woman of Dharshani’s height?
+
+\href{http://www.thetallestman.com/dharshanisivalingam.htm}{\beamergotobutton{Dharshani}}
+\end{alertblock}
+
+<<>>=
+#Check your answer
+d=(208.3 - 161.8)/6
+pnorm(d)
+@
+
+\begin{center}
+\includegraphics[height=2cm]{../images/Dharshani.jpg}
+\end{center}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{}
+
+\begin{alertblock}{Have a go}
+Madison Robinson is the shortest Australian International player. What percentage of Australian women are between Madison and Dharshani’s heights?
+
+\href{https://en.wikipedia.org/wiki/Madison Robinson}{\beamergotobutton{Madison}}
+
+\end{alertblock}
+
+<<>>=
+#Check your answer
+m=(168 - 161.8)/6
+pnorm(d)-pnorm(m)
+@
+
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{}
+
+\begin{alertblock}{Have a go}
+If 60\% of Australian women are below a certain height, what is that height?
+\end{alertblock}
+
+<<>>=
+#Check your answer
+qnorm(0.6,161.8,6)
+@
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{}
+
+\begin{alertblock}{Have a go}
+If $X \sim N(8,16)$ find $P(X \leq 20)$.
+
+\end{alertblock}
+
+<<>>=
+#Check your answer
+pnorm(20,8,4)
+pnorm(3)
+@
+
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{}
+
+\begin{alertblock}{Have a go}
+Given Australian male heights can be approximated by $X \sim N(175.6,7^2)$, what proportion of Australian man are similar height to Sydney superstar Adam Goodes (191cm) or West Coastruckman Nick Naitanui (201cm)?
+
+\end{alertblock}
+
+<<>>=
+#Check your answer
+a = (191-175.6)/7
+1- pnorm(a)
+n = (201-175.6)/7
+1- pnorm(n)
+@
+\end{frame}
+

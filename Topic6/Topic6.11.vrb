@@ -1,0 +1,14 @@
+\frametitle{Normal Distribution}
+
+\begin{definition}[Normal Distribution]
+The \alert{Normal distribution} models a symmetric, bell-shaped variable with 2 parameters mean $\mu$ and variance $\sigma^2$ and points of inflection at $\mu \pm \sigma$. We say the variable $X \sim N(\mu, \sigma^2)$.
+
+\vspace{.5cm}
+The probability density function (pdf) is:
+\[ f(x)  =  \frac{1}{  \sqrt{2 \pi \sigma^2}}  e^{   -\frac{ (x-\mu)^2 }{2 \sigma^2  } }
+\;\;\;\;\; \mbox{for }  x \in (- \infty, \infty) \]
+
+The cumulative distribution function (CDF) is
+\[ F(x) = P(X \leq x) = \int_{-\infty}^{x} f(y) dy \]
+\end{definition}
+

@@ -1,0 +1,26 @@
+\frametitle{}
+
+\begin{alertblock}{Have a go}
+Given Australian male heights can be approximated by $X \sim N(175.6,7^2)$, what proportion of Australian man are similar height to Sydney superstar Adam Goodes (191cm) or West Coastruckman Nick Naitanui (201cm)?
+
+\end{alertblock}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#Check your answer}
+\hlstd{a} \hlkwb{=} \hlstd{(}\hlnum{191}\hlopt{-}\hlnum{175.6}\hlstd{)}\hlopt{/}\hlnum{7}
+\hlnum{1}\hlopt{-} \hlkwd{pnorm}\hlstd{(a)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.01390345
+\end{verbatim}
+\begin{alltt}
+\hlstd{n} \hlkwb{=} \hlstd{(}\hlnum{201}\hlopt{-}\hlnum{175.6}\hlstd{)}\hlopt{/}\hlnum{7}
+\hlnum{1}\hlopt{-} \hlkwd{pnorm}\hlstd{(n)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.000142497
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
