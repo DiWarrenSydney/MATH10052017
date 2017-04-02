@@ -1,0 +1,2 @@
+# MATH10052017
+Course Files for MATH1005 USyd 2017
