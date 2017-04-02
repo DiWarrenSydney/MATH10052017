@@ -1,0 +1,532 @@
+<<echo=FALSE, cache=FALSE>>=
+set_parent('../full_lectures/master.Rnw')
+@
+
+\section[1]{Topic1: Data and Graphical Summaries}
+
+\subsection[]{Example: Australian Road Fatalities Jan-April 2016}
+\begin{frame}{Example: Australian Road Fatalities Jan-April 2016}
+
+The number of road fatalities in Australia continues to rise, given the ever increasing volume of vehicles on the road, despite preventative measures as compulsory seat belts and school zones. Last year in Australia, 1,209 died on our roads.
+
+\vspace{.5cm}
+Data from the Australian Bureau of Statistics (ABS) from the first four months of 2016, gives the following variables: \\
+
+Crash ID, State, Date, Day, Month, Year, Dayweek, Time, Hour, Min, Crash Type, Bus Involvement, Rigid Truck Invovement, Articulated Truck Involvement, Speed Limit, Road User, Gender, Age.
+\href{http://www.maths.usyd.edu.au/u/UG/JM/StatsData.html}{\beamergotobutton{See DataDictionary}} 
+
+\vspace{.5cm}
+{\bf What questions do you have?}
+\end{frame}
+
+\subsection[]{Identifying Variables}
+
+\begin{frame}[fragile]{Identifying Variables}
+
+{\tiny
+<<eval=-2, echo=-1>>=
+data <- read.csv("../datasets/2016Fatalities.csv",header=T)
+data <- read.csv("2016Fatalities.csv",header=T)
+data[1,]  #Extracts the 1st row
+@
+}
+
+<<eval=F>>=
+names(data) #Lists all the variables
+colnames(data)  #Lists all the variables
+head(data)  #List the 1st 5 rows of data
+class(data)  #Shows the way R has stored the data
+@
+
+<<>>=
+dim(data)   
+@
+
+
+\end{frame}
+
+
+\begin{frame}{}
+The 1st step in EDA is to identify the variables, in terms of form and type. 
+
+\vspace{.5cm}
+{\bf (i) Size of Variables} \\
+How many bits of information or ‘variables’ have been recorded? \\
+In `big data' we commonly have `large $p$, small $n$' meaning that we have stacks of variables (eg gene data) relative to the data size.
+
+{\tiny \begin{center}
+\begin{tikzpicture}[sibling distance=10em,
+  every node/.style = {shape=rectangle, rounded corners,
+    draw, align=center,
+    top color=white, bottom color=blue!20}]]
+  \node {Size}
+    child { node {Multivariate \\ = 2+ variables}
+      child { node {Bivariate \\ = 2 variables} } 
+      child { node {Univariate \\ = 1 variable} }};
+\end{tikzpicture}
+\end{center}}
+\end{frame}
+
+\begin{frame}{}
+
+{\bf (ii) Type of Variables} \\
+What is the nature of the variables – i.e. what process or situation  ‘produced’ the data?
+
+{\tiny  \begin{center}
+\begin{tikzpicture}[level distance = 1.5cm,
+level 1/.style={sibling distance=5cm},
+level 2/.style={sibling distance=2cm},
+  every node/.style = {shape=rectangle, rounded corners,
+    draw, align=center,
+    top color=white, bottom color=blue!20}]]
+  \node {Type}
+    child { node {Numerical  or Quantitative \\ = Measurements} 
+    child { node {Discrete \\ = Separated \\ Eg Year} }
+      child { node {Continuous \\ = Continuum \\ Eg Age} }  }
+    child { node {Categorical  or Qualitative \\ = Named, coded categories}
+      child { node {Ordinal \\ = Ordered \\ Eg Crash Type}
+      child { node {Binary = 2 categories} } 
+      }
+      child { node {Nominal \\ = Non-Ordered \\ }  
+      child { node {Binary \\ Eg Gender} } }};
+\end{tikzpicture}
+\end{center}}
+\end{frame}
+
+
+\begin{frame}{}
+Note:
+\begin{itemize}
+\item
+In practise, continuous data is often reported as discrete data (by rounding), but the underlying quantity represented is still continuous (eg Age and Time).
+\item
+A helpful diagnostic for determining continuous data is to ask: “Could this data have been recorded to higher accuracy, given a more precise ‘instrument’?”
+\item
+Quantitative data can be simplified to qualitative data. For example, in a survey, a respondent may feel more comfortable giving a general answer to a question about their personal income.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{alertblock}{Have a try}
+Identify all the variables for Australian Road Fatalities.
+\end{alertblock}
+
+{\tiny  \begin{center}
+\begin{tikzpicture}[level distance = 1cm,
+level 1/.style={sibling distance=5cm},
+level 2/.style={sibling distance=2.5cm},
+  every node/.style = {shape=rectangle, rounded corners,
+    draw, align=center,
+    top color=white, bottom color=blue!20}]]
+  \node {Type}
+    child { node {Numerical} 
+    child { node {Discrete \hspace{1cm} \\    \\ \\ \\ \\} }
+      child { node {Continuous \hspace{.5cm} \\ \\ \\ \\ \\ } }  }
+    child { node {Categorical}
+      child { node {Ordinal \hspace{1cm} \\  \\ \\  \\ \\}
+      }
+      child { node {Nominal \hspace{1cm}  \\ \\ \\  \\ \\}   }};
+\end{tikzpicture}
+\end{center}}
+\end{frame}
+
+
+\subsection[]{Graphical Summaries}
+\begin{frame}{Graphical Summaries}
+Once we identify the variables, we can summarise the data, both graphically and numerically, in order to identify and highlight the main features of interest.   A careful choice of graphical and numerical summaries can give a quick, transparent, perceptive snapshot of the data. 
+
+\vspace{.5cm}
+We often start with graphical summaries because `A picture is worth a thousand words.' (Similar idea: Arthur Brisbane, Syracuse Advertising Men's Club, 1911)
+
+\begin{center}
+\includegraphics[height=3.5cm]{../images/PictureWords.jpg}
+\end{center}
+\href{www.abpublish.co.uk/blogphotos/picture_thousand_words.jpg}{\beamergotobutton{Source}}
+\end{frame}
+
+
+\begin{frame}{How to choose an appropriate graphical summary?}
+The critical question is: `How can I visually represent this data?' or `What plot will best highlight features of the data?'. This knocks out pie charts and 3D charts!
+
+\vspace{.5cm}
+To some extent we use trial and error. We try some standard forms and see what is revealed about the data. One graphical summary can suggest another, and often a combination will highlight different features of the data
+
+\vspace{.5cm}
+In practise we use computer packages like R to construct summaries.
+However, it is important to understand how to construct graphical summaries ‘by hand’, so that you understand how to interpret computer output and for your final exam. Some computer packages vary slightly in construction. For example, in the calculation of the quartiles or the length of the whiskers in the boxplot.
+\end{frame}
+
+
+\subsection[]{Summary0: Barplot}
+\begin{frame}[fragile]{Summary0: Barplot (Categorical data)}
+
+{\bf Q: What was the most common day of road fatality?}
+
+{\tiny 
+<<fig.height=2.5>>=
+DayWeek <- data$Dayweek  
+table(DayWeek)
+plot(table(DayWeek),las=2)
+@
+}
+\end{frame}
+
+
+\subsection[]{Summary1: Frequency table and ordinate diagram}
+\begin{frame}[fragile]{Summary1: Frequency table and ordinate diagram (discrete data)}
+
+{\bf Q: What was the most common speed at which a road fatality occurred?}
+
+\vspace{.5cm}
+The frequency table is a very simple way to summarise a set of discrete data and when plotted gives an ordinate diagram. 
+
+\vspace{1cm}
+\begin{tabular}{l|llllll|l} \hline
+Speed & -9 & 40 & 50 & \ldots & 130 & 888 & Total \\ \hline
+Frequency & 28 & 4  & & & &  1 &  442 \\ \hline
+\end{tabular}
+
+\vspace{.5cm}
+What is strange? Why?
+\end{frame}
+
+\begin{frame}[fragile]{}
+<<fig.height=2.5>>=
+Speed <- data$SpeedLimit  #Extracts SpeedLimit
+table(Speed)
+plot(table(Speed))
+@
+\end{frame}
+
+\subsection[]{Summary2: Frequency table and histograms}
+\begin{frame}[fragile]{Summary2: Frequency table and histograms (continuous data)}
+
+{\bf Q: What were the most common ages at which a road fatality occurred?}
+
+\vspace{.5cm}
+The frequency table can also be used to summarise a set of continuous data, by collecting it into intervals (or ‘bins’). What is lost?
+
+\begin{itemize}
+\item 
+For equal bin lengths, we can simply sort the data into the bins, and then plot the frequency against each bin. This is called a `regular' histogram. 
+
+\item
+For unequal bin lengths, we need to sort the data into the bins, then work out the relative frequency (=frequency/sample size) and the height (=relative frequency/interval length). Plotting the height against each bin is called a 'probability' histogram.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+{\bf (i) Using equal bins: Regular Histogram} \\
+
+\begin{center}
+\begin{tabular}{| l | l| } \hline
+\mbox{Bin} & \mbox{Frequency} \\ \hline
+[-10,0) & ? \\ \hline
+[0,10) & 11  \\ \hline
+[10,20) &  \\ \hline
+\ldots &  \\ \hline
+[90,100) & 9  \\ \hline
+\end{tabular} 
+\end{center}
+
+<<>>=
+Age <- data$Age
+min(Age)
+max(Age)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+<<fig.height=3.5>>=
+Age <- data$Age
+hist(Age,xlab="Age",
+     main="Regular Histogram for Age of Fatality")
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+{\bf (ii) Using unequal bins: Probability Histogram} \\
+
+\begin{center}
+\begin{tabular}{| l | l| l| l| } \hline
+\mbox{Bin} & \mbox{Frequency} & \mbox{Relative Frequency} & \mbox{Height} \\ \hline
+[-10,18) & 31  & 31/442 = 0.07 & 0.0025  \\ \hline
+[18,25) & 72  & 72/442 = 0.16 & 0.0232 \\ \hline
+[25,70) & 259  & 259/442 = 0.59 &  0.0130 \\ \hline
+[70,100) & 80  &  80/442 = 0.18 & 0.0060 \\ \hline
+Total & 442 & 1 & \\ \hline
+\end{tabular} 
+\end{center}
+
+where: \\
+Relative Frequency = Frequency/442 \\
+Height = Relative Frequency/Bin length \\
+Eg For bin [-10,18): height = 0.07/28 =3.6. \\
+\end{frame}
+
+\begin{frame}[fragile]{}
+<<fig.height=2.5>>=
+breaks=c(-10,18,25,70,100)
+table(cut(Age,breaks,right=F))   
+hist(Age,br=breaks,freq=F,right=F,
+     xlab="Age",
+     main="Probability Histogram for Age of Fatality")  
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+Note how the `regular' histogram is misleading for unequal bin lengths, as it suggests that [25,70) is the most likely bin.
+
+%Gives warning message, hence input pdf following.
+%<<fig.height=3,echo=F, results='hide',message=FALSE>>=
+%breaks=c(-10,18,25,70,100)
+%table(cut(Age,breaks,right=F))   
+%hist(Age,br=breaks,freq=T, right=F, main ="Misleading Regular Histogram")  
+
+\vspace{.5cm}
+\includegraphics[height=6cm]{../images/AgeMisleadingHist.pdf}
+\end{frame}
+
+\subsection[]{Summary3: Stem and leaf plot}
+\begin{frame}[fragile]{Summary3: Stem and leaf plot}
+
+{\bf Q: What were the 3 highest ages at which a road fatality occurred?}
+
+\vspace{.5cm}
+A stem and leaf plot is basically a histogram turned on its side. It is useful for moderately sized data sets. It provides both a sense of the shape and an ordering of the data, while retaining all the raw numerical data (up to a certain decimal place). 
+
+\vspace{.5cm}
+The value to the left of the $\mid$ is called the ‘stem’ and the values on the right are called ‘leaves’.
+The leaves should be ordered, although sorting will not affect the shape of the plot.
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+{\tiny 
+<<fig.height=4>>=
+stem(Age)
+@
+}
+
+Note that R defaults to what it considers to be a sensible layout of the data. Here R chooses a `single' stem plot: with each stem having the leaves 0,1,2,...9. So the reading 2 $\mid$ 3 is age 23. If we consider the data is over-condensed (too stretched out) or under-condensed (too bunched up), we can adjust the format by experimenting with {\tt scale=}.
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+
+{\tiny 
+<<fig.height=4>>=
+stem(Age,scale=0.25)
+@
+}
+This is called a double leaf plot, as the stem `0' now has the leaves 0,1,2,3,4 5,6,7,8,9 (representing 00-09) and then a second set of leaves 0,1,2,3,4 5,6,7,8,9 (representing 10-19).  Note you need to read carefully, as 8|0 can represent both 80 or 90.
+
+\vspace{.5cm}
+A double stem plot would have one stem `0' with leaves 0,1,2,3,4 (representing 00-04) and then a second stem 'O' with leaves 5,6,7,8,9 (representing 05-09).
+\end{frame}
+
+\subsection[]{Summary4: Boxplot}
+\begin{frame}[fragile]{Summary4: Boxplot}
+
+\vspace{.5cm}
+{\bf Q: Were there any unusual ages at which a road fatality occurred? Is there any difference between the ages of male and female fatalities?}
+
+\vspace{.5cm}
+Boxplots are useful for comparing data sets and identifying outliers. 
+
+<<fig.height=2.5>>=
+boxplot(Age,horizontal=T)
+@
+ 
+\end{frame}
+
+\begin{frame}[fragile]{}
+<<fig.height=3.5>>=
+AgeM <- data$Age[ data$Gender == "Male"]
+AgeF <- data$Age[ data$Gender == "Female"]
+par(mfrow = c(1, 2))  #Puts 2 boxplots in a row
+boxplot(AgeM)
+boxplot(AgeF)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+A neat trick for producing the same boxplots:
+<<fig.height=3.5>>=
+boxplot(Age~data$Gender, ylab="Age")
+@
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+
+The boxplots show that the ages of road fatalities for men and women is similar.
+However, what do we learn from this simple commmand?
+
+<<fig.height=3.5>>=
+length(AgeM)
+length(AgeF)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+{\bf Q: What were there any unusual speeds at which fatalities occurred?}
+
+<<fig.height=3.5>>=
+boxplot(data$SpeedLimit, horizontal = T)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+\vspace{.5cm}
+A box plot is a visual representation of the 5 number summary
+(min, $Q_1$= 1st quartile, $Q_2$= median, $Q_3$= 3rd quartile, max), where:
+
+\begin{itemize}
+\item Min = smallest data point(s) \\
+\item Max = largest data point(s) \\
+\item $Q_2$ = middle data point (find the average of the 2 middle points for even sized dataset.) \\
+\item $Q_{1}$ and $Q_{3}$ are the `medians' of the half data sets: we divide the data into 2 sets at the median (including the median for an odd sized data set), and then find the median of each half set of data.
+\end{itemize}
+
+See more fuller definitions:  \hyperlink{Quartiles}{\beamergotobutton{Quartiles}} 
+
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+
+There are different conventions for boxplots. We will use the convention that the whiskers extend to the minimum and maximum observations within the thresholds [LT,UT], where 
+\begin{itemize}
+\item Lower Threshold $LT=Q_1-1.5IQR$;
+\item Upper Threshold $UT=Q_3+ 1.5IQR$;
+\item Interquartile range is $IQR=Q_3-Q_1$.
+\end{itemize}
+
+\vspace{.5cm}
+An outlier is any observation lying outside of [LT,UT].
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+\vspace{1cm}
+\begin{tikzpicture}[thick, framed]
+    \filldraw[fill=green!20] (2,0) rectangle (5,1);% draw the box
+    \draw (3,0) -- (3,1) node[above]{$\textsc{Q2}$};% draw the median
+    \draw (5,0.5) -- (7,0.5);% draw right whisker
+    \draw (2,0.5) -- (1,0.5);% draw left whisker
+    \draw (7,0.39) -- (7,0.61);% draw vertical tab
+    \draw (1,0.39) -- (1,0.61);% draw vertical tab
+    \node[below] at (2,0) {$\textsc{Q1}$};% label the hinge
+    \node[below] at (5,0) {$\textsc{Q3}$};% label the hinge
+    \filldraw[ball color=red!80,shading=ball] (4,0.5) circle
+        (0.06cm) node[above]{$\bar{x}$};% the mean
+    \draw[<->] (2.3, -0.3) -- (4.7, -0.3)
+        node[pos=0.5,below]{$\textsc{IQR}$}; % mark the IQR fences
+    \draw[<->] (2, -0.8) -- (0,-0.8)
+        node[pos=0.5,below]{$\textsc{1.5*IQR}$}; % left inner fence
+  %  \draw[<->] (2,-1.4) -- (-2, -1.4)
+  %      node[pos=0.5,below]{$\textsc{3*IQR}$};% left outer fence
+    \draw[<->] (5, -0.8) -- (8,-0.8)
+        node[midway,below]{$\textsc{1.5*IQR}$}; % right inner fence
+  %  \draw[<->] (5,-1.4) -- (10, -1.4)
+   %     node[pos=0.5,below]{$\textsc{3*IQR}$};% right outer fence
+    %
+  %  \node[below] at (7.5,0.7) {$o$}; % mild outlier on the right
+    \node[below] at (0,0.7) {$o$}; % extreme outlier on the left
+    % Title
+    \draw (3,2) node[above,xshift=0.7cm]{$ \textsc{Box
+        Plot}$};%
+    % Axis
+  %  \draw (-3,-2) -- (8,-2);
+    % Note that the snaked line is drawn to 11.1 to force
+    % TikZ to draw the final tick.
+  %  \draw[snake=ticks,segment length=1cm] (-3,-2) -- (8.1,-2);
+\end{tikzpicture}
+
+\vspace{.5cm}
+Note: Here we have indicated the mean $\bar{x}$ in red for comparision with the median $Q_{2}$, but normally that is not shown on the boxplot.
+\end{frame}
+
+\begin{frame}[fragile]{Steps for Constructing a Boxplot by Hand}
+\begin{enumerate}
+\item Calculate the quartiles $Q_1$, $Q_2$ and $Q_3$ and the interquartile range $IQR$. 
+\item Draw a box from $Q_1$ to $Q_3$, with a line within the box for the median= $Q_2$.
+\item Calculate the upper and lower thresholds.
+\item Draw a whisker from the box to the nearest points within the thresholds.
+\item Any points outside the thresholds are outliers, designated by circles.
+\end{enumerate}
+\end{frame}
+
+\subsection[]{Describing the Shape of Data}
+\begin{frame}[fragile]{Describing the Shape of Data}
+
+When we look at graphical summaries, we want to describe the form of the data and any ‘idiosyncrasies’.
+
+\vspace{.5cm}
+3 key questions:
+
+1. Is it symmetric or skewed?
+<<fig.height=3,echo=F>>=
+x1=c(1,2,3,4,5,6,7,8)
+x2=c(1,5,7,8,9,10)
+x3=c(1,2,3,5,9)
+par(mfrow = c(1, 3))
+boxplot(x1,main="Symmetric",horizontal=T)
+boxplot(x2,main="Left skewed: Long left tail",horizontal=T)
+boxplot(x3,main="Right skewed: Long right tail",horizontal=T)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+2. Is it unimodal, bimodal, trimodal, multimodal or other?
+<<fig.height=3,echo=F>>=
+x1=rnorm(1000)
+x2=c(rnorm(1000,25,6),rnorm(1000,100,4))
+x3=c(rnorm(1000,25,6),rnorm(1000,100,4), rnorm(1000,200,16))
+par(mfrow = c(1, 3))
+hist(x1,main="Unimodal")
+hist(x2,main="Bimodal")
+hist(x3,main="Trimodal")
+@
+
+Note: Bimodality can be an indication of interesting behaviour to explore. However, it can also arise from 2 populations mistakingly put together. 
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+3. Are there any unusual features?  (eg outliers or gaps)
+<<fig.height=3,echo=F>>=
+x1=c(1,2,3,4,5,6,7,8,100)
+x2=c(rexp(1000),rnorm(50,50))
+x3=c(1,2,3,5,9)
+par(mfrow = c(1, 3))
+boxplot(x1,main="Outlier")
+hist(x2,main="Right skewed: Long right tail")
+boxplot(x3,main="Right skewed: Long right tail")
+@
+
+
+Note: An outlier needs to be investigated carefully, as it can be an indication of an interesting data point or possibly a mistake in the recording of data.
+\end{frame}
+
+
+\subsection[]{Dirty Data}
+\begin{frame}[fragile]{Dirty Data}
+
+Notice that throughout Topic1 we have deliberately showcased raw data with the missing values coded as '-9'. This is called 'dirty data' and is how real data exists. 
+
+\vspace{.5cm}
+Dealing with 'dirty data' is outside the scope of MATH1005, as it can require some sophistication. Ideally, we would replace all the missing values by a blank. However, one possible strategy is to account for the missing values in your histogram: create the bins (-10,0), [0,18] ..., so there is effectively 1 nonsense bin (although it still affects the calculation of frequencies of the other bins.)
+\end{frame}
+
+
+
+
+
+
