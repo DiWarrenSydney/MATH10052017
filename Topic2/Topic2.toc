@@ -1,0 +1,9 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Topic2: Numerical Summaries}{1}{0}{1}
+\beamer@subsectionintoc {1}{1}{Example: Australian Road Fatalities Jan-April 2016}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Numerical Summaries}{4}{0}{1}
+\beamer@subsectionintoc {1}{3}{Numerical Data - Notation}{8}{0}{1}
+\beamer@subsectionintoc {1}{4}{Numerical Data - Summaries for Centre}{10}{0}{1}
+\beamer@subsectionintoc {1}{5}{Numerical Summaries for Spread}{15}{0}{1}
+\beamer@subsectionintoc {1}{6}{Outliers}{28}{0}{1}

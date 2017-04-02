@@ -1,0 +1,462 @@
+<<echo=FALSE, cache=FALSE>>=
+set_parent('../full_lectures/master.Rnw')
+@
+
+%%% Dataset used in Topic 1
+<<echo=FALSE>>=
+data <- read.csv("../datasets/2016Fatalities.csv",header=T)
+@
+
+\section[2]{Topic2: Numerical Summaries}
+
+\subsection[]{Example: Australian Road Fatalities Jan-April 2016}
+
+\begin{frame}[fragile]{Example: Australian Road Fatalities Jan-April 2016}
+
+The Australian Road Deaths Database provides basic details of road transport crash fatalities in Australia as reported by the police each month to the State and Territory road safety authorities.
+
+\vspace{.5cm}
+Details provided in the database fall into two groups:
+(1) the circumstances of the crash, for example, date, location, crash type \\
+(2) some details regarding the persons killed, for example, age, gender and road user group.
+
+\vspace{.5cm}
+{\bf What is the most common profile of person killed on Australian roads (eg gender, age, time of accident)?}
+
+\vspace{.5cm}
+\href{https://bitre.gov.au/statistics/safety/fatal_road_crash_database.aspx}{\beamergotobutton{Australian Road Deaths Database}}
+\end{frame}
+
+
+
+\subsection[]{Numerical Summaries}
+\begin{frame}[fragile]{Numerical Summaries}
+\begin{center}
+\includegraphics[height=5cm]{../images/SocialMedia2015.png}
+\end{center}
+
+A numerical summary describes a certain characteristic of the data in a single value. The notion of a numerical summary is very nice – what is lost in subtlety is gained in simplicity.
+For example, in the Australian census data, 1 mean can summarise 21.5 million data points. 
+\href{https://www.linkedin.com/pulse/2015-social-media-stats-trends-images-part-1-wahiba-chair-mba}{\beamergotobutton{SocialMediaStats}}
+\href{http:\\www.censusdata.abs.gov.au/census_services/getproduct/census/2011/quickstat/0}{\beamergotobutton{AusCensusData}}
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+{\bf From the Australian Road Fatalities summaries, what do you learn about the variables?}
+
+{\tiny 
+<<>>=
+summary(data[1:8])
+@
+}
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+{\tiny 
+<<>>=
+summary(data[9:18])
+@
+}
+\end{frame}
+
+\begin{frame}[fragile]{}
+Note: We use different summaries for different types of variables.  \\
+
+\begin{itemize}
+\item {\bf Categorial Data} \\
+Categorical data is essentially already summarised by category. We note the most common category or any trend within the categories. \\
+
+\vspace{.5cm}
+\item
+{\bf Numerical Data} \\
+Numerical summaries focus on a feature of interest, like the centre and spread.
+\end{itemize}
+\end{frame}
+
+
+\subsection[]{Numerical Data - Notation}
+\begin{frame}{Notation for Numerical Summaries}
+Given a univariate data set of sample size $n$:
+
+\begin{itemize}
+\item
+the data is $ \{ x_i \},i=1,2,\ldots,n$   or  $\{ x_{1},x_{2} \ldots, ,x_{n} \}$. 
+
+\vspace{.5cm}
+\item the ordered (ascending) data set is $ \{ x_{(i)} \},i=1,2,\ldots,n$ or 
+$\{ x_{(1)},x_{(2)},\ldots,x_{(n)} \}$.
+
+\vspace{.5cm}
+\item 
+the sum of the data is $\sum_{i=1}^{n} x_i = x_1+ x_2+\ldots x_n$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{alertblock}{Have a try}
+Given a data set $\{ 1,4,6,2,3,7\}$, find
+\[ \sum_{i=1}^{6} x_{i},  \sum_{i=2}^{5} x_{i}^2, \sum_{i=1}^{6} i x_{i}, \sum_{i=1}^{6} (x_{(i)}-1) \]
+\end{alertblock}
+
+<<>>=
+#Check your answers
+x=c(1,4,6,2,3,7)
+y=c(sum(x), sum(x[2:5]^2), sum(c(1:6)*x), sum(sort(x)-1))
+y
+@
+\href{www.mathsisfun.com/algebra/sigma-notation.html}{\beamergotobutton{More practise here}}
+\end{frame}
+
+
+\subsection[]{Numerical Data - Summaries for Centre}
+\begin{frame}[fragile]{Numerical Data - Summaries for Centre}
+%[label=SummariesCentre]
+
+There are 2 main measures of the centre (or location) of the data:
+
+\begin{itemize}
+\item {\bf Mean} $\bar{x}$ \\
+The mean is the average of the data. \\
+\[ \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i} \]
+
+\item {\bf Median} $\tilde{x}$ \\
+The median is the centre of the data, also called the 50\% percentile or the 2nd quartile. It splits the data into 2 equal groups.  
+
+\begin{itemize}
+\item 
+If $n$ is odd, the unique median is the middle value:
+\[  \tilde{x} = x_{(\frac{n+1}{2})}  \]
+
+\item
+If $n$ is even, the median is the average of the 2 middle values (by convention):
+\[ \tilde{x} = \frac{x_{(\frac{n}{2})} + x_{(\frac{n}{2} + 1)}}{2} \]
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+\vspace{.5cm}
+\begin{alertblock}{Have a try}
+For the data: $\{ 1,4,6,2,3,7\}$, show that the mean is 3.83 and the median is 3.5. 
+\end{alertblock}
+
+<<>>=
+#Check your answers
+x=c(1,4,6,2,3,7)
+mean(x)
+median(x)
+@
+
+%%%%Extention%%%%
+%Note: Data sets which have the same values in the same proportions have the same median (replication principle). For example, the sets $\{ 1,2,3,4 \}$ and $\{ 1,1,1,2,2,2,3,3,3,4,4,4 \}$ have the same median.
+\end{frame}
+
+
+\begin{frame}{Comparing the Mean and Median}
+\begin{itemize}
+\item 
+For symmetric data, we expect $\bar{x} = \tilde{x}$. For left skewed data, we expect $\bar{x} < \tilde{x}$ and for right skewed data, $\bar{x} > \tilde{x}$.
+\end{itemize}
+
+<<fig.height=3,echo=F>>=
+x1=c(1,2,3,4,5,6,7,8)
+x2=c(1,5,7,8,9,10)
+x3=c(1,2,3,5,9)
+par(mfrow = c(1, 3))
+boxplot(x1,main="Symmetric",horizontal=T)
+boxplot(x2,main="Left skewed",horizontal=T)
+boxplot(x3,main="Right skewed",horizontal=T)
+@
+\end{frame}
+
+
+\begin{frame}
+\begin{itemize}
+\item
+Which is ‘optimal’ for describing the centre of the data? 
+
+\vspace{.5cm}
+Both have strengths and weaknesses depending on the nature of the data. 
+\begin{itemize}
+\item Sometimes neither gives a sensible sense of location, for example if the data is bimodal.
+\item The median is robust which means it is not affected by some extreme readings. This makes the median preferable for data which is skewed or has many outliers (eg Sydney house prices). 
+\item The mean is helpful for data which is basically symmetric which not too many outliers, and for theoretical analysis.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{}
+<<fig.height=2.5>>=
+Speed <- data$SpeedLimit
+mean(Speed)
+median(Speed)
+par(mfrow = c(1, 2))
+boxplot(Speed, horizontal=T)
+hist(Speed)
+@
+\end{frame}
+
+
+\subsection[]{Numerical Summaries for Spread}
+\begin{frame}[fragile]{Numerical Data - Summaries for Spread}
+Having summarised the centre of the data, we now want to couple this with a summary of the spread of the data: how far is the data from the centre? The combination of both a numerical centre of centre and spread is a surprisingly helpful snapshot of the data.
+
+\vspace{.5cm}
+We can base our summaries for spread on the mean or the quantiles.
+\end{frame}
+
+\begin{frame}[fragile]{Spread - based on the Mean (Standard Deviation)}
+
+There are 3 main measures of spread based on the mean:
+\begin{itemize}
+\item {\bf Mean Absolute Deviation (MAD)}
+\[ MAD = \frac{1}{n} \sum_{i=1}^{n} | x_{i} - \bar{x} | \]
+This is messy algebraically.
+
+\vspace{.5cm}
+\item {\bf Mean Square Error (MSE)}
+\[ MSE = \frac{1}{n} \sum_{i=1}^{n} (x_{i} - \bar{x})^2 \]
+This requires that we sample $\bar{x}$ from the sample before calculating the MSE: only $n-1$ of the observations are independent of each other.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{itemize}
+\item {\bf Standard deviation (SD)}
+\[ s= \sqrt{\frac{1}{n-1}  \sum_{i=1}^{n} (x_{i} - \bar{x})^2 } \]
+
+This is called the definition formula: it represents the average of the squared deviations from the mean $\{ (x_{i} - \bar{x}) \}$. We need squared deviations as $\sum_{i=1}^{n} (x_{i} - \bar{x}) = 0$.
+
+\vspace{.5cm}
+The calculation formula is
+\[ s= \sqrt{\frac{1}{n-1} \big[ \sum_{i=1}^{n} x_{i}^2 - \frac{1}{n} (\sum_{i=1}^{n} x_{i})^2 \big] }
+= \sqrt{ \frac{1}{n-1} \big[ \sum_{i=1}^{n} x_{i}^2 - n \bar{x}^2} \big]
+\]
+
+\vspace{.5cm}
+$s^2 = \frac{1}{n-1} \sum_{i=1}^{n-1} (x_{i} - \bar{x})^2$ is called the variance. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Using the Standard Deviation}
+Note that $s$ has the same units as $\bar{x}$, so we can couple $(\bar{x}, s)$ as a summary of centre and spread.
+
+\vspace{.5cm}
+\begin{block}{Calculating Standard Deviation}
+Given $\{ 1,4,6,2,3,7\}$ with $\bar{x}=23/6$, what is the standard deviation? \\
+
+Definition formula: $s= \sqrt{ \frac{1}{5} [ (1-23/6)^2 + (4-23/6)^2 + \ldots (7-23/6)^2 ]} \approx 2.32 $ \\
+
+Calculation formula: $s = \sqrt{ \frac{1}{5} [ 1^2 + 4^2 + 6^2 + 2^2 + 3^2 + 7^2 - 6(23/6)^2] }  \approx 2.32 $
+
+\end{block}
+
+<<>>=
+sd(x)
+@
+\end{frame}
+ 
+ 
+ 
+\begin{frame}[fragile]{}
+<<>>=
+Speed <- data$SpeedLimit
+mean(Speed)
+median(Speed)
+sd(Speed)
+iqr=fivenum(Speed)[4]-fivenum(Speed)[2]
+iqr
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+<<fig.height=3>>=
+fivenum(Speed)
+boxplot(Speed, horizontal=T)
+@
+\end{frame}
+ 
+ 
+ 
+ 
+\begin{frame}[fragile,label=Quartiles]{Spread - based on the Quartiles (IQR)}
+The quartiles are a set of 3 values $\{ Q_{1}, Q_{2} = \tilde{x}, Q_{3} \}$ that roughly split the data into quarters.
+
+\vspace{.5cm}
+There is no universal way to define quartiles.  
+We use the following convention: we divide the data into 2 sets at the median (including the median for an odd sized data set), and then find the median of each half set of data.
+
+\vspace{.5cm}
+Once we have found $Q_{1}$, we can find $Q_{3}$ by symmetry, by counting back from the end of sorted data set.
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+\begin{block}{Calculating the Quartiles (even sized sample)}
+Given $\{ 1,4,6,2,3,7\}$, the sorted data is $\{ 1,2,3,4,6,7 \}$ and the median $Q_{2} = 3.5$ splits the data into $\{ 1,2,3 \}$ and $\{ 4,6,7 \}$, hence $Q_{1} = 2$ and $Q_{3} = 6$.
+\end{block}
+
+<<>>=
+# Finds min, Q1, Q2, Q3, max
+fivenum(x)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{block}{Calculating the Quartiles (even sized sample)}
+Given $\{ 1,4,6,2,3,7\}$, the sorted data is $\{ 1,2,3,4,6,7 \}$ and the median $Q_{2} = 3.5$ splits the data into $\{ 1,2,3 \}$ and $\{ 4,6,7 \}$, hence $Q_{1} = 2$ and $Q_{3} = 6$.
+\end{block}
+
+<<>>=
+# Finds min, Q1, Q2, Q3, max
+fivenum(x)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{block}{Calculating the Quartiles (odd sized sample)}
+Given $\{ 1,4,6,2,3,7,8\}$, the sorted data is $\{ 1,2,3,4,6,7,8 \}$ and the median $Q_{2} = 4$ splits the data into $\{ 1,2,3,4 \}$ and $\{ 4,6,7,8 \}$, hence $Q_{1} = 2.5$ and $Q_{3} = 6.5$.
+\end{block}
+
+<<>>=
+x2=c(1,4,6,2,3,7,8)
+fivenum(x2)
+@
+\end{frame}
+
+
+\begin{frame}[fragile]{Interquartile Range (IQR)}
+The full range of the data is $x_{(n)} - x_{(1)}$, but this ignores $n-2$ data points.
+
+\vspace{.5cm}
+The Interquartile Range is defined as
+\[ IQR = Q_{3} -Q_{1} \]
+and represents the range of the middle 50\% of the data. 
+
+\vspace{.5cm}
+We couple $(\tilde{x}, IQR)$ as a summary of centre and spread.
+<<>>=
+fivenum(x)[4]-fivenum(x)[2]   # Don't use iqr()
+@
+\end{frame}
+
+\begin{frame}[fragile]{The Five Number Summary}
+The five number summary is a neat way to summarise the data
+\[ ( x_{(1)}, Q_{1}, Q_{2}, Q_{3}, x_{(n)} ) \]
+and is essentially drawn by the boxplot.
+
+<<fig.height=2.5>>=
+fivenum(x)
+boxplot(x, horizontal=T, col="purple")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Comparing the SD and the IQR}
+Like the mean and median, the IQR is robust and so preferable for data which is skewed or has many outliers. However, the standard deviation is good for theoretical analysis.
+
+\vspace{.5cm}
+\begin{block}{Comparing the SD and the IQR}
+Given $\{ 1,4,6,2,3,7,100\}$, what is the sd and IQR?
+\end{block}
+
+<<fig.height=2>>=
+x1=c(1,4,6,2,3,7,100)
+sd(x1)
+fivenum(x1)[4] - fivenum(x1)[2]
+@
+\end{frame}
+
+\subsection[]{Outliers}
+\begin{frame}[fragile]{Identifying Outliers}
+Outliers are `unusual values' that do not fit the model. They can either indicate interesting values that need futher investigation or a transformation of the model, or they can indicate a possible mistake in your data.
+
+\vspace{.5cm}
+There are 2 main ways to identify outliers:
+\begin{itemize}
+\item {\bf The IQR method (Tukey)} \\
+As outlined in the boxplot, we calculate the lower and upper thresholds
+\[ LT = Q_{1} - 1.5 IQR  \mbox{  and   }  UT = Q_{3} + 1.5 IQR  \]
+Any data point lying outside these thresholds is deemed an outlier. \\
+Disadvantages:  No outliers detected for $n \leq 4$ and for large samples wrongly identifies outliers.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Identifying Outliers}
+\begin{itemize}
+\item {\bf (Extension: The 3-$\sigma$ method)} \\
+Any data point lying more than 3 standard deviations away from the mean is deemed to be an outlier. \\
+\[ x_{i} \mbox{ is an outlier iff } |x_{i} - \bar{x}| > 3 \sigma  \]
+Disadvantages:  No outliers detected for $n \leq 7$ and for large samples wrongly identifies outliers. \\
+
+\vspace{.5cm}
+Note: The 3-sigma edit rule is popular in economics, but it should be avoided in practice due to the following inflexibility, which will make more sense after Part2 of the course. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{}
+The 3-$\sigma$ rule assumes that the underlying distribution is the Normal, and is based on both the sample mean and standard deviation. Problems can occur when either:
+
+\vspace{.5cm}
+1) The data is sufficiently skewed. In this case, the mean is no longer a `good' measure of central tendency, and defining outliers as points outside of some symmetric neighbourhood of the mean is not appropriate. The risk is that the `outliers' are detected near the mode rather than the longer tail. Tukey's five number approach is less likely to suffer from this.  
+\end{frame}
+
+\begin{frame}[fragile]{}
+2) The underlying population has heavy tails. The principle behind the 3-$\sigma$ rule is that $P(  |x_{i} - \bar{x}| > 3 \sigma)$ occurs with small probability, for example when the population is Normal this probability is 0.0027. 
+
+<<>>=
+2*(1-pnorm(3))
+@
+
+\vspace{.5cm}
+If there are heavy tails then this probability can be substantially larger. For example, the probability is 0.029 when the population is $t_{3}$, or 0.10 when the population is $t_{1}$. In the latter case 10\% of the observations will be deemed `outliers'!
+
+%{\tiny 
+%<<>>=
+%2*(1-pt(3*sqrt(3),3))
+%2*(1-pt(3*sqrt(2),1))
+%@
+%}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+\begin{block}{Detecting Outlier in Data with Mistake}
+Suppose we made a mistake in the data entry with heights:
+1.68 1.58 1.64 1.73 1.60 1.62 1.78 1.69 1.80 1.74 1.71 1.59 1.63 1.77 1.70 1.77 1.63 1.62 1.80 1.70 1.60 1.77 1.79 1.65 1.66 1.60 1.71 {\bf 178}
+\end{block}
+
+IQR method
+<<echo=-1, eval=-2>>=
+Usyd <- read.csv("../datasets/USyd.csv")
+Usyd <- read.csv("USyd.csv")
+heights1=c(Usyd$Heights[1:27],178)
+iqr=fivenum(heights1)[4]-fivenum(heights1)[2]
+lt=fivenum(heights1)[2]-1.5*iqr
+ut=fivenum(heights1)[4]+1.5*iqr
+heights1[(heights1<lt) | (heights1 > ut)]   # | = 'or'
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+3-$\sigma$ method
+<<>>=
+3*sd(heights1)  
+heights1[abs(heights1-mean(heights1))>3*sd(heights1)]
+@
+\end{frame}
+
+
+\begin{frame}[fragile]{Dealing with Outliers by Transformation}
+Sometimes an outlier indicates that a better model is needed.
+<<fig.height=3>>=
+w=c(1,2,3,4,10,30,60,120,180,300)
+w1=log(w,10)
+par(mfrow = c(1, 2))
+boxplot(w, main ="Data")
+boxplot(w1, main="Log of Data")
+@
+\end{frame}
