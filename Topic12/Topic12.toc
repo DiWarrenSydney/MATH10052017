@@ -1,0 +1,13 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Topic12: Confidence Intervals}{1}{0}{1}
+\beamer@subsectionintoc {1}{1}{Example1: Birth Weight}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Example2: Paint Primer Thickness}{4}{0}{1}
+\beamer@subsectionintoc {1}{3}{Example3: Concrete Tensile Strength}{5}{0}{1}
+\beamer@subsectionintoc {1}{4}{Example4: Clinton vs Trump Polls}{7}{0}{1}
+\beamer@subsectionintoc {1}{5}{Estimating Parameters}{9}{0}{1}
+\beamer@subsectionintoc {1}{6}{Overview of Confidence Intervals}{11}{0}{1}
+\beamer@subsectionintoc {1}{7}{Formulae for Confidence Intervals}{12}{0}{1}
+\beamer@subsectionintoc {1}{8}{Confidence Interval for Mean based on Z Test Statistic}{13}{0}{1}
+\beamer@subsectionintoc {1}{9}{Worked Examples}{20}{0}{1}
+\beamer@subsectionintoc {1}{10}{Justifying the Conservative CI for Proportion}{29}{0}{1}

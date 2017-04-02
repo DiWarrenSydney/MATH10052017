@@ -1,0 +1,471 @@
+<<echo=FALSE, cache=FALSE>>=
+set_parent('../full_lectures/master.Rnw')
+@
+
+
+
+%%%% TOPIC12 %%%%
+\section[12]{Topic12: Confidence Intervals}
+
+\subsection[Examples]{Example1: Birth Weight}
+\begin{frame}{Example1: Birth Weight}
+It is known that the birthweight (in kgs) of babies born at term (37-41 weeks gestation) is $W \sim N(\mu,0.525^2)$. \\
+
+The following data are 8 term births:
+
+<<>>=
+x=c(2.853,3.127,3.159,3.800,2.656,3.245,3.510,3.082)
+@
+
+\vspace{.5cm}
+(i) What is the best estimate for $\mu$? \\
+
+(ii) Find a 95\% and 99\% CI for $\mu$. \\
+
+\begin{center}
+\includegraphics[height=3cm]{../images/Baby.jpg}
+\end{center}
+\end{frame}
+
+\subsection[Examples]{Example2: Paint Primer Thickness}
+\begin{frame}{Example2: Paint Primer Thickness}
+
+Assume that paint primer thickness can be modelled by $X \sim N(\mu, \sigma^2)$.In an ongoing process of quality control in an industrial system, the following first sample of values was obtained:
+
+<<>>=
+x=c(1.30,1.10,1.20,1.25,1.05,0.95,1.10,1.16,1.37,0.98)
+@
+
+(i) What is a 95\% CI for the primer thickness? \\
+
+(ii) The company advertises that the primer thickness is 1.25. What would you conclude?
+
+\begin{center}
+\includegraphics[height=3cm]{../images/Primer.jpg}
+\end{center}
+\end{frame}
+
+\subsection[Examples]{Example3: Concrete Tensile Strength}
+\begin{frame}[fragile]{Example3: Concrete Tensile Strength}
+
+We are interested in the influence of the size of test specimens of concrete on the tensile strength. 
+8 concrete mixes were made, and from each mix 2 test secimens were prepared and tested, resulting in the following strengths (in $kN/m^2$):
+
+<<>>=
+small=c(4404,4236,3788,3475,3418,2262,7415,6993)
+large=c(4140,3984,3842,3053,3145,1813,6867,7091)
+diff=large-small
+diff
+@
+
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+
+(i) Find a 95\% CI for the mean tensile strength of small specimens, assuming that the strengths can be modelled by $N(\mu,1000^2)$. 
+
+\vspace{.5cm}
+(ii) Find a 90\% CI for the mean difference in tensile strengths, assuming that the differences can be modelled by $N(\mu,\sigma^2)$. 
+
+\begin{center}
+\includegraphics[height=3cm]{../images/Concrete.jpg}
+\end{center}
+\end{frame}
+
+
+\subsection[Examples]{Example4: Clinton vs Trump Polls}
+\begin{frame}[fragile]{Example4: Clinton vs Trump Polls}
+
+From a recent report on the \href{http://edition.cnn.com/2016/10/09/politics/hillary-clinton-donald-trump-florida-pennsylvania-polls/index.html}{\beamergotobutton{USA Election 2016}}, we find the following quotes:
+
+`The tighter race in Florida showed Clinton edging Trump 45\% to 42\% among likely voters, with Johnson at 5\% and Stein at 3\%. That three-point lead was within the poll's margin of error.'
+
+\begin{center}
+\includegraphics[height=3cm]{../images/ClintonTrump.jpg}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{}
+`The NBC/WSJ/Marist poll Florida poll surveyed 700 likely voters between October 3-5 with a margin of error of plus or minus 3.7 percentage points.' 
+
+\vspace{.5cm}
+`The Pennsylvania poll surveyed 709 likely voters between October 3-6 with a margin of error of plus or minus 3.7 percentage points.'
+
+A fuller report is found here with an interesting video overview: 
+\href{http://www.telegraph.co.uk/news/0/us-election-2016-polls-and-odds-tracker-latest-forecast-in-race/}{\beamergotobutton{USA Election Polls}}
+
+\vspace{.5cm}
+A random survey of 2000 voters found that 1165 were going to vote for Hilary Clinton.  
+
+\vspace{.5cm}
+(i) Find a 95\% CI for the proportion of voters $p$ that will vote for Hillary.\\
+
+(ii) What is the `margin of error'? \\
+
+(iii) What sample size is needed to give a 95\% CI for $p$ with width $\pm 0.03$?
+\end{frame}
+
+
+\subsection[Estimating]{Estimating Parameters}
+\begin{frame}{Estimating Parameters}
+So far in Part3 we have been testing {\it hypotheses} about an unknown parameter. 
+Now we want to {\it estimate} the unknown parameter.
+
+\vspace{.5cm}
+If we can find a Pivot, then we can find:\\
+(1) A {\it Point Estimate} for the parameter. \\
+(2) A {\it Confidence Interval (CI)} for the parameter. 
+
+\vspace{.5cm}
+\includegraphics[height=3cm]{../images/Pivot.jpg}
+\end{frame} 
+ 
+ 
+\begin{frame}{}
+\begin{block}{Definition (Pivot)}
+A pivot is:
+\begin{itemize}
+\item a function (based on the data and parameters) which always has the same distribution regardless of the value of the parameter, for some statistical model.
+\item the random variable from which we construct CIs.
+\item often of the form $\frac{Estimate - Parameter}{Standard \; Error} \sim Distribution$
+where the $Standard \; Error$ is the standard deviation of the $Estimate$.
+\end{itemize}
+\end{block}
+
+\vspace{.5cm}
+It turns out that the Test Statistics, previously considered in Part 3, can be used as Pivots. Hence, we effectively rearrange the Pivot to get the CI.
+\end{frame} 
+
+\subsection[Confidence Intervals]{Overview of Confidence Intervals}
+\begin{frame}{Overview of Confidence Intervals}
+
+\begin{block}{Definition (Confidence Interval)}
+A Confidence Interval is:
+\begin{itemize}
+\item a sequence of intervals which contain the unknown parameter $(1-\alpha)$\% of the time, where $\alpha$ is the confidence level, often $\alpha = 0.05$.
+\href{https://gauss17gon.shinyapps.io/conf_intervals/}{\beamergotobutton{Sequence of CIs}}
+\item of the form $(Point) Estimate \pm Critical Value \times Standard Error$.
+\item a set of possible hypotheses $\{ H_{0}: \mu = \mu_{0} \}$, which will be retained if $\mu_{0} \in CI$.
+\end{itemize}
+
+\vspace{.5cm}
+A Confidence Interval is {\it not} an interval which contains the unknown parameter $(1-\alpha)$\% of the time.
+\end{block}
+\end{frame}
+
+
+
+
+\subsection[Formulae for Confidence Intervals]{Formulae for Confidence Intervals}
+\begin{frame}{Formulae for Confidence Intervals}
+\vspace{.5cm}
+{\small \begin{tabular}{lll} \hline
+Test &  Parameter & Test Statistic and CI \\ \hline
+Proportion & $p$ & \framebox{T} $\frac{ \hat{p} - p }{ \sqrt{ \frac{\hat{p}(1-
+\hat{p})}{n} }} \sim Z$  \\
+& & \framebox{CI} $\hat{p} \pm z^{*} \sqrt{ \frac{\hat{p}(1-
+\hat{p})}{n} }$  \mbox{ Approximate} \\ 
+& & \framebox{CI} $\hat{p} \pm z^{*} \frac{1}{2 \sqrt{n}}$  \mbox{ Conservative}   \\ \hline \hline
+1 sample $Z$ & $\mu$ & \framebox{T} $\frac{ \bar{X} - \mu }{ \frac{\sigma}{\sqrt{n}} } \sim Z$  \\
+ &  & \framebox{CI} $\bar{x} \pm z^{*} \frac{\sigma}{\sqrt{n}}$  \\ \hline
+1 sample $T$ & $\mu$ & \framebox{T} $\frac{ \bar{X} - \mu }{ \frac{s}{\sqrt{n}} } \sim t_{n-1}$  \\ 
+& & \framebox{CI} $\bar{x} \pm t_{n-1}^{*} \frac{s}{\sqrt{n}}$   \\ \hline
+2 sample $T$ & $\mu_{1} - \mu_{2}$ & \framebox{T} $\frac{ \bar{X_{1}} - \bar{X_{2}} - (\mu_{1}-\mu_{2}) }{ s_{p} \sqrt{ \frac{1}{n_{1}} + \frac{1}{n_{2}}  } } \sim t_{n_{1} + n_{2}-2}$  \\
+& & \framebox{CI}  $\bar{x}_{1} - \bar{x}_{2} \pm t_{n_{1} + n_{2}-2}^{*} s_{p} \sqrt{ \frac{1}{n_{1}} + \frac{1}{n_{2}}  }   $  \\ \hline
+\end{tabular}}
+\end{frame}
+
+
+
+\subsection[Confidence Interval for Mean based on Z test]{Confidence Interval for Mean based on Z Test Statistic}
+
+\begin{frame}[fragile]{Confidence Interval for Mean based on Z Test Statistic}
+
+We will consider this example in detail, and then treat the other CIs by analogy.
+
+\vspace{.5cm}
+Assume we have a sample $x_{1}, x_{2}, \ldots, x_{n}$ from a Normal population $X \sim N(\mu, \sigma^2)$, where $\mu$ is unknown and $\sigma^2$ is known.
+
+\vspace{.5cm}
+The best estimate of the population mean is the sample mean:
+\[ \hat{\mu} = \bar{x} = \frac{\sum_{i=1}^n x_{i}}{n} \]
+
+\vspace{.5cm}
+As the sample mean will differ from sample to sample, we want to find a plausible set of values for $\mu$ that incorporates this sample to sample variation.
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+Based on the 1 sample $Z$ test statistic, we want to find a 95\% CI. 
+
+\vspace{.5cm}
+(1) If $P(-z^{*} \leq Z \leq z^{*}) = 0.95$, we know that $z^{*} = 1.96$. \\
+
+
+<<fig.height=3,echo=FALSE>>=
+curve(dnorm(x), xlim = c(-3, 3),ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(-1.96, 1.96, 0.1)
+polygon(x = c(sequence,1.96,-1.96),
+        y = c(dnorm(c(sequence)),0,0),
+        col = "green")
+axis(1, at=seq(-1.96, 1.96, 3.92), pos=0)
+qnorm(0.975)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+(2) Now substituting the pivot 
+$Z = \frac{ \bar{X} - \mu }{ \frac{\sigma}{\sqrt{n}} }$, gives
+
+\[ P(-z^{*} \leq \frac{ \bar{X} - \mu }{ \frac{\sigma}{\sqrt{n}} } \leq z^{*}) = 0.95 \]
+
+Rearranging gives
+\[ P( -\bar{X} -z^{*} \frac{\sigma}{\sqrt{n}}  \leq        -\mu         \leq  -\bar{X} + z^{*} \frac{\sigma}{\sqrt{n}}) = 0.95 \]
+
+which simplifies to
+
+\[ P( \bar{X} -z^{*} \frac{\sigma}{\sqrt{n}}  \leq  \mu  \leq  \bar{X} + z^{*} \frac{\sigma}{\sqrt{n}}) = 0.95 \]
+\end{frame}
+
+\begin{frame}[fragile]{}
+(3) This is a random interval which covers $\mu$ with probability 0.95. 
+
+\vspace{.5cm}
+\begin{center}
+\framebox{ $\bar{X}  \pm 1.96 \frac{\sigma}{\sqrt{n}}$ }
+\end{center}
+
+
+
+\vspace{.5cm}
+(4) The observed value of the interval is called the 95\% Confidence Interval (CI) for $\mu$.
+
+\vspace{.5cm}
+\begin{center}
+\framebox{ $\bar{x}  \pm 1.96 \frac{\sigma}{\sqrt{n}}$ }
+\end{center}
+
+(5) More generally, the $(1-\alpha)$\% Confidence Interval (CI) for $\mu$ is:
+
+\vspace{.5cm}
+\begin{center}
+\framebox{ $\bar{x}  \pm z^{*} \frac{\sigma}{\sqrt{n}}$ }
+\end{center}
+where $P(-z^{*} \leq Z \leq z^{*}) = 1-\alpha$ or
+$P(Z \geq z^{*}) = \frac{\alpha}{2}$.
+
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+\vspace{.5cm}
+Note: \\
+(1) The CI refers to the proportion of CIs that will cover the true $\mu$ if the above procedure is repeated for many samples of size $n$. We only observe one sample, so we don't know if it is one that contains $\mu$. 
+
+\includegraphics[height=4cm]{../images/CI.jpg} 
+
+\vspace{.5cm}
+(2) As we increase $n$, the CI gets narrower, and so $\bar{x}$ is a better estimate for the long term estimate of $\mu$.
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+\vspace{.5cm}
+(3) As we increase the confidence level, the CI gets wider.
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+
+\begin{alertblock}{Practise finding critical values}
+Find $z^{*}$ for 70\%, 80\%, 90\%, 95\% and 99\% CIs.
+\end{alertblock}
+
+{\tiny
+<<>>=
+qnorm(0.85)
+qnorm(0.9)
+qnorm(0.95)
+qnorm(0.975)
+qnorm(0.995)
+@
+}
+\end{frame}
+
+
+\subsection[Worked Examples]{Worked Examples}
+\begin{frame}[fragile]{Example1: Birth Weight}
+
+We have $W \sim N(\mu,0.525^2)$ and the data:
+
+<<>>=
+x=c(2.853,3.127,3.159,3.800,2.656,3.245,3.510,3.082)
+mean(x)
+@
+
+(i) The best estimate for $\mu$ is $\bar{x} = 3.179$ \\
+
+\vspace{.5cm}
+(ii) A 95\% CI for $\mu$ is: 
+\[ \bar{x}  \pm 1.96 \frac{\sigma}{\sqrt{n}} \] which is $3.179  \pm 1.96 \frac{0.525}{\sqrt{8}}$, giving (2.82,3.54).
+<<>>=
+qnorm(0.975)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+A 99\% CI for $\mu$ is: 
+\[ \bar{x}  \pm z^{*} \frac{\sigma}{\sqrt{n}} \]
+which is $3.179  \pm 2.576 \frac{0.525}{\sqrt{8}}$, giving (2.70,3.66).
+
+<<>>=
+qnorm(0.995)
+@
+
+<<fig.height=3,echo=FALSE>>=
+curve(dnorm(x), xlim = c(-3, 3),ylab="",axes=FALSE)
+abline(h = 0)
+sequence <- seq(-2.576, 2.576, 0.1)
+polygon(x = c(sequence,2.576,-2.576),
+        y = c(dnorm(c(sequence)),0,0),
+        col = "green")
+axis(1, at=seq(-2.576, 2.576, 5.152), pos=0)
+@
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Example2: Paint Primer}
+
+We have $X \sim N(\mu,\sigma^2)$ and the data:
+
+<<>>=
+x=c(1.30,1.10,1.20,1.25,1.05,0.95,1.10,1.16,1.37,0.98)
+mean(x)
+sd(x)
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+(i) A 95\% CI for $\mu$ is: 
+\[ \bar{x}  \pm t^{*} \frac{s}{\sqrt{n}} \]
+which is $1.146  \pm 2.262 \frac{0.136}{\sqrt{10}}$, giving (1.05,1.24).
+
+<<>>=
+qt(0.975,9)
+@
+
+(ii) The CI does not contain $H_{0}: \mu=1.25$ hence the data provide evidence against the company's advertising.
+\end{frame}
+
+\begin{frame}[fragile]{Example3: Concrete Tensile Strength}
+
+(i)
+{\tiny
+<<>>=
+small=c(4404,4326,3788,3475,3418,2262,7415,6993)
+mean(small)
+sd(small)
+@
+}
+
+Assuming that the strengths can be modelled by $N(\mu,1000^2)$, a 95\% CI for the mean tensile strength of small specimens is:
+\[ \bar{x}  \pm 1.96 \frac{\sigma}{\sqrt{n}}\]
+which is
+\[ 4510.125 \pm 1.96*1000/\sqrt{8} \] which gives 
+\[ (3817,5203). \]
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+(ii)
+{\tiny
+<<>>=
+small=c(4404,4326,3788,3475,3418,2262,7415,6993)
+large=c(4140,3984,3842,3053,3145,1813,6867,7091)
+diff=large-small
+mean(diff)
+sd(diff)
+@
+}
+
+Assuming that the differences can be modelled by $N(\mu,\sigma^2)$, a 90\% CI for the mean difference in tensile strengths is:
+\[ \bar{x}  \pm t^{*}_{7} \frac{s}{\sqrt{n}} \]
+which is
+$-268.25 \pm 1.895*232.39/\sqrt{8}$ which gives (113,424).
+
+<<>>=
+qt(0.95,7)
+@
+\end{frame}
+
+
+\begin{frame}[fragile]{Example4: Clinton vs Trump Polls}
+
+Given a random survey of 2000 voters found that 1165 were going to vote for Clinton:
+
+\vspace{.5cm}
+(i) A 95\% approximate CI for the proportion of voters $p$ that will vote for Hillary is:
+\[ \hat{p} \pm Z^{*} \sqrt{ \frac{\hat{p}(1-
+\hat{p})}{n}} \]
+
+Given $\hat{p} = 1165/2000 = 0.5825$, we get \\
+\[ 0.5825 \pm 1.96 \sqrt{ \frac{0.5825*(1-0.5825)}{2000}} \]
+which gives
+\[ (0.56,0.60) \].
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+A 95\% conservative CI for the proportion of voters $p$ that will vote for Hillary is:
+\[ \hat{p} \pm Z^{*} \frac{1}{2 \sqrt{n}} \]
+which is
+\[ 0.5825 \pm 1.96 \frac{1}{2 \sqrt{2000}} \]
+which gives
+\[ (0.56,0.60). \]
+
+\vspace{.5cm}
+(ii) The `margin of error' is $1.96 \frac{1}{2 \sqrt{2000}}$
+which is 0.02191347 or approximately 2\%.
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+\vspace{.5cm}
+(iii) To give a 95\% CI for $p$ with width $\pm 0.03$ (ie margin of error 3\%):
+
+We solve \[ 1.96 \frac{1}{2 \sqrt{n}} = 0.03 \]
+which gives
+\[ n = (\frac{1.96}{2 (0.03)} )^2 \]
+resulting in $n=1067$, or approximately 1000.
+
+\vspace{.5cm}
+Note that  $1.96 \frac{1}{2 \sqrt{n}} \approx \frac{1}{\sqrt{n}}$, so the margin of error is approximately $\frac{1}{\sqrt{n}}$, which clearly decreases for larger $n$.
+\end{frame}
+
+
+
+
+\subsection[Justifying the Conservative CI for Proportion]{Justifying the Conservative CI for Proportion}
+\begin{frame}[fragile]{Justifying the Conservative CI for Proportion}
+
+The Standard Error in the Approximate CI is $\sqrt{ \frac{\hat{p}(1- \hat{p})}{n} }$. \\
+
+As $0 \leq \hat{p} \leq 1$, then
+ $0 \leq \hat{p}(1- \hat{p}) \leq \frac{1}{4}$, as the maximum of the function occurs when $\hat{p} = \frac{1}{2}$.
+ 
+<<fig.height=3,echo=FALSE>>=
+curve(x*(1-x), xlim = c(0,1), xlab="p", ylab="p(1-p)", main="Plot of p(1-p)")
+@
+ 
+Hence,the maximum that the SE can be is 
+$\sqrt{ \frac{\frac{1}{4}}{n} } = \frac{1}{2 \sqrt{n}}$
+which is what we use in the conservative CI. That is, we choose the largest possible CI.
+\end{frame}
