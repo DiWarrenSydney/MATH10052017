@@ -1,0 +1,16 @@
+\frametitle{}
+
+\framebox{C} \\
+
+‘The (null hypothesis) is ... never proved or established, but is possibly disproved, in the context of experimentation. Every experiment may be said to exist only in order to give the facts a chance of disproving the null hypothesis.’ (Ronald Fisher, Design of Experiments, 1935, p19).
+
+\begin{itemize}
+\item There is no final proof that $H_{0}$ is true or false.
+
+\item The conclusion is not `Accept' $H_{0}$ or $H_{1}$, as  we have assumed $H_{0}$ to be true.
+That is, we have not proved $H_{0}$ true, rather we look for evidence about whether it is false.
+
+\item  If the $P$-value is small, it suggests there is evidence against  $H_{0}$. If the $P$-value is not small, then it suggests the data are consistent with $H_{0}$
+
+\item By `small', a common convention is $\alpha = 0.05$. That is, for $P$-values under 0.05, we suggest there is evidence against  $H_{0}$.
+\end{itemize}

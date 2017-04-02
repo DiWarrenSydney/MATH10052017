@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Topic8: Hypothesis Testing}{1}{0}{1}
+\beamer@subsectionintoc {1}{1}{Example: Famous Court Cases}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{The Western legal system}{5}{0}{1}
+\beamer@subsectionintoc {1}{3}{Framework for Hypothesis Testing}{8}{0}{1}
+\beamer@subsectionintoc {1}{4}{Defining Terms}{9}{0}{1}
