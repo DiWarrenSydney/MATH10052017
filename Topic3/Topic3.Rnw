@@ -1,0 +1,510 @@
+<<echo=FALSE, cache=FALSE>>=
+set_parent('../full_lectures/master.Rnw')
+@
+
+
+%%% TOPIC3 %%%%
+\section[3]{Topic3: Bivariate Data}
+
+\subsection[]{Example: Male Olympic 100m sprints}
+\begin{frame}[fragile]{Example: Male Olympic 100m sprints}
+
+The Male 100 metres sprint race in the Olympics is one of the most prestigious events in Athletics. The reigning champion is often named `the fastest man in the world', currently the Jamaican Usain Bolt. 
+
+\vspace{.5cm}
+{\bf Are the times getting faster in each Olympics? What would you predict the time for the next Olympics?}
+
+\includegraphics[height=3cm]{../images/Olympics100m.jpg}
+\includegraphics[height=5cm]{../images/UsainBolt.jpg}
+
+\href{http://www.nytimes.com/interactive/2012/08/05/sports/olympics/the-100-meter-dash-one-race-every-medalist-ever.html}{\beamergotobutton{Olympics100mData}}
+\end{frame}
+
+\subsection[]{Bivariate Data}
+\begin{frame}[fragile]{Bivariate Data}
+In most contexts we collect many pieces of information for each ‘individual’ in the data set and look at the relationships between the variables (eg age, height, weight and income for USyd students).  This is called multivariate data.
+
+\begin{itemize}
+\item
+We just consider bivariate data, of the form: $\{ (x_i,y_i) \}$ for  $i=1,2, \ldots, n$.
+
+\item
+$X$ is called the independent variable (or explanatory variable, predictor or regressor) and $Y$ is called the dependent variable (or response variable). These are determined by the context of the data.
+\end{itemize}
+\end{frame}
+
+\subsection[]{Fitting a Least Squares Regression Model}
+\begin{frame}[fragile]{Fitting a Model}
+We are interested in fitting a model $Y = f(X) + error$, where the error is independent of the function $f(X)$ and follows a Normal curve (See Topic 6).
+
+\begin{itemize}
+\item
+Examples include
+$Y = \alpha + (X+\beta)^2 + \gamma + error$ (quadratic) or $Y=\alpha e^{\beta X}$ (exponential) or $Y=\alpha X^{\beta}$ (allometric).
+
+\item
+We will just consider the linear model: $Y = \alpha + \beta X + error$. 
+
+\item
+We use the sample values $\{ (x,y) \}$ to find an estimate of the model:
+$y = a + b x + residual$.
+
+\item
+Note that both the exponential and allometric models can be expressed as a linear model by taking logs of each side.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Fitting a Linear Regression (LSL)}
+Consider the following 5 steps:  
+\begin{enumerate}
+
+\item 
+Construct a Scatterplot: $y$ vs $x$.
+
+\item
+If the plot looks linear, fit the Least Square’s (Regression) Line (LSL): $\hat{y} = a + b x$. 
+
+\item
+Construct a residual plot: $res= y-\hat{y} = y-(a+bx)$ vs $x$
+
+\item
+If the residual plot looks random, calculate the coefficient of determination ($r^2$) and correlation coefficient ($r$).
+
+\item
+Work out predictions for $y$, by finding $\hat{y}$ for a certain given $x$.
+\end{enumerate}
+\end{frame}
+
+
+\subsection[]{Step1: Construct a Scatter plot}
+\begin{frame}[fragile]{Step1: Construct a Scatter plot}
+The 1st step is to construct a scatterplot of $Y$ vs $X$. This is a graphical summary of the bivariate data.
+
+\vspace{.5cm}
+This is 1st diagnostic: does the plot suggest a linear relationship between $Y$ and $X$, or not?
+\end{frame}
+
+\begin{frame}[fragile]{}
+<<fig.height=3.5, echo = -1, eval = -2>>=
+olympics <- read.csv("../datasets/Olympics100m.csv",header=T)
+olympics <- read.csv("Olympics100m.csv",header=T)
+year=c(olympics$Year)
+time=c(olympics$Time)
+plot(year,time, xlab="year", ylab="time", 
+     main="Olympics 100m 1968-2012")
+@
+\end{frame}
+
+
+\subsection[]{Step2: Fit the Least Square’s Line (LSL)}
+\begin{frame}[fragile]{Step2: Fit the Least Square’s Line (LSL)}
+If the scatter plot looks linear, then we fit the Least Square’s Regression Line (LSL).
+
+\begin{itemize}
+\item By `eye’, there are many possible lines, which could be drawn on the scatter plot – but which one is optimal?
+
+<<echo=F,fig.height=3>>=
+plot(year,time, xlab="year", ylab="time", main="Olympics 100m 1968-2012")
+abline(lm(time~year),col="blue")
+abline(a=24.1,b=-0.00715, col="green")
+abline(a=23.95019,b=-0.0070, col="red")
+@
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+\begin{itemize}
+
+\item 
+For each candidate line $f(x)= a+bx$ for all $a$ and $b$, we focus on the resultant set of residuals: $res = e(a,b) = y-(a+bx)$. 
+
+\vspace{.5cm}
+This is the gaps between the line and the actual points.
+For example, in the plot below the green residual is -0.1581 and the purple residual is 0.22603.
+\end{itemize}
+
+<<echo=F,fig.height=4>>=
+plot(year,time, xlab="year", ylab="time", main="Olympics 100m 1968-2012")
+abline(lm(time~year),col="blue")
+segments(1968,9.95,1968,10.10841,col="green")
+segments(1980,10.25,1980,10.02397,col="purple")
+# residual = 10.10841-9.95
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+\begin{itemize}
+\item   
+We consider the `best’ line, to have the smallest residuals, determined by their sum of squared residuals 
+\[ S(a,b)= \sum_{i=1}^{n} e(a,b)^2 = \sum_{i=1}^{n} (y - (a+bx))^2 \]
+
+\item   
+We minimise $S(a,b)$  by solving  $\frac{ \partial}{\partial a} = 0$ and 
+$\frac{ \partial}{\partial b} = 0$. This gives 
+ \[ \sum_{i=1}^{n} y_{i} - na - b \sum_{i=1}^{n} x_{i} = 0 \]
+and
+\[\sum_{i=1}^{n} x_{i} y_{i}  -  a \sum_{i=1}^{n} x_{i}   - b \sum_{i=1}^{n} x_{i}^2 = 0 \].
+
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+
+\begin{itemize}
+\item
+As long as the  $x_i$ are not all equal, there is a unique solution for the intercept and the slope,
+
+\[  \boxed{ a = \bar{y} - b \bar{x}   } \]
+and
+\[ \boxed{ b = \frac { S_{xy} }{ S_{xx}} } \]
+\end{itemize}
+
+
+
+
+where    
+\[ S_{xx} = \sum_{i=1}^{n} x_{i}^2 - \frac{1}{n} (\sum_{i=1}^{n} x_{i})^2 = (n-1) s_{x}^2 \]
+\[ S_{yy} = \sum_{i=1}^{n} y_{i}^2 - \frac{1}{n} (\sum_{i=1}^{n} y_{i})^2 = (n-1) s_{y}^2 \]
+\[ S_{xy} = \sum_{i=1}^{n} x_{i} y_{i} - \frac{1}{n} (\sum_{i=1}^{n} x_{i}) (\sum_{i=1}^{n} y_{i})  \]
+and $s_{x}^2$ and $s_{y}^2$ are the variance of $\{ x \}$ and $\{ y \}$ respectively.
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+Note: The natural numerical summaries for bivariate data are:
+$\bar{x}, \bar{y}, s_{x}, s_{y}$, so the LSL is a combination of these summaries: $\hat{y} = a+bx$.
+
+\vspace{.5cm}
+<<>>=
+model = lm(time~year)
+model$coeff
+@
+\end{frame}
+
+\begin{frame}[fragile]{}
+<<fig.height=3>>=
+plot(year,time, xlab="year", ylab="time", 
+     main="Olympics 100m 1968-2012")
+abline(model$coeff, col="blue")
+@
+\end{frame}
+
+
+\subsection[]{Step3: Construct a residual plot}
+\begin{frame}[fragile]{Step3: Construct a residual plot}
+A residual plot is a scatter plot of the residuals $res = e = y-(a+bx)$ vs $x$.
+
+\vspace{.5cm}
+It is a 2nd diagnostic: "Does the plot look random, or is there any pattern?"
+\begin{itemize}
+\item
+  If the plot is random: then the LSL fit is good.
+\item
+	If the plot shows a relationship between $e$ and $x$, then the LSL is not adequate and we need to consider a more complex function or a transformation (eg $y=x^2$ or $y=log(x)$).
+\end{itemize}
+\end{frame} 
+  
+\begin{frame}[fragile]{}  
+<<fig.height=3.5>>=
+residuals=model$res
+plot(year,residuals,main="Residual Plot")
+abline(h=0,col="red")
+@
+\end{frame}
+
+
+\subsection[]{Step4: Calculate the correlation coefficient and the coefficient of determination}
+\begin{frame}[fragile]{Step4: Calculate the correlation coefficient and the coefficient of determination}
+
+We have calculated the ‘best’ line, but is it a good line? How strong is the linear relationship between $Y$ and $X$?
+
+\vspace{.5cm}
+A fit is considered good when the set of data points is close to the LSL, so that the residuals are small. So we consider the relationship between $s_{res}^2$ (the variance of the residuals) and $s_{y}^2$   (the variance of $y$).
+\end{frame} 
+
+\begin{frame}[fragile]{Pearson's correlation coefficient}
+The correlation coefficient is
+\[ \boxed{ r =  \frac{ S_{xy} }{\sqrt{ S_{xx} S_{yy}} } } \]
+
+Properties:
+\begin{itemize}
+\item
+$r$ is symmetric in $x$ and $y$.
+
+\item $-1 \leq r \leq 1$ \\
+$r$ is a numerical summary which indicates the strength of the linear assocation between $y$ and $x$.
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]{}
+\begin{itemize}
+\item  $r=\pm 1$ \\
+This corresponds to a perfect linear correlation, with all the data points lying on the LSL.
+
+<<fig.height=2.5,echo=F>>=
+x1=c(1:10)
+y1=x1*2
+model1=lm(y1~x1)
+y2=-x1*2
+model2=lm(y2~x1)
+par(mfrow = c(1, 2))
+plot(x1, y1, xlab="x", ylab="y", main="r=+1")
+abline(model1$coeff,col="purple")
+plot(x1,y2, xlab="x", ylab="y", main="r=-1")
+abline(model2$coeff,col="orange")
+@
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]{}
+\begin{itemize}
+\item $r=0 $ \\
+This indicates no linear correlation, for example a line with zero slope, or a random scatter, or a non linear relationship.
+\end{itemize}
+<<fig.height=3.5,echo=F>>=
+x1=c(1:20)
+y3=c(rep(0,20))  # line with zero slope
+y4=sin(x1)  # non linear relationship
+par(mfrow = c(1, 2))
+plot(x1,y3, xlab="x", ylab="y", main="r=0")
+plot(x1,y4, xlab="x", ylab="y", main="r=0")
+@
+\end{frame} 
+
+\begin{frame}[fragile]{Examples of Correlation Coefficients}
+\includegraphics[height=5cm]{../images/CorrelationChart.jpg}
+
+\href{https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient}{\beamergotobutton{Link}}
+\end{frame} 
+
+\begin{frame}[fragile]{Relationship between Correlation Coefficient and Slope}
+There is an interesting relationship between $r$ and $b$
+\[ b =  \frac{ S_{xy} }{ S_{xx}  }
+= \frac{ S_{xy} }{\sqrt{ S_{xx} S_{yy}} }   \frac{ \sqrt{ S_{yy} } }{ \sqrt{ S_{xx} } }
+= r \frac{ \sqrt{ S_{yy}/(n-1)} }{ \sqrt{ S_{xx}/(n-1) }  }
+= r \frac{ s_{y}}{s_{x}} \]
+
+Hence:
+\begin{itemize}
+\item 
+The sign of $r$ reflects the trend (slope) of the data.
+\item
+$r$ is unaffected by a change of scale or origin.
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]{The coefficient of determination}
+The coefficient of determination is the proportion of variability of $y$ explained by $x$ for a model, or in our context, the proportion of variability explained by the linear regression. 
+
+\[ \boxed{  r^2 = \frac{s_{y}^2 - s_{res}^2}{s_{y}^2} = \frac{S_{xy}^2}{S_{xx} S_{yy}}  }\]
+
+Properties:
+\begin{itemize}
+\item $0 \leq r^2 \leq 1$ \\
+%$r^2$ is a numerical summary: we say that $(1-r^2)100 \%$ of the variability of $y$ is explained by $x$.
+
+\item  $r^2=1$ \\
+This arises when $res_i=0 \;\; \forall i$ and $s_{res}^2=0$, ie all of the variability of the model is associated with the linear regression.
+All points lie on the LSL.
+\end{itemize}
+\end{frame} 
+
+
+
+\begin{frame}[fragile]{}
+
+\begin{itemize}
+\item  $r^2 \approx 1$ \\
+This arises when $res_i=0$ is small compared to $s_{y}^2$, ie most of the variability of the model is associated with the linear regression.
+
+\item $r^2=0$ \\
+This arises when $s_{res}^2=s_{y}^2$, ie none the variability of the model is associated with the linear regression. 
+
+\item $r^2 \approx 0$ \\
+This arises when $s_{res}^2 \approx s_{y}^2$, ie almost none the variability of the model is associated with the linear regression. 
+
+\item Note that $r^2$ can be small and still indicate that the model is correct (ie a model where there is naturally low association between $X$ and $Y$).
+
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]{}  
+<<fig.height=3.5>>=
+cor(year,time)
+cor(year,time)^2
+@
+
+Hence, the linear associotion between year and time for the Olympics 100m sprint is  -0.7 (fairly high). 48\% of the variation in times is explained by the variation in years.
+
+
+
+\end{frame}
+
+
+
+\subsection{Avoiding mistakes in Regression}
+\begin{frame}[fragile]{Avoiding mistakes in Regression}
+
+\begin{itemize}
+\item Correlation does not imply causation \\
+A high value of $r$ does not necessarily imply a causal relationship between $X$ and $Y$.  For example, December temperature and consumer spending).
+
+\vspace{.5cm}
+\item Causation does not imply (linear) correlation \\
+
+<<fig.height=3.5,echo=F>>=
+x5=runif(40,-2,2)
+par(mfrow = c(1, 2))
+plot(x5,x5^2, xlab="x", ylab="y", main="y=x^2, r=-0.015")
+plot(x5,x5^3, xlab="x", ylab="y", main="y=x3, r=0.91")
+@
+\end{itemize}
+\end{frame} 
+
+
+\begin{frame}[fragile]{Avoiding mistakes in Regression}
+\begin{itemize}
+\item The same value of $r$ can correspond to very different models.  \\
+
+\vspace{.5cm}
+The following data sets, called `Ansombe's Quartet' were constructed by Francis Anscombe in 1973. They all have $\bar{x}= 9$, $s_{x}^2=11$, $\bar{y} = 7.5$, $s_{y}^2 = 4.127$, $r=0.816$ and linear regression line $y=3+0.5x$. But look how different they look!
+\end{itemize}
+
+\href{https://en.wikipedia.org/wiki/Anscombes_quartet}{\beamergotobutton{Anscombes Quartet}}
+
+\href{http://data.heapanalytics.com/anscombes-quartet-and-why-summary-statistics-dont-tell-the-whole-story}{\beamergotobutton{Law Grad salaries}}  %Why not work?
+\end{frame} 
+
+
+\begin{frame}[fragile]{}
+
+<<fig.height=5.5,echo=F>>=
+par(mfrow = c(2, 2))
+plot(anscombe[,1],anscombe[,5], xlab="x", ylab="y", main ="r=0.816")
+abline(3,.5, col="purple")
+plot(anscombe[,1],anscombe[,6], xlab="x", ylab="y", main ="r=0.816")
+abline(3,.5, col="purple")
+plot(anscombe[,1],anscombe[,7], xlab="x", ylab="y", main ="r=0.816")
+abline(3,.5, col="purple")
+plot(anscombe[,4],anscombe[,8], xlab="x", ylab="y", main ="r=0.816") 
+abline(3,.5, col="purple")
+@
+\end{frame} 
+
+
+\begin{frame}[fragile]{}
+
+\begin{itemize}
+\item Even one outlier can distort the model.  \\
+
+It's vital to draw a scatter plot before considering $r$, because of the high influence of outliers.
+
+<<fig.height=3.5,echo=F>>=
+x6=c(1:10)
+y6=c(1,2,3,4,5,6,7,8,9,20)
+x7=c(rep(0,9),10)
+par(mfrow = c(1, 2))
+plot(x6,y6, xlab="x", ylab="y", main="r=0.87")
+abline((lm(y6~x6)), col="green")
+plot(x7,y6, xlab="x", ylab="y", main="r=0.88")
+abline((lm(y6~x7)), col="blue")
+#cor(x7,y6)
+@
+\end{itemize}
+\end{frame}
+
+\subsection{Linear regression with outliers}
+\begin{frame}[fragile]{Example: Animals dataset: body vs brain weight}
+
+Body weight in kg and brain weight in g
+
+<<>>=
+library(MASS) ## The location of the package
+head(Animals)
+names(Animals)
+@
+
+
+\end{frame}
+
+\begin{frame}[fragile]{Outliers galore!}
+<<fig.height=5,echo=F>>=
+plot(Animals$body, Animals$brain, ylab = "Brain mass (g)", xlab = "Body mass (kg)", main = "Scatterplot")
+lm1=lm(Animals$brain~Animals$body)
+abline(lm1, col = "red")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Log transformation}
+<<fig.height=5,echo=F>>=
+par(mfrow=c(2,1))
+boxplot(log(Animals$body), horizontal = TRUE, xlab = "log(kg)", main = "Log(body weight)")
+boxplot(log(Animals$brain), horizontal = TRUE, xlab = "log(g)", main = "Log(brain weight)")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Log transformation linear regression}
+<<fig.height=5,echo=F>>=
+plot(log(Animals$body), log(Animals$brain), ylab = "log(Brain mass) - log(g)", xlab = "log(Body mass) - log(kg)", main = "Scatterplot")
+lm2=lm(log(Animals$brain)~log(Animals$body))
+abline(lm2, col = "red")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Robust regression}
+<<fig.height=5.5,echo=F, message=F, warning=F>>=
+library(MASS)
+library(quantreg)
+par(mfrow = c(2, 2))
+plot(anscombe[,1],anscombe[,5], xlab="x", ylab="y", main ="r=0.816")
+abline(3,.5, col="black")
+abline(rlm(anscombe[,5]~anscombe[,1]),col="red",lty=2)
+abline(rq(anscombe[,5]~anscombe[,1]),col="blue",lty=4)
+plot(anscombe[,1],anscombe[,6], xlab="x", ylab="y", main ="r=0.816")
+abline(3,.5, col="black")
+abline(rlm(anscombe[,6]~anscombe[,1]),col="red",lty=2)
+abline(rq(anscombe[,6]~anscombe[,1]),col="blue",lty=4)
+plot(anscombe[,1],anscombe[,7], xlab="x", ylab="y", main ="r=0.816")
+abline(3,.5, col="black")
+abline(rlm(anscombe[,7]~anscombe[,1]),col="red",lty=2)
+abline(rq(anscombe[,7]~anscombe[,1]),col="blue",lty=4)
+plot(anscombe[,4],anscombe[,8], xlab="x", ylab="y", main ="r=0.816") 
+abline(3,.5, col="black")
+abline(rlm(anscombe[,8]~anscombe[,4]),col="red",lty=2)
+abline(rq(anscombe[,8]~anscombe[,4]),col="blue",lty=4)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Robust regression}
+<<fig.height=5,echo=F>>=
+plot(log(Animals$body), log(Animals$brain), ylab = "log(Brain mass) - log(g)", xlab = "log(Body mass) - log(kg)", main = "Scatterplot")
+lm2=lm(log(Animals$brain)~log(Animals$body))
+abline(lm2)
+abline(rlm(log(Animals$brain)~log(Animals$body)), col="red",lty=4)
+abline(rq(log(Animals$brain)~log(Animals$body)), col="blue",lty=4)
+@
+\end{frame}
+
+\begin{frame}[fragile]{In R}
+The red line is MM regression
+<<eval=FALSE>>=
+library(MASS)   # library
+plot(x, y)
+red_line = rlm(y~x)  # r[obust]lm()
+abline(red_line, col="red")
+@
+The blue line is quantile regression
+<<eval=FALSE>>=
+library(quantreg)   # library
+plot(x, y)
+blue_line = rq(y~x)  # r[egression]q[uantile]()
+abline(blue_line, col="blue")
+@
+\end{frame}
+

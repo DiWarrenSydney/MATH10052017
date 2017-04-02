@@ -1,0 +1,23 @@
+\frametitle{In R}
+The red line is MM regression
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(MASS)}   \hlcom{# library}
+\hlkwd{plot}\hlstd{(x, y)}
+\hlstd{red_line} \hlkwb{=} \hlkwd{rlm}\hlstd{(y}\hlopt{~}\hlstd{x)}  \hlcom{# r[obust]lm()}
+\hlkwd{abline}\hlstd{(red_line,} \hlkwc{col}\hlstd{=}\hlstr{"red"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+The blue line is quantile regression
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(quantreg)}   \hlcom{# library}
+\hlkwd{plot}\hlstd{(x, y)}
+\hlstd{blue_line} \hlkwb{=} \hlkwd{rq}\hlstd{(y}\hlopt{~}\hlstd{x)}  \hlcom{# r[egression]q[uantile]()}
+\hlkwd{abline}\hlstd{(blue_line,} \hlkwc{col}\hlstd{=}\hlstr{"blue"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
