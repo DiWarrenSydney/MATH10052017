@@ -1,0 +1,33 @@
+\frametitle{}
+
+{\bf Approximation:} \\
+Exact Binomial: $X \sim Bin(n=30,p=0.9)$ \\
+Approximating Normal (CLT): $Y \sim N(np,np(1-p)) = N(27,2.7) = N(27,1.643168^2)$
+
+\vspace{.5cm}
+So first using a continuity correction (cc),
+\[ P( X \geq 29) \approx P(Y \geq 28.5) \]
+
+and then standardising,
+
+\[ P(Y \geq 28.5) = P(\frac{\bar{Y}-27}{1.643168} \geq \frac{28.5-27}{1.643168}) = P(Z \geq 0.9128707) \approx 0.18 \]
+
+{\tiny
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1}\hlopt{-}\hlkwd{pnorm}\hlstd{(}\hlnum{28.5}\hlstd{,}\hlnum{27}\hlstd{,}\hlnum{1.643168}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1806553
+\end{verbatim}
+\begin{alltt}
+\hlnum{1}\hlopt{-}\hlkwd{pnorm}\hlstd{(}\hlnum{0.9128707}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1806553
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+}
+
